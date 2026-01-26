@@ -1,6 +1,7 @@
 //============================================
 // APPLICATION ROUTES CONSTANTS
 // ============================================
+import { NavLink } from "@/types";
 
 export const ROUTES = {
   HOME: '/',
@@ -17,7 +18,7 @@ export const ROUTES = {
 } as const;
 
 // Navigation links configuration
-export const NAV_LINKS = [
+export const NAV_LINKS: NavLink[] = [
   {
     label: 'Find Talent',
     href: ROUTES.SERVICES,

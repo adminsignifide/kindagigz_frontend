@@ -2,6 +2,19 @@
 // GLOBAL TYPE DEFINITIONS
 // ============================================
 
+// Standardized Navbar type
+export interface NavLink {
+    label: string;
+    href: string;
+    public: boolean;
+    requiresAuth?: boolean;
+    hasDropdown?: boolean;
+    dropdownItems?: Array<{
+        label: string;
+        href: string;
+    }>;
+}
+
 // User & Authentication Types
 export interface User {
     id: string;
