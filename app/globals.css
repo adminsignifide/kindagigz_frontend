@@ -50,7 +50,7 @@
   --color-accent: var(--accent);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -65,7 +65,7 @@
     --footer: #0F172A; 
     --accent: #94A3B8;
   }
-}
+} */
 
 body {
   background: var(--background);
