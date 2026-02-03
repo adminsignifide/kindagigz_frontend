@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  variant?: 'default' | 'elevated' | 'outlined' | 'flat';
+  variant?: 'default' | 'elevated' | 'outlined' | 'flat' | 'gray' | 'purple-border';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hoverable?: boolean;
 }
@@ -20,13 +20,20 @@ export const Card: React.FC<CardProps> = ({
   className,
   ...props
 }) => {
-  const baseStyles = 'rounded-xl bg-card transition-all duration-200';
+  const baseStyles = 'rounded-xl transition-all duration-600';
   
   const variants = {
-    default: 'border-2 border-card-border',
-    elevated: 'shadow-lg border border-card-border/50',
-    outlined: 'border-2 border-primary/20',
-    flat: 'border-none',
+    // Original variants
+    default: 'bg-card border-2 border-card-border',
+    elevated: 'bg-card shadow-lg border border-card-border/50',
+    outlined: 'bg-card border-2 border-primary/20',
+    flat: 'bg-card border-none',
+    
+    // NEW: Gray background (#D9D9D9)
+    gray: 'bg-[#D9D9D9] border-2 border-transparent',
+    
+    // NEW: Purple with yellow border (#4F4F7C with #FBD430 border)
+    'purple-border': 'bg-[#4F4F7C] border-2 border-secondary',
   };
   
   const paddings = {
@@ -37,7 +44,9 @@ export const Card: React.FC<CardProps> = ({
   };
 
   const hoverStyles = hoverable 
-    ? 'hover:shadow-xl hover:border-primary/40 hover:-translate-y-1 cursor-pointer' 
+    ? variant === 'purple-border'
+      ? 'hover:shadow-xl hover:border-secondary/80 hover:-translate-y-1 cursor-pointer'
+      : 'hover:shadow-xl hover:border-primary/40 hover:-translate-y-1 cursor-pointer'
     : '';
 
   return (
@@ -69,25 +78,45 @@ export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   );
 };
 
-export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
+export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement> & { 
+  variant?: 'default' | 'light';
+}> = ({
   children,
   className,
+  variant = 'default',
   ...props
 }) => {
   return (
-    <h3 className={cn('text-xl font-bold text-primary', className)} {...props}>
+    <h3 
+      className={cn(
+        'text-xl font-bold',
+        variant === 'light' ? 'text-white' : 'text-primary',
+        className
+      )} 
+      {...props}
+    >
       {children}
     </h3>
   );
 };
 
-export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement>> = ({
+export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement> & {
+  variant?: 'default' | 'light';
+}> = ({
   children,
   className,
+  variant = 'default',
   ...props
 }) => {
   return (
-    <p className={cn('text-sm text-gray-600', className)} {...props}>
+    <p 
+      className={cn(
+        'text-sm',
+        variant === 'light' ? 'text-white/80' : 'text-gray-600',
+        className
+      )} 
+      {...props}
+    >
       {children}
     </p>
   );
@@ -116,3 +145,55 @@ export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
     </div>
   );
 };
+
+/*
+CARD VARIANTS SUMMARY:
+======================
+
+1. variant="default" (Original)
+   - Background: #F9FAFB (Light gray)
+   - Border: #B5B5B5 (Medium gray)
+   - Use for: General content cards
+
+2. variant="elevated"
+   - Background: #F9FAFB
+   - Shadow: Large shadow
+   - Border: Subtle
+   - Use for: Highlighted content
+
+3. variant="outlined"
+   - Background: #F9FAFB
+   - Border: Primary color (20% opacity)
+   - Use for: Special emphasis
+
+4. variant="flat"
+   - Background: #F9FAFB
+   - Border: None
+   - Use for: Minimal style
+
+5. variant="gray" (NEW)
+   - Background: #D9D9D9 (Gray)
+   - Border: Transparent
+   - Use for: Why KindaGigz section, muted content
+
+6. variant="purple-border" (NEW)
+   - Background: #4F4F7C (Purple-blue)
+   - Border: #FBD430 (Yellow/Secondary)
+   - Use for: Categories section, premium content
+   - NOTE: Use CardTitle/CardDescription with variant="light"
+
+USAGE EXAMPLES:
+===============
+
+// Gray card (for WhyKindaGigz)
+<Card variant="gray" hoverable>
+  <CardTitle>Feature Title</CardTitle>
+  <CardDescription>Feature description</CardDescription>
+</Card>
+
+// Purple card with yellow border (for Categories)
+<Card variant="purple-border" hoverable>
+  <CardTitle variant="light">Category Name</CardTitle>
+  <CardDescription variant="light">Category description</CardDescription>
+</Card>
+*/

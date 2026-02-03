@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   // Unified border radius for all buttons
-  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-500 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
     // Button Variation 1: Yellow bg, Dark blue text

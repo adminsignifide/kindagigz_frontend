@@ -5,6 +5,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/constants/routes';
+import Image from 'next/image';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -56,12 +57,14 @@ export const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href={ROUTES.HOME} className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">K</span>
-              </div>
-              <span className="text-xl font-bold text-white">
-                Kinda<span className="text-purple-400">Gigz</span>
-              </span>
+              <Image 
+                src="/kinda-gigz-logo-zoomed.png" 
+                alt="KindaGigz logo"
+                width={40}
+                height={40}
+                className="rounded-lg"
+                priority
+              />
             </Link>
             <p className="text-sm text-gray-400 mb-4">
               Connecting Africa's skilled professionals with real opportunities. Building the future of work, one job at a time.
@@ -112,12 +115,6 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-gray-400">
               © {currentYear} KindaGigz. All rights reserved.
             </p>
-            <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <span className="flex items-center">
-                <span className="mr-2">🇰🇪</span>
-                Proudly made in Kenya
-              </span>
-            </div>
           </div>
         </div>
       </div>
