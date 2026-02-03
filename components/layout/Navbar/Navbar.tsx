@@ -14,7 +14,11 @@ import { UserMenu } from './UserMenu';
 import { cn } from '@/lib/utils/cn';
 import Image from 'next/image';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  variant?: 'default' | 'transparent';
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,10 +26,20 @@ export const Navbar: React.FC = () => {
   const isAuthenticated = false;
   const user = null;
 
+  const isTransparent = variant === 'transparent';
+
   return (
     // Navbar with margin from edges and rounded corners
-    <div className="sticky top-0 z-50 px-4 pt-4">
-      <nav className="bg-secondary border-2 border-black/10 shadow-md rounded-full max-w-7xl mx-auto">
+    <div className={cn(
+      "z-50",
+      isTransparent ? "absolute top-0 left-0 right-0 px-4 pt-4" : "sticky top-0 px-4 pt-4"
+    )}>
+      <nav className={cn(
+        "border-2 shadow-md rounded-full max-w-7xl mx-auto",
+        isTransparent 
+          ? "bg-secondary/90 backdrop-blur-md border-secondary/30" 
+          : "bg-secondary border-black/10"
+      )}>
         <div className="px-6 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}

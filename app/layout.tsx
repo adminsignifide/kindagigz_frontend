@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Footer } from "@/components/layout/Footer/Footer";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -25,9 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jakarta.variable} ${inter.variable} antialiased`}
+        className={`${jakarta.variable} ${inter.variable} antialiased bg-primary`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
