@@ -18,7 +18,6 @@ export const ResourcesDropdown: React.FC = () => {
     { label: 'Minimum Wage Guide', href: ROUTES.MINIMUM_WAGE, icon: '💰' },
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -34,10 +33,10 @@ export const ResourcesDropdown: React.FC = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         className={cn(
-          'px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center space-x-1',
+          'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 inline-flex items-center space-x-1',
           isOpen
-            ? 'text-purple-600 bg-purple-50'
-            : 'text-gray-700 hover:text-purple-600 hover:bg-gray-50'
+            ? 'text-primary bg-white/30 shadow-sm'
+            : 'text-primary/80 hover:text-primary hover:bg-white/20'
         )}
         onClick={() => setIsOpen(!isOpen)}
         onMouseEnter={() => setIsOpen(true)}
@@ -54,24 +53,21 @@ export const ResourcesDropdown: React.FC = () => {
         </svg>
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border-2 border-card-border py-2 z-50"
           onMouseLeave={() => setIsOpen(false)}
         >
           {resourceLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="flex items-center space-x-3 px-4 py-2.5 hover:bg-purple-50 transition-colors group"
+              className="flex items-center space-x-3 px-4 py-3 hover:bg-secondary/10 transition-colors group"
               onClick={() => setIsOpen(false)}
             >
               <span className="text-2xl">{link.icon}</span>
-              <div>
-                <div className="text-sm font-medium text-gray-900 group-hover:text-purple-600">
-                  {link.label}
-                </div>
+              <div className="text-sm font-semibold text-primary group-hover:text-primary/80">
+                {link.label}
               </div>
             </Link>
           ))}
