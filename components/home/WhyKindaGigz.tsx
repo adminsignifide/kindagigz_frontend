@@ -1,8 +1,9 @@
 // ============================================
-// WHY KINDAGIGZ SECTION
+// WHY KINDAGIGZ SECTION - UPDATED
 // ============================================
 
 import React from 'react';
+import { Card } from '@/components/ui/Card';
 
 const features = [
   {
@@ -39,12 +40,12 @@ const features = [
 
 export const WhyKindaGigz: React.FC = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 md:py-20 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Why Choose <span className="text-purple-600">KindaGigz</span>?
+            Why Choose <span className="text-primary">KindaGigz</span>?
           </h2>
           <p className="text-lg text-gray-600">
             We're building the future of work in Africa by connecting skilled professionals 
@@ -52,44 +53,46 @@ export const WhyKindaGigz: React.FC = () => {
           </p>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Features Grid - 2 columns on mobile, 3 on desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {features.map((feature, index) => (
-            <div
+            <Card 
               key={index}
-              className="group p-6 rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all duration-300"
+              variant="gray"
+              hoverable
+              className="group"
             >
               <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm text-gray-700">
                 {feature.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
 
         {/* Stats Bar */}
-        <div className="mt-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl p-8 lg:p-12">
-          <div className="grid md:grid-cols-4 gap-8 text-center text-white">
+        <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary via-primary-600 to-primary-800 rounded-2xl p-8 lg:p-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center text-white">
             <div>
-              <div className="text-4xl font-bold mb-2">150+</div>
-              <div className="text-purple-100">Service Categories</div>
+              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">150+</div>
+              <div className="text-sm lg:text-base text-white/80">Service Categories</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">10K+</div>
-              <div className="text-purple-100">Active Professionals</div>
+              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">10K+</div>
+              <div className="text-sm lg:text-base text-white/80">Active Professionals</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">50K+</div>
-              <div className="text-purple-100">Successful Jobs</div>
+              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">50K+</div>
+              <div className="text-sm lg:text-base text-white/80">Successful Jobs</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">98%</div>
-              <div className="text-purple-100">Client Satisfaction</div>
+              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">98%</div>
+              <div className="text-sm lg:text-base text-white/80">Client Satisfaction</div>
             </div>
           </div>
         </div>
@@ -97,3 +100,33 @@ export const WhyKindaGigz: React.FC = () => {
     </section>
   );
 };
+
+/*
+RESPONSIVE DESIGN:
+==================
+
+MOBILE (< 768px):
+- 2 columns grid (grid-cols-2)
+- Smaller gaps (gap-4)
+- Smaller text sizes
+- Stats in 2 rows (2x2 grid)
+
+TABLET (768px - 1024px):
+- Still 2 columns
+- Stats in 1 row (4 columns)
+
+DESKTOP (1024px+):
+- 3 columns (lg:grid-cols-3)
+- Larger gaps (lg:gap-6)
+- Larger text sizes
+- Stats in 1 row with more spacing
+
+CHANGES MADE:
+=============
+1. ✅ Cards now use variant="gray" (#D9D9D9 background)
+2. ✅ Mobile: 2 cards per row instead of 1
+3. ✅ Updated brand colors (purple → primary)
+4. ✅ Stats bar uses primary gradient
+5. ✅ Stats numbers now in secondary color (yellow)
+6. ✅ Responsive padding and spacing
+*/

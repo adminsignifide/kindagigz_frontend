@@ -15,14 +15,14 @@ export const LiveMapSection: React.FC = () => {
   const displayedServices = MOCK_SERVICES.slice(0, 8);
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-16 md:py-20 lg:py-24 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
             Live Map - Who's Around
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-white/80">
             Browse through nearby services to explore who you ight hire.
           </p>
         </div>
