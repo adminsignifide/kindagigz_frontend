@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                 alt="KindaGigz logo"
                 width={40}
                 height={40}
-                className="rounded-lg"
+                className="rounded-sm"
                 priority
               />
             </Link>
