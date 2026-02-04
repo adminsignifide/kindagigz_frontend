@@ -122,7 +122,7 @@ export const CTASection: React.FC = () => {
           {/* Right Side - CTA Image */}
           <div className="relative order-1 lg:order-2">
             {/* Image Container */}
-            <div className="relative aspect-square lg:aspect-auto lg:h-[600px] rounded-2xl overflow-hidden">
+            <div className="relative aspect-square lg:aspect-auto lg:h-150 rounded-2xl overflow-hidden">
               <Image
                 src="/images/cta-image.png"
                 alt="Join KindaGigz community"
@@ -132,7 +132,7 @@ export const CTASection: React.FC = () => {
               />
               
               {/* Overlay gradient for better text readability if needed */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent" />
             </div>
 
             {/* Floating Stats Card */}

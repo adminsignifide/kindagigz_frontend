@@ -127,3 +127,82 @@ export interface Review {
     serviceType: string;
     createdAt: string;
 }
+
+// Course Types (for Skills Boost)
+export interface Course {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
+  price: string;
+  category: string;
+  instructor?: string;
+  enrolled?: number;
+}
+
+// Wage Guide Types
+// export interface WageService {
+//   name: string;
+//   minHourly?: number;
+//   maxHourly?: number;
+//   minFixed?: number;
+//   maxFixed?: number;
+//   currency: string;
+// }
+
+type HourlyService = {
+  name: string;
+  minHourly: number;
+  maxHourly: number;
+  currency: string;
+};
+
+type FixedService = {
+  name: string;
+  minFixed: number;
+  maxFixed: number;
+  currency: string;
+};
+
+type WageService = HourlyService | FixedService;
+
+export interface WageCategory {
+  category: string;
+  icon: string;
+  services: WageService[];
+}
+
+// Form Types
+export interface LoginFormData {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
+
+export interface SignupFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  role: 'client' | 'professional' | 'both';
+  agreeToTerms: boolean;
+}
+
+// API Response Types
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  message?: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasMore: boolean;
+}
