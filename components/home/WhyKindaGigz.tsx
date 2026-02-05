@@ -76,7 +76,7 @@ export const WhyKindaGigz: React.FC = () => {
         </div>
 
         {/* Stats Bar */}
-        <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary via-primary-600 to-primary-800 rounded-2xl p-8 lg:p-12">
+        <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary to-accent rounded-2xl p-8 lg:p-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center text-white">
             <div>
               <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">150+</div>

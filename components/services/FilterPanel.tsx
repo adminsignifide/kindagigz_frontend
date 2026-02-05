@@ -63,7 +63,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
           onClick={() => setActiveTab('filters')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'filters'
-              ? 'bg-white text-primary shadow-sm'
+              ? 'bg-secondary text-primary shadow-sm'
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
@@ -73,7 +73,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
           onClick={() => setActiveTab('categories')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'categories'
-              ? 'bg-white text-primary shadow-sm'
+              ? 'bg-secondary text-primary shadow-sm'
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
