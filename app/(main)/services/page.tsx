@@ -4,11 +4,13 @@
 // SERVICES PAGE (EXPLORE) - COMPLETE
 // ============================================
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/components/layout/Navbar/Navbar';
 import { FiltersPanel } from '@/components/services/FilterPanel';
+import { ServicesList } from '@/components/services/ServicesList';
+import { ServicesMapView } from '@/components/services/ServicesMapView';
 import { ProfessionalCard } from '@/components/services/ProfessionalCard';
-import { Professional } from '@/types';
+import { Professional, ServiceProvider } from '@/types';
 
 // Mock professionals data
 const MOCK_PROFESSIONALS: Professional[] = [
@@ -95,131 +97,77 @@ const MOCK_PROFESSIONALS: Professional[] = [
 ];
 
 export default function ServicesPage() {
-  const [professionals, setProfessionals] = useState<Professional[]>(MOCK_PROFESSIONALS);
   const [showMapView, setShowMapView] = useState(false);
   const [activeFilters, setActiveFilters] = useState<any>({});
 
-  const handleFilterChange = (filters: any) => {
-    setActiveFilters(filters);
-    // TODO: Filter professionals based on filters
-    console.log('Filters changed:', filters);
-  };
-
-  const toggleMapView = () => {
-    setShowMapView(!showMapView);
-  };
+  // Adapter: Transforming Professional data to ServiceProvider format
+  const serviceProviders = useMemo(() => {
+    return MOCK_PROFESSIONALS.map((pro): ServiceProvider => ({
+      id: pro.id,
+      professionalName: `${pro.firstName} ${pro.lastName}`,
+      serviceName: pro.services[0]?.name || 'Professional Service',
+      banner: pro.bannerImage || '',
+      logo: pro.profileImage || '',
+      description: pro.bio,
+      catchphrase: pro.title,
+      categoryId: pro.services[0]?.categoryId || '',
+      categoryName: pro.services[0]?.categoryName || 'Expert',
+      price: pro.startingPrice,
+      priceType: pro.services[0]?.priceType || 'negotiable',
+      location: pro.location,
+      openHours: pro.workingHours,
+      rating: pro.rating,
+      reviewCount: pro.reviewCount,
+      isVerified: pro.isVerified,
+      isAvailableNow: pro.isAvailableNow,
+      currency: pro.currency,
+    }));
+  }, []);
 
   return (
     <div className="min-h-screen bg-primary">
-      <Navbar />
+      <Navbar variant='transparent'/>
       
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Page Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-white mb-2">
-            Explore Services
-          </h1>
-          <p className="text-white/80">
-            Find verified professionals for any job. {professionals.length} professionals available.
-          </p>
-        </div>
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8  pt-24">
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold text-white mb-2">Explore Services</h1>
+          <p className="text-white/70">Connecting you with {serviceProviders.length} verified experts.</p>
+        </header>
 
-        {/* Main Grid Layout */}
-        <div className="grid lg:grid-cols-12 gap-6">
-          {/* Filters Sidebar */}
-          <div className="lg:col-span-3">
-            <FiltersPanel
-              onFilterChange={handleFilterChange}
-              onShowMap={toggleMapView}
-              showMapView={showMapView}
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Filters */}
+          <aside className="lg:col-span-3">
+            <FiltersPanel 
+              onFilterChange={setActiveFilters} 
+              onShowMap={() => setShowMapView(!showMapView)} 
+              showMapView={showMapView} 
             />
-          </div>
+          </aside>
 
-          {/* Results Section */}
-          <div className={showMapView ? 'lg:col-span-5' : 'lg:col-span-9'}>
-            <div className="bg-white rounded-2xl p-6 min-h-[600px]">
-              {/* Results Header */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-                <div>
-                  <h2 className="text-xl font-bold text-primary">
-                    {professionals.length} Professionals Found
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Showing results {activeFilters.location ? `near ${activeFilters.location}` : 'in Nairobi'}
-                  </p>
-                </div>
-
-                {/* Sort Dropdown */}
-                <select className="px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none text-sm">
+          {/* Results */}
+          <section className={showMapView ? 'lg:col-span-5' : 'lg:col-span-9'}>
+            <div className="bg-white rounded-3xl p-6 shadow-xl min-h-[700px]">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+                <h2 className="text-2xl font-bold text-primary">Results</h2>
+                <select className="bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium border-none focus:ring-2 focus:ring-secondary">
                   <option>Most Relevant</option>
                   <option>Highest Rated</option>
-                  <option>Nearest First</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
                 </select>
               </div>
 
-              {/* Professionals Grid */}
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {professionals.map((professional) => (
-                  <ProfessionalCard key={professional.id} professional={professional} />
-                ))}
-              </div>
-
-              {/* Load More */}
-              {professionals.length > 0 && (
-                <div className="mt-8 text-center">
-                  <button className="px-6 py-3 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors font-semibold">
-                    Load More Professionals
-                  </button>
-                </div>
-              )}
-
-              {/* Empty State */}
-              {professionals.length === 0 && (
-                <div className="text-center py-16">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">No professionals found</h3>
-                  <p className="text-gray-600 mb-6">
-                    Try adjusting your filters or search criteria
-                  </p>
-                  <button
-                    onClick={() => handleFilterChange({})}
-                    className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold"
-                  >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
+              <ServicesList 
+                providers={serviceProviders} 
+                showMapView={showMapView} 
+                onClearFilters={() => setActiveFilters({})} 
+              />
             </div>
-          </div>
+          </section>
 
           {/* Map View */}
           {showMapView && (
-            <div className="lg:col-span-4">
-              <div className="bg-white rounded-2xl p-6 sticky top-24 h-[600px]">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-primary">Map View</h3>
-                  <button
-                    onClick={toggleMapView}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    ✕
-                  </button>
-                </div>
-                
-                {/* Map Placeholder */}
-                <div className="h-full bg-gray-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-5xl mb-4">🗺️</div>
-                    <p className="text-gray-600 mb-4">Interactive map coming soon</p>
-                    <p className="text-sm text-gray-500">
-                      This will show professionals' locations on a map
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <aside className="lg:col-span-4">
+              <ServicesMapView onClose={() => setShowMapView(false)} />
+            </aside>
           )}
         </div>
       </main>
