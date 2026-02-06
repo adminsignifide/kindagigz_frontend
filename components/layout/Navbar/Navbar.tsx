@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
       <nav className={cn(
         "border-2 shadow-md rounded-full max-w-7xl mx-auto",
         isTransparent 
-          ? "bg-secondary/90 backdrop-blur-md border-secondary/30" 
+          ? "bg-secondary/80 backdrop-blur-lg border-secondary/30" 
           : "bg-secondary border-black/10"
       )}>
         <div className="px-6 sm:px-8 lg:px-10">

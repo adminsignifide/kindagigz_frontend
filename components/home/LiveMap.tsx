@@ -1,18 +1,18 @@
 'use client';
 
 // ============================================
-// SERVICES SECTION (HOMEPAGE)
+// LiveMap SECTION (HOMEPAGE)
 // ============================================
 
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
-import { MOCK_SERVICES } from '@/lib/constants/categories';
+import { MOCK_SERVICE_PROVIDERS } from '@/lib/constants/categories';
 
 export const LiveMapSection: React.FC = () => {
   // Show only first 8 categories on homepage
-  const displayedServices = MOCK_SERVICES.slice(0, 8);
+  const displayedServices = MOCK_SERVICE_PROVIDERS.slice(0, 8);
 
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-primary">
