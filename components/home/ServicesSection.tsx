@@ -8,11 +8,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
-import { MOCK_SERVICES } from '@/lib/constants/categories';
+import { MOCK_SERVICE_PROVIDERS } from '@/lib/constants/categories';
+import { ServiceProviderCard } from '../services/ServiceProviderCard';
 
 export const ServicesSection: React.FC = () => {
   // Show only first 8 categories on homepage
-  const displayedServices = MOCK_SERVICES.slice(0, 8);
+  const displayedServices = MOCK_SERVICE_PROVIDERS.slice(0, 8);
 
   return (
     <section className="py-20 bg-gray-50">
@@ -27,51 +28,19 @@ export const ServicesSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
-          {displayedServices.map((service) => (
-            <Link
-              key={service.id}
-              href={`${ROUTES.SERVICES}?tab=categories&category=${service.name}`}
-              className="group"
-            >
-              <div
-                className="relative p-6 rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:shadow-xl transition-all duration-300 bg-white"
-              >
-                {/* Icon */}
-                <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-
-                {/* service Name */}
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-purple-600 transition-colors">
-                  {service.name}
-                </h3>
-
-                {/* Hover Arrow */}
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg
-                    className="w-6 h-6 text-purple-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </Link>
+        {/* Service Providers Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {displayedServices.map((provider) => (
+            <ServiceProviderCard 
+              key={provider.id} 
+              provider={provider} 
+            />
           ))}
         </div>
 
         {/* Browse All Button */}
         <div className="text-center">
-          <Link href={`${ROUTES.SERVICES}?tab=categories`}>
+          <Link href={ROUTES.SERVICES}>
             <Button 
               variant="primary" 
               size="lg"
