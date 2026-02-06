@@ -21,7 +21,7 @@ export interface User {
     email: string;
     firstName: string;
     lastName: string;
-    role: 'client' | 'professional' | 'both';
+    role: 'client' | 'professional';
     profileImage?: string;
     createdAt: string; //type ISOString = string;
 }
@@ -68,6 +68,30 @@ export interface Professional {
     badges?: Array<{ id: string; name: string; icon: string; level: number }>; // For Skills Boost
     languages: string[]; // Crucial for multi-lingual African markets
     status: 'online' | 'offline' | 'busy';
+    gallery?: GalleryItem[];
+    about?: string;
+}
+
+// Service Provider (what's shown in cards and lists)
+export interface ServiceProvider {
+  id: string;
+  professionalName: string;
+  serviceName: string;
+  banner: string;
+  logo: string;
+  description: string;
+  catchphrase: string;
+  categoryId: string;
+  categoryName: string;
+  price?: number;
+  priceType: 'fixed' | 'hourly' | 'negotiable';
+  location: Location;
+  openHours: WorkingHours;
+  rating: number;
+  reviewCount: number;
+  isVerified: boolean;
+  isAvailableNow: boolean;
+  currency: string;
 }
 
 // Service Types
@@ -91,6 +115,14 @@ export interface Category {
     icon: string;
     serviceCount: number;
     color?: string;
+}
+
+//Gallery Types
+export interface GalleryItem {
+  id: string;
+  url: string;
+  caption?: string;
+  type: 'image' | 'video';
 }
 
 // Location Types
@@ -187,8 +219,17 @@ export interface SignupFormData {
   phone: string;
   password: string;
   confirmPassword: string;
-  role: 'client' | 'professional' | 'both';
+  role: 'client' | 'professional';
   agreeToTerms: boolean;
+}
+
+// Contact Form
+export interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  preferredContact: 'email' | 'phone' | 'whatsapp';
 }
 
 // API Response Types
