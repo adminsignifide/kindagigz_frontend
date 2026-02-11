@@ -7,7 +7,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/constants/routes';
-import { User } from '@/types';
+import { User } from '@/types/auth';
 
 interface UserMenuProps {
   user: User;
@@ -19,7 +19,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
 
   const menuItems = [
     { label: 'Dashboard', href: ROUTES.DASHBOARD, icon: '📊' },
-    { label: 'My Profile', href: ROUTES.PROFESSIONAL(user.id), icon: '👤' },
+    { label: 'My Profile', href: ROUTES.PROFESSIONAL(user.id.toString()), icon: '👤' },
     { label: 'Settings', href: ROUTES.DASHBOARD_SETTINGS, icon: '⚙️' },
   ];
 
@@ -34,7 +34,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+  const initials = `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
 
   return (
     <div className="relative" ref={menuRef}>
@@ -43,10 +43,10 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        {user.profileImage ? (
+        {user.profile_image ? (
           <img
-            src={user.profileImage}
-            alt={`${user.firstName} ${user.lastName}`}
+            src={user.profile_image}
+            alt={`${user.first_name} ${user.last_name}`}
             className="w-8 h-8 rounded-full object-cover border-2 border-primary"
           />
         ) : (
@@ -55,7 +55,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           </div>
         )}
         <span className="text-sm font-semibold text-primary hidden lg:block">
-          {user.firstName}
+          {user.first_name}
         </span>
         <svg
           className="w-4 h-4 text-primary"
@@ -72,12 +72,12 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           {/* User Info Header */}
           <div className="px-4 py-3 border-b border-card-border">
             <div className="text-sm font-bold text-primary">
-              {user.firstName} {user.lastName}
+              {user.first_name} {user.last_name}
             </div>
             <div className="text-xs text-gray-500">{user.email}</div>
             <div className="mt-2">
               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-secondary text-primary">
-                {user.role === 'both' ? 'Client & Pro' : user.role === 'professional' ? 'Professional' : 'Client'}
+                { user.role === 'professional' ? 'Professional' : 'Client'}
               </span>
             </div>
           </div>
