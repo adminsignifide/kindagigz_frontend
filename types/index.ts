@@ -15,23 +15,6 @@ export interface NavLink {
     }>;
 }
 
-// User & Authentication Types
-export interface User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    role: 'client' | 'professional';
-    profileImage?: string;
-    createdAt: string; //type ISOString = string;
-}
-
-export interface AuthState {
-    user: User | null;
-    isAuthenticated: boolean;
-    isLoading: boolean;
-}
-
 export type DayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
 export interface TimeRange {
@@ -203,24 +186,6 @@ export interface WageCategory {
   category: string;
   icon: string;
   services: WageService[];
-}
-
-// Form Types
-export interface LoginFormData {
-  email: string;
-  password: string;
-  remember?: boolean;
-}
-
-export interface SignupFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-  role: 'client' | 'professional';
-  agreeToTerms: boolean;
 }
 
 // Contact Form
