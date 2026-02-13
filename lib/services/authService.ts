@@ -19,6 +19,7 @@ class AuthService {
      */
     async register(data: RegisterData): Promise<AuthResponse> {
         try {
+            console.log('Sending registration data:', data);
             const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
                 method: 'POST',
                 headers: {
@@ -27,13 +28,18 @@ class AuthService {
                 body: JSON.stringify(data),
             });
 
+            const responseData = await response.json();
+            console.log('Registration response:', responseData); // Debug log
+            console.log('Response status:', response.status);
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw this.handleError(errorData);
+                console.error('Registration failed:', responseData);
+                throw this.handleError({ response: { data: responseData, status: response.status } });
             }
 
-            return await response.json();
+            return responseData;
         } catch (error) {
+            console.error('Registration error caught:', error);
             throw this.handleError(error);
         }
     }
@@ -51,12 +57,13 @@ class AuthService {
                 body: JSON.stringify(credentials),
             });
 
+            const responseData = await response.json();
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw this.handleError(errorData);
+                throw this.handleError({ response: { data: responseData, status: response.status } });
             }
 
-            return await response.json();
+            return responseData;
         } catch (error) {
             throw this.handleError(error);
         }
@@ -208,24 +215,58 @@ class AuthService {
      * Error handling
      */
     private handleError(error: any): ApiError {
-        if (error.response) {
-            // Server responded with error
-            return {
-                message: error.response.data?.message || 'An error occurred',
-                errors: error.response.data,
-            };
-        } else if (error.request) {
-            // Request made but no response
-            return {
-                message: 'No response from server. Please check your connection.',
-            };
-        } else {
-            // Something else happened
-            return {
-                message: error.message || 'An unexpected error occurred',
-            };
+    console.log('handleError received:', error); // Debug log
+
+    // Check if this is a fetch response error
+    if (error.response) {
+      const { data, status } = error.response;
+      
+      // Django REST Framework typically returns errors in this format:
+      // { "field_name": ["error message"], "non_field_errors": ["error"] }
+      // OR { "detail": "error message" }
+      
+      let message = 'An error occurred';
+      let errors: Record<string, string[]> | undefined;
+
+      // Check for detail field (common in DRF)
+      if (data.detail) {
+        message = typeof data.detail === 'string' ? data.detail : 'An error occurred';
+      }
+      // Check for non_field_errors
+      else if (data.non_field_errors) {
+        message = Array.isArray(data.non_field_errors) 
+          ? data.non_field_errors[0] 
+          : data.non_field_errors;
+      }
+      // Check if data is the errors object itself
+      else if (typeof data === 'object') {
+        // Get first error message from any field
+        const firstErrorField = Object.keys(data)[0];
+        if (firstErrorField && data[firstErrorField]) {
+          const fieldErrors = data[firstErrorField];
+          message = Array.isArray(fieldErrors) ? fieldErrors[0] : fieldErrors;
         }
+        errors = data;
+      }
+
+      return {
+        message,
+        errors,
+      };
     }
+    
+    // Network error or other error
+    if (error instanceof Error) {
+      return {
+        message: error.message || 'An unexpected error occurred',
+      };
+    }
+
+    // Default fallback
+    return {
+      message: 'An unexpected error occurred',
+    };
+  }
 }
 
 export const authService = new AuthService();
