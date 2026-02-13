@@ -1,9 +1,5 @@
 'use client';
 
-// ============================================
-// MAIN NAVBAR COMPONENT
-// ============================================
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,6 +7,7 @@ import { ROUTES, NAV_LINKS } from '@/lib/constants/routes';
 import { Button } from '@/components/ui/Button';
 import { ResourcesDropdown } from './ResourcesDropdown';
 import { UserMenu } from './UserMenu';
+import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils/cn';
 import Image from 'next/image';
 
@@ -22,9 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Mock authentication state - replace with actual auth hook
-  const isAuthenticated = false;
-  const user = null;
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   const isTransparent = variant === 'transparent';
 
@@ -82,7 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
 
             {/* Right Side - Auth Buttons or User Menu */}
             <div className="hidden md:flex items-center space-x-3 shrink-0">
-              {isAuthenticated && user ? (
+              {isLoading ? (
+                // Loading skeleton
+                <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+              ) : isAuthenticated && user ? (
                 <UserMenu user={user} />
               ) : (
                 <>
