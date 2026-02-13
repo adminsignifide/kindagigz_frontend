@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
         <nav className={cn(
           "border-2 shadow-md max-w-7xl mx-auto transition-all duration-200",
           // Dynamic border radius - full when closed, only top when mobile menu is open
-          isMobileMenuOpen ? "rounded-sm" : "rounded-full",
+          isMobileMenuOpen ? "rounded-lg" : "rounded-full",
           isTransparent 
             ? "bg-secondary/80 backdrop-blur-lg border-secondary/30" 
             : "bg-secondary border-black/10"
@@ -273,8 +273,11 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                 <div className="pt-4 border-t border-primary/10 space-y-2">
                   {isAuthenticated && user ? (
                     <>
-                      {/* User Info Header */}
-                      <div className="px-4 py-3 bg-white/20 rounded-lg">
+                      {/* User Info Header with Dropdown Toggle - UPDATED */}
+                      <button
+                        onClick={() => toggleMobileDropdown('userMenu')}
+                        className="w-full px-4 py-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"
+                      >
                         <div className="flex items-center gap-3">
                           {user.profile_image ? (
                             <img
@@ -289,25 +292,16 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                               </span>
                             </div>
                           )}
-                          <div className="flex-1">
+                          <div className="flex-1 text-left">
                             <div className="text-sm font-bold text-primary">
                               {user.first_name} {user.last_name}
                             </div>
                             <div className="text-xs text-gray-600">{user.email}</div>
                           </div>
-                        </div>
-                      </div>
-
-                      {/* User Menu Dropdown */}
-                      <div className="space-y-1">
-                        <button
-                          onClick={() => toggleMobileDropdown('userMenu')}
-                          className="w-full flex items-center justify-between px-4 py-2 text-sm font-bold text-primary/70 hover:bg-white/20 rounded-lg transition-colors"
-                        >
-                          <span>My Account</span>
+                          {/* Dropdown Icon */}
                           <svg
                             className={cn(
-                              "w-4 h-4 transition-transform",
+                              "w-5 h-5 text-primary transition-transform",
                               openMobileDropdown === 'userMenu' && "rotate-180"
                             )}
                             fill="none"
@@ -316,37 +310,37 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                           >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
-                        </button>
+                        </div>
+                      </button>
 
-                        {/* User Menu Items */}
-                        {openMobileDropdown === 'userMenu' && (
-                          <div className="pl-2 space-y-1">
-                            {getUserMenuItems().map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                className="flex items-center gap-2 px-6 py-2 text-sm text-primary hover:bg-white/20 rounded-lg transition-colors"
-                                onClick={() => {
-                                  setIsMobileMenuOpen(false);
-                                  setOpenMobileDropdown(null);
-                                }}
-                              >
-                                <span className="text-lg">{item.icon}</span>
-                                <span>{item.label}</span>
-                              </Link>
-                            ))}
-                            
-                            {/* Logout Button */}
-                            <button
-                              onClick={handleLogoutClick}
-                              className="w-full flex items-center gap-2 px-6 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      {/* User Menu Items - UPDATED */}
+                      {openMobileDropdown === 'userMenu' && (
+                        <div className="space-y-1 pl-2">
+                          {getUserMenuItems().map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              className="flex items-center gap-2 px-6 py-2 text-sm text-primary hover:bg-white/20 rounded-lg transition-colors"
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setOpenMobileDropdown(null);
+                              }}
                             >
-                              <span className="text-lg">🚪</span>
-                              <span>Log Out</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                              <span className="text-lg">{item.icon}</span>
+                              <span>{item.label}</span>
+                            </Link>
+                          ))}
+                          
+                          {/* Logout Button */}
+                          <button
+                            onClick={handleLogoutClick}
+                            className="w-full flex items-center gap-2 px-6 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          >
+                            <span className="text-lg">🚪</span>
+                            <span>Log Out</span>
+                          </button>
+                        </div>
+                      )}
                     </>
                   ) : (
                     <>
