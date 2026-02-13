@@ -26,7 +26,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Integrated Navbar */}
-      <Navbar variant="transparent" />
+      <Navbar />
 
       {/* Main Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24">
