@@ -11,10 +11,10 @@ export default function LoginPage() {
     <div className="min-h-screen bg-primary">
       <Navbar />
       
-      <main className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="bg-white rounded-2xl p-8 shadow-xl">
+      <main className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-primary mb-2">
               Welcome Back
             </h1>
@@ -50,7 +50,7 @@ export default function LoginPage() {
           </div>
 
           {/* Sign Up Link */}
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
               <Link href={ROUTES.SIGNUP} className="font-semibold text-primary hover:text-primary/80">
