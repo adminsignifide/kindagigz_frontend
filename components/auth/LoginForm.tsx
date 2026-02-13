@@ -2,14 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
 import { authService } from '@/lib/services/authService';
+import { useAuth } from '@/contexts/AuthContext';
 import type { LoginCredentials, ApiError } from '@/types/auth';
 
 export function LoginForm() {
   const router = useRouter();
+  const { setUser } = useAuth();
   const [formData, setFormData] = useState<LoginCredentials>({
     email: '',
     password: '',
@@ -22,6 +25,8 @@ export function LoginForm() {
     setError('');
     setIsLoading(true);
 
+    const loadingToast = toast.loading('Logging in...');
+
     try {
       const response = await authService.login(formData);
       
@@ -29,15 +34,31 @@ export function LoginForm() {
       authService.setTokens(response.tokens);
       authService.setUser(response.user);
 
-      // Redirect based on user role
-      if (response.user.role === 'professional') {
-        router.push(ROUTES.DASHBOARD);
-      } else {
-        router.push(ROUTES.HOME);
-      }
+      // Update auth context
+      setUser(response.user);
+
+      // Dismiss loading toast and show success
+      toast.dismiss(loadingToast);
+      toast.success(`Welcome back, ${response.user.first_name}!`, {
+        duration: 3000,
+      });
+
+      // Small delay for user to see the success message
+      setTimeout(() => {
+        // Redirect based on user role
+        if (response.user.role === 'professional') {
+          router.push(ROUTES.DASHBOARD);
+        } else {
+          router.push(ROUTES.HOME);
+        }
+      }, 500);
+
     } catch (err: any) {
+      toast.dismiss(loadingToast);
       const apiError = err as ApiError;
-      setError(apiError.message || 'Login failed. Please try again.');
+      const errorMessage = apiError.message || 'Login failed. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

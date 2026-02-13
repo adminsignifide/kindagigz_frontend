@@ -2,14 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
 import { authService } from '@/lib/services/authService';
+import { useAuth } from '@/contexts/AuthContext';
 import type { RegisterData, UserRole, ApiError } from '@/types/auth';
 
 export function SignupForm() {
   const router = useRouter();
+  const { setUser } = useAuth();
   const [step, setStep] = useState<1 | 2>(1);
   const [formData, setFormData] = useState<RegisterData>({
     first_name: '',
@@ -34,6 +37,7 @@ export function SignupForm() {
       // Validate step 1
       if (formData.password !== formData.password_confirm) {
         setErrors({ password_confirm: ['Passwords do not match'] });
+        toast.error('Passwords do not match');
         return;
       }
       setStep(2);
@@ -42,6 +46,7 @@ export function SignupForm() {
 
     // Step 2: Submit registration
     setIsLoading(true);
+    const loadingToast = toast.loading('Creating your account...');
 
     try {
       const response = await authService.register(formData);
@@ -50,18 +55,39 @@ export function SignupForm() {
       authService.setTokens(response.tokens);
       authService.setUser(response.user);
 
-      // Redirect based on role
-      if (formData.role === 'professional') {
-        router.push('/onboarding'); // Professional onboarding flow
-      } else {
-        router.push(ROUTES.HOME);
-      }
+       // Update auth context
+      setUser(response.user);
+
+      // Dismiss loading and show success
+      toast.dismiss(loadingToast);
+      toast.success(`Welcome to KindaGigz, ${response.user.first_name}! 🎉`, {
+        duration: 4000,
+      });
+
+      // Small delay for user to see the success message
+      setTimeout(() => {
+        // Redirect based on role
+        if (formData.role === 'professional') {
+          router.push('/onboarding');
+        } else {
+          router.push(ROUTES.HOME);
+        }
+      }, 500);
+
     } catch (err: any) {
+      toast.dismiss(loadingToast);
       const apiError = err as ApiError;
       if (apiError.errors) {
         setErrors(apiError.errors);
+        
+        // Show first error as toast
+        const firstErrorField = Object.keys(apiError.errors)[0];
+        const firstError = apiError.errors[firstErrorField][0];
+        toast.error(firstError || 'Registration failed');
       } else {
-        setErrors({ general: [apiError.message || 'Registration failed. Please try again.'] });
+        const errorMessage = apiError.message || 'Registration failed. Please try again.';
+        setErrors({ general: [errorMessage] });
+        toast.error(errorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -87,12 +113,16 @@ export function SignupForm() {
     setFormData(prev => ({ ...prev, role }));
   };
 
+  const getErrorMessage = (field: string): string | undefined => {
+    return errors[field]?.[0];
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* General Error */}
       {errors.general && (
         <div className="p-4 rounded-lg bg-red-50 border border-red-200">
-          <p className="text-sm text-red-600">{errors.general}</p>
+          <p className="text-sm text-red-600">{errors.general[0]}</p>
         </div>
       )}
 
@@ -115,8 +145,8 @@ export function SignupForm() {
                 className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
                 placeholder="John"
               />
-              {errors.first_name && (
-                <p className="mt-1 text-sm text-red-600">{errors.first_name}</p>
+              {getErrorMessage('first_name') && (
+                <p className="mt-1 text-sm text-red-600">{getErrorMessage('first_name')}</p>
               )}
             </div>
             <div>
@@ -134,8 +164,8 @@ export function SignupForm() {
                 className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
                 placeholder="Doe"
               />
-              {errors.last_name && (
-                <p className="mt-1 text-sm text-red-600">{errors.last_name}</p>
+              {getErrorMessage('last_name') && (
+                <p className="mt-1 text-sm text-red-600">{getErrorMessage('last_name')}</p>
               )}
             </div>
           </div>
@@ -154,8 +184,8 @@ export function SignupForm() {
               className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
               placeholder="john@example.com"
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+            {getErrorMessage('email') && (
+              <p className="mt-1 text-sm text-red-600">{getErrorMessage('email')}</p>
             )}
           </div>
 
@@ -173,8 +203,8 @@ export function SignupForm() {
               className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
               placeholder="+254 712 345 678"
             />
-            {errors.phone && (
-              <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+            {getErrorMessage('phone') && (
+              <p className="mt-1 text-sm text-red-600">{getErrorMessage('phone')}</p>
             )}
           </div>
 
@@ -191,10 +221,10 @@ export function SignupForm() {
               required
               minLength={8}
               className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
-              placeholder="••••••••"
+              placeholder="Enter password"
             />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+            {getErrorMessage('password') && (
+              <p className="mt-1 text-sm text-red-600">{getErrorMessage('password')}</p>
             )}
           </div>
 
@@ -210,10 +240,10 @@ export function SignupForm() {
               onChange={handleChange}
               required
               className="w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
-              placeholder="••••••••"
+              placeholder="Confirm password"
             />
-            {errors.password_confirm && (
-              <p className="mt-1 text-sm text-red-600">{errors.password_confirm}</p>
+            {getErrorMessage('password_confirm') && (
+              <p className="mt-1 text-sm text-red-600">{getErrorMessage('password_confirm')}</p>
             )}
           </div>
 
