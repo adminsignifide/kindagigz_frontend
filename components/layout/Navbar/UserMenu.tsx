@@ -28,6 +28,15 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
     { label: 'Settings', href: ROUTES.DASHBOARD_SETTINGS, icon: '⚙️' },
   ];
 
+  // Add "Become a Professional" for clients only
+  if (user.role === 'client') {
+    menuItems.push({
+      label: 'Become a Professional',
+      href: ROUTES.UPGRADE_TO_SERVICE_PROVIDER,
+      icon: '⚡',
+    });
+  }
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {

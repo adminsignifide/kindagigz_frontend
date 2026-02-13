@@ -15,6 +15,7 @@ export const ROUTES = {
   SKILLS_BOOST: '/skills-boost',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  UPGRADE_TO_SERVICE_PROVIDER: '/upgrade-to-service-provider',
 } as const;
 
 // Navigation links configuration
@@ -23,12 +24,6 @@ export const NAV_LINKS: NavLink[] = [
     label: 'Find Talent',
     href: ROUTES.SERVICES,
     public: true,
-  },
-  {
-    label: 'Become a Pro',
-    href: ROUTES.SIGNUP,
-    public: true,
-    requiresAuth: false,
   },
   {
     label: 'Resources',
