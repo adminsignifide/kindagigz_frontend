@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer/Footer";
 import "./globals.css";
+import { ToastProvider } from "@/components/providers/ToastProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -27,9 +29,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${jakarta.variable} ${inter.variable} antialiased bg-primary`}
-      >
-        {children}
-        <Footer />
+      >  
+        <AuthProvider>
+          {children}
+          <ToastProvider />
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

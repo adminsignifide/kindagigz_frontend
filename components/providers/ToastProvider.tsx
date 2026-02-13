@@ -12,7 +12,7 @@ export function ToastProvider() {
         // Default options
         duration: 4000,
         style: {
-          background: '#fff',
+          background: '#C7D2FE',
           color: '#1a1a2e',
           border: '2px solid #e8e8e8',
           borderRadius: '12px',
@@ -36,7 +36,7 @@ export function ToastProvider() {
           duration: 4000,
           iconTheme: {
             primary: '#ef4444',
-            secondary: '#fff',
+            secondary: '#EBEBF0',
           },
           style: {
             border: '2px solid #ef4444',
@@ -46,7 +46,7 @@ export function ToastProvider() {
         loading: {
           iconTheme: {
             primary: '#3b82f6',
-            secondary: '#fff',
+            secondary: '#EBEBF0',
           },
         },
       }}
