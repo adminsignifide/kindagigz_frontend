@@ -52,6 +52,20 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface ServiceProOnboardingData {
+  business_name: string;
+  about: string;
+  tagline?: string;
+  category_id: number;
+  service_ids: number[]; // Array of service IDs (max 5)
+  logo?: File;
+  banner_image?: File;
+  address: string;
+  service_radius_km?: number;
+  languages?: string[];
+  agreeToTerms: boolean;
+}
+
 export interface RegisterData {
   email: string;
   phone: string;
@@ -68,4 +82,8 @@ export interface RegisterData {
 export interface ApiError {
   message: string;
   errors?: Record<string, string[]>;
+}
+
+export interface CompleteProfessionalRegistration extends RegisterData {
+  professional_data?: ServiceProOnboardingData;
 }
