@@ -36,8 +36,9 @@ export const API_ENDPOINTS = {
   },
   
   SERVICES: {
-    LIST: `${API_BASE_URL}/api/services/`,
-    DETAIL: (id: string) => `${API_BASE_URL}/api/services/${id}/`,
+    CATEGORIES: `${API_BASE_URL}/api/services/categories`,
+    LIST: `${API_BASE_URL}/api/services`,
+    VALIDATE: `${API_BASE_URL}/api/services/validate`,
   },
 } as const;
 
