@@ -9,7 +9,7 @@ import { ROUTES } from '@/lib/constants/routes';
 import { authService } from '@/lib/services/authService';
 import { useAuth } from '@/contexts/AuthContext';
 import { ServiceProOnboardingForm } from './ServiceProOnboardingForm';
-import type { RegisterData, UserRole, ApiError } from '@/types/auth';
+import type { RegisterData, UserRole, ApiError, ServiceProOnboardingData } from '@/types/auth';
 
 export function SignupForm() {
   const router = useRouter();
@@ -58,11 +58,47 @@ export function SignupForm() {
     await registerUser();
   };
 
-  const registerUser = async () => {
+  const registerUser = async (professionalData?: ServiceProOnboardingData) => {
     setIsLoading(true);
     const loadingToast = toast.loading('Creating your account...');
 
     try {
+      // Prepare registration data
+      const registrationData = new FormData();
+      
+      // Add basic user data
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'password_confirm') {
+          registrationData.append(key, value.toString());
+        }
+      });
+
+      // Add professional data if provided
+      if (professionalData && formData.role === 'professional') {
+        registrationData.append('business_name', professionalData.business_name);
+        registrationData.append('about', professionalData.about);
+        registrationData.append('category_id', professionalData.category_id.toString());
+        registrationData.append('service_ids', JSON.stringify(professionalData.service_ids));
+        registrationData.append('address', professionalData.address);
+        registrationData.append('service_radius_km', professionalData.service_radius_km?.toString() || '10');
+        
+        if (professionalData.tagline) {
+          registrationData.append('tagline', professionalData.tagline);
+        }
+        
+        if (professionalData.logo) {
+          registrationData.append('logo', professionalData.logo);
+        }
+        
+        if (professionalData.banner_image) {
+          registrationData.append('banner_image', professionalData.banner_image);
+        }
+        
+        if (professionalData.languages) {
+          registrationData.append('languages', JSON.stringify(professionalData.languages));
+        }
+      }
+
       const response = await authService.register(formData);
 
       // Store tokens and user data
@@ -78,22 +114,38 @@ export function SignupForm() {
 
       // Redirect
       setTimeout(() => {
-        router.push(ROUTES.HOME);
+        if (formData.role === 'professional') {
+          router.push(ROUTES.DASHBOARD);
+        } else {
+          router.push(ROUTES.HOME);
+        }
       }, 500);
 
     } catch (err: any) {
       toast.dismiss(loadingToast);
       const apiError = err as ApiError;
 
+      console.log('Caught error in SignupForm:', apiError); // Debug
+      
       if (apiError.errors) {
+        // ✅ Set field-specific errors for display
         setErrors(apiError.errors);
-        const firstErrorField = Object.keys(apiError.errors)[0];
-        const firstError = apiError.errors[firstErrorField][0];
-        toast.error(firstError || 'Registration failed');
+        
+        // ✅ Show user-friendly toast with specific error
+        toast.error(apiError.message, {
+          duration: 5000,
+        });
+      } else if (apiError.message) {
+        // ✅ Show the actual error message, not generic one
+        toast.error(apiError.message, {
+          duration: 5000,
+        });
+        setErrors({ general: [apiError.message] });
       } else {
-        const errorMessage = apiError.message || 'Registration failed. Please try again.';
-        setErrors({ general: [errorMessage] });
+        // ✅ Only use generic message as last resort
+        const errorMessage = 'Registration failed. Please try again.';
         toast.error(errorMessage);
+        setErrors({ general: [errorMessage] });
       }
     } finally {
       setIsLoading(false);
@@ -133,7 +185,7 @@ export function SignupForm() {
           // Here you would merge professional data with basic data
           // and call registerUser with complete data
           console.log('Professional data:', ServiceProviderData);
-          registerUser();
+          registerUser(ServiceProviderData);
         }}
       />
     );
@@ -244,7 +296,7 @@ export function SignupForm() {
           placeholder="Enter password"
         />
         <p className="mt-1 text-xs text-gray-500">
-          At least 8 characters with uppercase, lowercase, and number
+          At least 8 characters with uppercase, lowercase, special character and number
         </p>
         {getErrorMessage('password') && (
           <p className="mt-1 text-sm text-red-600">{getErrorMessage('password')}</p>

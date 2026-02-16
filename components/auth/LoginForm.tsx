@@ -56,9 +56,23 @@ export function LoginForm() {
     } catch (err: any) {
       toast.dismiss(loadingToast);
       const apiError = err as ApiError;
-      const errorMessage = apiError.message || 'Login failed. Please try again.';
-      setError(errorMessage);
-      toast.error(errorMessage);
+      
+      console.log('Caught error in LoginForm:', apiError); // Debug
+      
+      // ✅ Extract and display the specific error message
+      if (apiError.message) {
+        setError(apiError.message);
+        toast.error(apiError.message, {
+          duration: 5000,
+        });
+      } else {
+        // ✅ Fallback to generic message only if no specific message
+        const errorMessage = 'Login failed. Please check your credentials and try again.';
+        setError(errorMessage);
+        toast.error(errorMessage, {
+          duration: 5000,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +83,11 @@ export function LoginForm() {
       ...prev,
       [e.target.name]: e.target.value
     }));
+
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
+    }
   };
 
   return (
