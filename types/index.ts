@@ -29,12 +29,12 @@ export type WorkingHours = Record<DayOfWeek, TimeRange | null>;
 export interface Professional {
     id: string;
     userId: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     title: string;
     bio: string;
-    profileImage?: string;
-    bannerImage?: string;
+    profile_image?: string;
+    banner_image?: string;
     rating: number;
     reviewCount: number;
     completedJobs: number;
@@ -64,8 +64,8 @@ export interface ServiceProvider {
   logo: string;
   description: string;
   catchphrase: string;
-  categoryId: string;
-  categoryName: string;
+  category_id: string;
+  category_name: string;
   price?: number;
   priceType: 'fixed' | 'hourly' | 'negotiable';
   location: Location;
@@ -77,27 +77,34 @@ export interface ServiceProvider {
   currency: string;
 }
 
-// Service Types
-export interface Service {
-    id: string;
-    name: string;
-    categoryId: string;
-    categoryName: string;
-    description: string;
-    price?: number;
-    priceType: 'fixed' | 'hourly' | 'negotiable';
-    icon?: string;
-}
-
 // Category Types
 export interface Category {
-    id: string;
-    name: string;
-    slug: string;
-    description: string;
-    icon: string;
-    serviceCount: number;
-    color?: string;
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  icon: string;
+  image?: string;
+  is_active: boolean;
+  services_count: number;
+  color?: string;
+}
+
+// Service Types
+export interface Service {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  category: number;
+  category_name: string;
+  category_slug: string;
+  suggested_price_min: string;
+  suggested_price_max: string;
+  is_active: boolean;
+  order: number;
+  price_type?: 'fixed' | 'hourly' | 'negotiable';
+  icon?: string;
 }
 
 //Gallery Types
@@ -168,15 +175,15 @@ export interface Course {
 
 type HourlyService = {
   name: string;
-  minHourly: number;
-  maxHourly: number;
+  min_hourly: number;
+  max_hourly: number;
   currency: string;
 };
 
 type FixedService = {
   name: string;
-  minFixed: number;
-  maxFixed: number;
+  min_fixed: number;
+  max_fixed: number;
   currency: string;
 };
 
@@ -194,7 +201,7 @@ export interface ContactFormData {
   email: string;
   phone: string;
   message: string;
-  preferredContact: 'email' | 'phone' | 'whatsapp';
+  preferred_contact: 'email' | 'phone' | 'whatsapp';
 }
 
 // API Response Types
@@ -209,6 +216,6 @@ export interface PaginatedResponse<T> {
   data: T[];
   total: number;
   page: number;
-  pageSize: number;
-  hasMore: boolean;
+  page_size: number;
+  has_more: boolean;
 }
