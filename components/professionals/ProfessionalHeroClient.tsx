@@ -8,14 +8,14 @@ import { ProfessionalOpsTimeandLocation } from './ProfessionalOpsTimeandLocation
 import { ProfessionalContactForm } from './ProfessionalContactForm';
 
 export function ProfessionalHeroClient({ professional }: { professional: Professional }) {
-    const [activeTab, setActiveTab] = useState<'profile' | 'reviews'>('profile');
+    const [activeTab, setactiveTab] = useState<'profile' | 'reviews'>('profile');
 
     return (
         <>
             <ProfessionalHeader
                 professional={professional}
                 activeTab={activeTab}
-                onTabChange={(tab) => setActiveTab(tab as 'profile' | 'reviews')}
+                onTabChange={(tab) => setactiveTab(tab as 'profile' | 'reviews')}
             />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -31,7 +31,7 @@ export function ProfessionalHeroClient({ professional }: { professional: Profess
                     </div>
                 ) : (
                     <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-                        <h2 className="text-xl font-bold mb-4">Reviews ({professional.reviewCount})</h2>
+                        <h2 className="text-xl font-bold mb-4">Reviews ({professional.review_count})</h2>
                         <p className="text-gray-500">Review list coming soon...</p>
                     </div>
                 )}

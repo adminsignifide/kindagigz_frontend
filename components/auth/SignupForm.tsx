@@ -329,7 +329,7 @@ export function SignupForm() {
         </label>
         <div className="space-y-3">
           {/* Client Checkbox */}
-          <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+          <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-primary/50 has-checked:border-primary has-checked:bg-primary/5">
             <input
               type="radio"
               name="role"
@@ -350,7 +350,7 @@ export function SignupForm() {
           </label>
 
           {/* Professional Checkbox */}
-          <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-primary/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+          <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-primary/50 has-checked:border-primary has-checked:bg-primary/5">
             <input
               type="radio"
               name="role"

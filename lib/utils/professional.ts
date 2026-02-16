@@ -5,7 +5,7 @@ import { formatInTimeZone } from 'date-fns-tz'; // Recommended library for timez
  * Checks if a professional is currently within their working hours.
  */
 export const isCurrentlyOpen = (professional: Professional): boolean => {
-  const { workingHours, timezone } = professional;
+  const { working_hours, timezone } = professional;
   
   // 1. Get current time in the Professional's timezone
   const now = new Date();
@@ -13,7 +13,7 @@ export const isCurrentlyOpen = (professional: Professional): boolean => {
   const currentTime = formatInTimeZone(now, timezone, 'HH:mm');
 
   // 2. Get the schedule for today
-  const todaySchedule = workingHours[dayName];
+  const todaySchedule = working_hours[dayName];
 
   // 3. If no schedule (null), they are closed
   if (!todaySchedule) return false;

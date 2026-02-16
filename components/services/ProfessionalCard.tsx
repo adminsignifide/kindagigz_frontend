@@ -12,18 +12,18 @@ export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
   onClick,
 }) => {
   const {
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     title,
     rating,
-    reviewCount,
-    completedJobs,
-    isVerified,
-    isAvailableNow,
+    review_count,
+    completed_jobs,
+    is_verified,
+    is_available_now,
     location,
-    startingPrice,
+    starting_price,
     currency,
-    responseTime,
+    response_time,
   } = professional;
 
   return (
@@ -38,14 +38,14 @@ export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
         <div className="flex items-start gap-4">
           {/* Avatar placeholder */}
           <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
-            {firstName[0]}
-            {lastName[0]}
+            {first_name[0]}
+            {last_name[0]}
           </div>
 
           <div className="flex-1">
             <CardTitle>
-              {firstName} {lastName}
-              {isVerified && (
+              {first_name} {last_name}
+              {is_verified && (
                 <span className="ml-2 text-xs bg-secondary text-primary px-2 py-0.5 rounded-full">
                   Verified
                 </span>
@@ -63,26 +63,26 @@ export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
 
       {/* Meta */}
       <div className="flex items-center justify-between text-sm text-gray-600">
-        <span>⭐ {rating} ({reviewCount})</span>
-        <span>{completedJobs} jobs</span>
-        <span>{responseTime}</span>
+        <span>⭐ {rating} ({review_count})</span>
+        <span>{completed_jobs} jobs</span>
+        <span>{response_time}</span>
       </div>
 
       {/* Availability */}
       <div className="flex items-center justify-between">
         <span
           className={`text-xs px-2 py-1 rounded-full ${
-            isAvailableNow
+            is_available_now
               ? 'bg-green-100 text-green-700'
               : 'bg-gray-100 text-gray-600'
           }`}
         >
-          {isAvailableNow ? 'Available now' : 'Unavailable'}
+          {is_available_now ? 'Available now' : 'Unavailable'}
         </span>
 
-        {startingPrice && (
+        {starting_price && (
           <span className="font-semibold text-primary">
-            From {currency} {startingPrice.toLocaleString()}
+            From {currency} {starting_price.toLocaleString()}
           </span>
         )}
       </div>

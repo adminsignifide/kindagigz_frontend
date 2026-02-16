@@ -15,7 +15,7 @@ export const ServiceProviderCard: React.FC<ServiceProviderCardProps> = ({
   provider,
   className,
 }) => {
-  const { id, professionalName, banner, logo, description, categoryName } = provider;
+  const { id, professionalName, banner, logo, description, category_name } = provider;
 
   return (
     <Link href={ROUTES.PROFESSIONAL(id)} className="block">
@@ -64,7 +64,7 @@ export const ServiceProviderCard: React.FC<ServiceProviderCardProps> = ({
                 <div className="w-4 h-4 bg-white/20 rounded-sm" />
               </div>
               <span className="text-sm font-medium text-black">
-                {categoryName}
+                {category_name}
               </span>
             </div>
 

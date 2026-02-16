@@ -3,13 +3,13 @@
 import React from 'react';
 import { ServiceProviderCard } from '@/components/services/ServiceProviderCard';
 
-export const ProfessionalSimilarServices = ({ categoryId, currentProfessionalId }: { categoryId: string, currentProfessionalId: string }) => {
-  // In reality, this would fetch from your API based on categoryId
+export const ProfessionalSimilarServices = ({ category_id, currentProfessionalId }: { category_id: string, currentProfessionalId: string }) => {
+  // In reality, this would fetch from your API based on category_id
   const mockSimilarProviders = [
     {
       id: 'p2',
       professionalName: 'Jane Wanjiku',
-      categoryName: 'Carpentry',
+      category_name: 'Carpentry',
       description: 'Custom kitchen cabinets and modern home wood finishes.',
       banner: '/placeholders/banner-2.jpg',
       logo: '/placeholders/logo-2.jpg',

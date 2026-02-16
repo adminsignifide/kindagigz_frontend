@@ -25,7 +25,7 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
       {/* Banner */}
       <div className="relative h-80 w-full bg-gray-200 pt-20">
         <Image 
-          src={professional.bannerImage || '/banner.jpg'} 
+          src={professional.banner_image || '/banner.jpg'} 
           fill 
           className="object-cover" 
           alt="Banner" 
@@ -37,7 +37,7 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
         <div className="relative flex flex-col md:flex-row items-end -mt-16 pb-6 gap-6">
           <div className="relative w-40 h-40 rounded-3xl border-4 border-white bg-gray-400 overflow-hidden shadow-lg">
             <Image 
-              src={professional.profileImage || '/avatar.jpg'} 
+              src={professional.profile_image || '/avatar.jpg'} 
               fill 
               className="object-cover" 
               alt="Logo" 
@@ -45,7 +45,7 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
           </div>
           <div className="flex-1 pb-2">
             <h1 className="text-2xl font-bold text-[#4F4F7C]">
-              {professional.firstName} {professional.lastName}
+              {professional.first_name} {professional.last_name}
             </h1>
             <p className="text-gray-600 italic">{professional.title}</p>
           </div>

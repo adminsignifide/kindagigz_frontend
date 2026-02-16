@@ -23,7 +23,7 @@ export interface TimeRange {
 }
 
 // Record allows us to map each day to a TimeRange or null if they are closed
-export type WorkingHours = Record<DayOfWeek, TimeRange | null>;
+export type working_hours = Record<DayOfWeek, TimeRange | null>;
 
 // Professional Types
 export interface Professional {
@@ -36,17 +36,17 @@ export interface Professional {
     profile_image?: string;
     banner_image?: string;
     rating: number;
-    reviewCount: number;
-    completedJobs: number;
-    responseTime: string; // e.g., "2 hours"
-    isVerified: boolean;
-    isAvailableNow: boolean;
+    review_count: number;
+    completed_jobs: number;
+    response_time: string; // e.g., "2 hours"
+    is_verified: boolean;
+    is_available_now: boolean;
     location: Location;
     services: Service[];
-    hourlyRate?: number;
+    hourly_rate?: number;
     currency: string;
-    startingPrice?: number;
-    workingHours: WorkingHours; 
+    starting_price?: number;
+    working_hours: working_hours; 
     timezone: string;
     badges?: Array<{ id: string; name: string; icon: string; level: number }>; // For Skills Boost
     languages: string[]; // Crucial for multi-lingual African markets
@@ -69,11 +69,11 @@ export interface ServiceProvider {
   price?: number;
   priceType: 'fixed' | 'hourly' | 'negotiable';
   location: Location;
-  openHours: WorkingHours;
+  open_hours: working_hours;
   rating: number;
-  reviewCount: number;
-  isVerified: boolean;
-  isAvailableNow: boolean;
+  review_count: number;
+  is_verified: boolean;
+  is_available_now: boolean;
   currency: string;
 }
 
@@ -128,9 +128,9 @@ export interface Location {
 // Filter Types
 export interface FilterState {
     activeTab: 'services' | 'categories';
-    selectedCategories: string[];
-    selectedServices: string[];
-    priceRange: [number, number];
+    selected_categories: string[];
+    selected_services: string[];
+    price_range: [number, number];
     rating: number;
     distance: number;
     availability: 'all' | 'available' | 'unavailable';
@@ -140,14 +140,14 @@ export interface FilterState {
 // Review Types
 export interface Review {
     id: string;
-    professionalId: string;
-    clientId: string;
-    clientName: string;
-    clientImage?: string;
+    professional_id: string;
+    client_id: string;
+    client_name: string;
+    client_image?: string;
     rating: number;
     comment: string;
-    serviceType: string;
-    createdAt: string;
+    service_type: string;
+    created_at: string;
 }
 
 // Course Types (for Skills Boost)

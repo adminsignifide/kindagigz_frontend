@@ -11,7 +11,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'residential-carpentry',
     description: 'Expert carpenters for home projects',
     icon: '🔨',
-    serviceCount: 145,
+    services_count: 145,
     color: '#E8B4B8',
   },
   {
@@ -20,7 +20,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'electrical-services',
     description: 'Licensed electricians for all electrical work',
     icon: '⚡',
-    serviceCount: 203,
+    services_count: 203,
     color: '#FFE5B4',
   },
   {
@@ -29,7 +29,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'plumbing',
     description: 'Professional plumbers for repairs and installations',
     icon: '🔧',
-    serviceCount: 178,
+    services_count: 178,
     color: '#B4D7E8',
   },
   {
@@ -38,7 +38,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'painting-decoration',
     description: 'Transform your space with professional painters',
     icon: '🎨',
-    serviceCount: 167,
+    services_count: 167,
     color: '#D4B4E8',
   },
   {
@@ -47,7 +47,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'cleaning-services',
     description: 'Reliable cleaning professionals for home and office',
     icon: '🧹',
-    serviceCount: 289,
+    services_count: 289,
     color: '#B4E8D4',
   },
   {
@@ -56,7 +56,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'moving-delivery',
     description: 'Fast and safe moving and delivery services',
     icon: '📦',
-    serviceCount: 134,
+    services_count: 134,
     color: '#E8D4B4',
   },
   {
@@ -65,7 +65,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'tech-support',
     description: 'IT professionals for hardware and software issues',
     icon: '💻',
-    serviceCount: 198,
+    services_count: 198,
     color: '#B4C8E8',
   },
   {
@@ -74,7 +74,7 @@ export const MOCK_CATEGORIES: Category[] = [
     slug: 'garden-landscaping',
     description: 'Create beautiful outdoor spaces',
     icon: '🌱',
-    serviceCount: 156,
+    services_count: 156,
     color: '#C8E8B4',
   },
 ];
@@ -90,8 +90,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/jk-furniture.jpg',
     description: 'Expert furniture assembly and custom woodwork with 10+ years experience',
     catchphrase: 'Crafting quality furniture for your home',
-    categoryId: 'cat-1',
-    categoryName: 'Residential Carpentry',
+    category_id: 'cat-1',
+    category_name: 'Residential Carpentry',
     price: 2500,
     priceType: 'fixed',
     location: {
@@ -102,7 +102,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 3.2,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '08:00', close: '18:00' },
       tuesday: { open: '08:00', close: '18:00' },
       wednesday: { open: '08:00', close: '18:00' },
@@ -112,9 +112,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: null,
     },
     rating: 4.8,
-    reviewCount: 127,
-    isVerified: true,
-    isAvailableNow: true,
+    review_count: 127,
+    is_verified: true,
+    is_available_now: true,
     currency: 'KES',
   },
   {
@@ -125,8 +125,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/wanjiku-electric.jpg',
     description: 'Licensed electrician specializing in home and commercial electrical installations',
     catchphrase: 'Powering homes safely across Nairobi',
-    categoryId: 'cat-2',
-    categoryName: 'Electrical Services',
+    category_id: 'cat-2',
+    category_name: 'Electrical Services',
     price: 5000,
     priceType: 'hourly',
     location: {
@@ -137,7 +137,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 5.1,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '07:00', close: '19:00' },
       tuesday: { open: '07:00', close: '19:00' },
       wednesday: { open: '07:00', close: '19:00' },
@@ -147,9 +147,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: { open: '10:00', close: '14:00' },
     },
     rating: 4.9,
-    reviewCount: 203,
-    isVerified: true,
-    isAvailableNow: false,
+    review_count: 203,
+    is_verified: true,
+    is_available_now: false,
     currency: 'KES',
   },
   {
@@ -160,8 +160,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/quickfix-plumbing.jpg',
     description: 'Fast and reliable plumbing repairs and installations available 24/7',
     catchphrase: 'No leak too small, no job too big',
-    categoryId: 'cat-3',
-    categoryName: 'Plumbing',
+    category_id: 'cat-3',
+    category_name: 'Plumbing',
     price: 1500,
     priceType: 'fixed',
     location: {
@@ -172,7 +172,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 8.3,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '00:00', close: '23:59' },
       tuesday: { open: '00:00', close: '23:59' },
       wednesday: { open: '00:00', close: '23:59' },
@@ -182,9 +182,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: { open: '00:00', close: '23:59' },
     },
     rating: 4.7,
-    reviewCount: 156,
-    isVerified: true,
-    isAvailableNow: true,
+    review_count: 156,
+    is_verified: true,
+    is_available_now: true,
     currency: 'KES',
   },
   {
@@ -195,8 +195,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/colors-designs.jpg',
     description: 'Professional painting services for residential and commercial properties',
     catchphrase: 'Bringing color to your life',
-    categoryId: 'cat-4',
-    categoryName: 'Painting & Decoration',
+    category_id: 'cat-4',
+    category_name: 'Painting & Decoration',
     priceType: 'negotiable',
     location: {
       lat: -1.2921,
@@ -206,7 +206,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 4.5,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '08:00', close: '17:00' },
       tuesday: { open: '08:00', close: '17:00' },
       wednesday: { open: '08:00', close: '17:00' },
@@ -216,9 +216,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: null,
     },
     rating: 4.6,
-    reviewCount: 89,
-    isVerified: true,
-    isAvailableNow: true,
+    review_count: 89,
+    is_verified: true,
+    is_available_now: true,
     currency: 'KES',
   },
   {
@@ -229,8 +229,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/sparkle-clean.jpg',
     description: 'Thorough home and office cleaning with eco-friendly products',
     catchphrase: 'Making your space sparkle',
-    categoryId: 'cat-5',
-    categoryName: 'Cleaning Services',
+    category_id: 'cat-5',
+    category_name: 'Cleaning Services',
     price: 3000,
     priceType: 'fixed',
     location: {
@@ -241,7 +241,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 6.2,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '06:00', close: '20:00' },
       tuesday: { open: '06:00', close: '20:00' },
       wednesday: { open: '06:00', close: '20:00' },
@@ -251,9 +251,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: { open: '08:00', close: '16:00' },
     },
     rating: 4.9,
-    reviewCount: 234,
-    isVerified: true,
-    isAvailableNow: true,
+    review_count: 234,
+    is_verified: true,
+    is_available_now: true,
     currency: 'KES',
   },
   {
@@ -264,8 +264,8 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
     logo: '/service-logos/swift-movers.jpg',
     description: 'Reliable and careful moving services for homes and offices',
     catchphrase: 'Moving made easy',
-    categoryId: 'cat-6',
-    categoryName: 'Moving & Delivery',
+    category_id: 'cat-6',
+    category_name: 'Moving & Delivery',
     priceType: 'negotiable',
     location: {
       lat: -1.2921,
@@ -275,7 +275,7 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       country: 'Kenya',
       distance: 7.8,
     },
-    openHours: {
+    open_hours: {
       monday: { open: '07:00', close: '19:00' },
       tuesday: { open: '07:00', close: '19:00' },
       wednesday: { open: '07:00', close: '19:00' },
@@ -285,9 +285,9 @@ export const MOCK_SERVICE_PROVIDERS: ServiceProvider[] = [
       sunday: null,
     },
     rating: 4.8,
-    reviewCount: 178,
-    isVerified: true,
-    isAvailableNow: false,
+    review_count: 178,
+    is_verified: true,
+    is_available_now: false,
     currency: 'KES',
   },
 ];

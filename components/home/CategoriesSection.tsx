@@ -52,7 +52,7 @@ export const CategoriesSection: React.FC = () => {
 
                 {/* Service Count */}
                 <CardDescription variant="light" className="text-white/70">
-                  {category.serviceCount} professionals
+                  {category.services_count} professionals
                 </CardDescription>
 
                 {/* Hover Arrow */}

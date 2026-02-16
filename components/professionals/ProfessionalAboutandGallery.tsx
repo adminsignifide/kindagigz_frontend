@@ -5,7 +5,7 @@ import { Professional } from '@/types';
 
 export const ProfessionalAboutandGallery: React.FC<{ professional: Professional }> = ({ professional }) => {
   // Extract unique category names from services
-  const categories = Array.from(new Set(professional.services.map(s => s.categoryName)));
+  const categories = Array.from(new Set(professional.services.map(s => s.category_name)));
 
   return (
     <div className="space-y-8">

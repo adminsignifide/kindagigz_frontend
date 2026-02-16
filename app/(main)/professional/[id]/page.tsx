@@ -17,19 +17,19 @@ async function getProfessional(id: string): Promise<Professional> {
     return {
         id,
         userId: 'user-1',
-        firstName: 'John',
-        lastName: 'Kamau',
+        first_name: 'John',
+        last_name: 'Kamau',
         title: 'Expert Carpenter & Furniture Maker',
         bio: 'Professional carpenter with 10+ years of experience...',
         about: `I specialize in creating custom furniture pieces...`,
-        profileImage: '/professionals/john-kamau.jpg',
-        bannerImage: '/professionals/john-kamau-banner.jpg',
+        profile_image: '/professionals/john-kamau.jpg',
+        banner_image: '/professionals/john-kamau-banner.jpg',
         rating: 4.8,
-        reviewCount: 127,
-        completedJobs: 156,
-        responseTime: '2 hours',
-        isVerified: true,
-        isAvailableNow: true,
+        review_count: 127,
+        completed_jobs: 156,
+        response_time: '2 hours',
+        is_verified: true,
+        is_available_now: true,
         location: {
             lat: -1.2921,
             lng: 36.8219,
@@ -38,13 +38,13 @@ async function getProfessional(id: string): Promise<Professional> {
             country: 'Kenya',
         },
         services: [
-            { id: 's1', name: 'Custom Furniture Making', categoryId: 'cat-1', categoryName: 'Carpentry', description: '...', price: 15000, priceType: 'negotiable' },
+            { id: 's1', name: 'Custom Furniture Making', category_id: 'cat-1', category_name: 'Carpentry', description: '...', price: 15000, priceType: 'negotiable' },
             // ... rest of services
         ],
-        hourlyRate: 1500,
+        hourly_rate: 1500,
         currency: 'KES',
-        startingPrice: 2500,
-        workingHours: {
+        starting_price: 2500,
+        working_hours: {
             monday: { open: '08:00', close: '18:00' },
             tuesday: { open: '08:00', close: '18:00' },
             wednesday: { open: '08:00', close: '18:00' },
@@ -82,7 +82,7 @@ export default async function ProfessionalPage({
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
                 <ProfessionalSimilarServices
-                    categoryId={professional.services[0]?.categoryId || 'default'}
+                    category_id={professional.services[0]?.category_id || 'default'}
                     currentProfessionalId={id}
                 />
             </div>

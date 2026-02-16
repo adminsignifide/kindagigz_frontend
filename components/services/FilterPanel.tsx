@@ -20,13 +20,13 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
   onShowMap,
   showMapView 
 }) => {
-  const [activeTab, setActiveTab] = useState<'filters' | 'categories'>('filters');
+  const [activeTab, setactiveTab] = useState<'filters' | 'categories'>('filters');
   const [filters, setFilters] = useState({
     keywords: '',
     category: '',
     location: '',
     proximity: 10, // km
-    priceRange: [0, 100000] as [number, number],
+    price_range: [0, 100000] as [number, number],
     rating: 0,
     availability: 'all' as 'all' | 'available',
   });
@@ -47,7 +47,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
       category: '',
       location: '',
       proximity: 10,
-      priceRange: [0, 100000] as [number, number],
+      price_range: [0, 100000] as [number, number],
       rating: 0,
       availability: 'all' as 'all' | 'available',
     };
@@ -60,7 +60,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
       {/* Tab Switcher */}
       <div className="flex gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
         <button
-          onClick={() => setActiveTab('filters')}
+          onClick={() => setactiveTab('filters')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'filters'
               ? 'bg-secondary text-primary shadow-sm'
@@ -70,7 +70,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
           Filters
         </button>
         <button
-          onClick={() => setActiveTab('categories')}
+          onClick={() => setactiveTab('categories')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'categories'
               ? 'bg-secondary text-primary shadow-sm'
@@ -169,15 +169,15 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <input
                 type="number"
-                value={filters.priceRange[0]}
-                onChange={(e) => handleFilterChange('priceRange', [parseInt(e.target.value), filters.priceRange[1]])}
+                value={filters.price_range[0]}
+                onChange={(e) => handleFilterChange('price_range', [parseInt(e.target.value), filters.price_range[1]])}
                 placeholder="Min"
                 className="px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
               />
               <input
                 type="number"
-                value={filters.priceRange[1]}
-                onChange={(e) => handleFilterChange('priceRange', [filters.priceRange[0], parseInt(e.target.value)])}
+                value={filters.price_range[1]}
+                onChange={(e) => handleFilterChange('price_range', [filters.price_range[0], parseInt(e.target.value)])}
                 placeholder="Max"
                 className="px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
               />
@@ -271,7 +271,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
               key={category.id}
               onClick={() => {
                 handleFilterChange('category', category.id);
-                setActiveTab('filters');
+                setactiveTab('filters');
               }}
               className="w-full p-4 rounded-lg border-2 border-card-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
             >
@@ -282,7 +282,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
                 <div className="flex-1">
                   <div className="font-semibold text-primary">{category.name}</div>
                   <div className="text-sm text-gray-600">
-                    {category.serviceCount} professionals
+                    {category.services_count} professionals
                   </div>
                 </div>
                 <svg

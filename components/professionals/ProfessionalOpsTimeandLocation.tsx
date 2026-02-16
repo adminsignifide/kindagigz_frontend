@@ -9,14 +9,14 @@ export const ProfessionalOpsTimeandLocation: React.FC<{ professional: Profession
   const today = new Date()
     .toLocaleDateString('en-US', { weekday: 'long' })
     .toLowerCase() as DayOfWeek;// e.g., 'monday'
-  const hoursToday = professional.workingHours[today as keyof typeof professional.workingHours];
+  const hoursToday = professional.working_hours[today as keyof typeof professional.working_hours];
 
   return (
     <Card className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-           <span className={`w-3 h-3 rounded-full ${professional.isAvailableNow ? 'bg-green-500' : 'bg-gray-400'}`}></span>
-           <span className="font-bold text-gray-900">{professional.isAvailableNow ? 'Open' : 'Closed'}</span>
+           <span className={`w-3 h-3 rounded-full ${professional.is_available_now ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+           <span className="font-bold text-gray-900">{professional.is_available_now ? 'Open' : 'Closed'}</span>
         </div>
         <span className="text-xs text-gray-500">
           {hoursToday ? `Hours today: ${hoursToday.open} - ${hoursToday.close}` : 'Closed today'}
