@@ -39,7 +39,13 @@ class AuthService {
 
             return responseData;
         } catch (error) {
-            console.error('Registration error caught:', error);
+            // ✅ If it's already an ApiError, just re-throw it
+            if ((error as ApiError).message) {
+                console.error('Registration error:', error);
+                throw error;
+            }
+            // ✅ Otherwise, handle it
+            console.error('Unexpected registration error:', error);
             throw this.handleError(error);
         }
     }
@@ -58,6 +64,7 @@ class AuthService {
             });
 
             const responseData = await response.json();
+            console.log('Login response status:', response.status);
 
             if (!response.ok) {
                 throw this.handleError({ response: { data: responseData, status: response.status } });
@@ -65,6 +72,13 @@ class AuthService {
 
             return responseData;
         } catch (error) {
+            // ✅ If it's already an ApiError, just re-throw it
+            if ((error as ApiError).message) {
+                console.error('Login error:', error);
+                throw error;
+            }
+            // ✅ Otherwise, handle it
+            console.error('Unexpected login error:', error);
             throw this.handleError(error);
         }
     }
@@ -74,6 +88,8 @@ class AuthService {
      */
     async logout(refreshToken: string): Promise<void> {
         try {
+            console.log('Attempting logout with refresh token');
+
             const response = await fetch(API_ENDPOINTS.AUTH.LOGOUT, {
                 method: 'POST',
                 headers: {
@@ -83,13 +99,24 @@ class AuthService {
                 body: JSON.stringify({ refresh_token: refreshToken }),
             });
 
+            // Parse response
+            const responseData = await response.json();
+            console.log('Logout response:', responseData);
+
+            // if (!response.ok) {
+            //     throw new Error('Logout failed');
+            // }
+
             if (!response.ok) {
-                throw new Error('Logout failed');
+                // Log the error but don't throw - we still want to clear local session
+                console.warn('Backend logout error:', responseData.error || 'Unknown error');
+            } else {
+                console.log('Logout successful:', responseData.message);
             }
         } catch (error) {
             console.error('Logout error:', error);
-            // Still clear local tokens even if API call fails
         } finally {
+            // Still clear local tokens even if API call fails
             this.clearTokens();
         }
     }
@@ -215,58 +242,58 @@ class AuthService {
      * Error handling
      */
     private handleError(error: any): ApiError {
-    console.log('handleError received:', error); // Debug log
+        console.log('handleError received:', error); // Debug log
 
-    // Check if this is a fetch response error
-    if (error.response) {
-      const { data, status } = error.response;
-      
-      // Django REST Framework typically returns errors in this format:
-      // { "field_name": ["error message"], "non_field_errors": ["error"] }
-      // OR { "detail": "error message" }
-      
-      let message = 'An error occurred';
-      let errors: Record<string, string[]> | undefined;
+        // Check if this is a fetch response error
+        if (error.response) {
+        const { data, status } = error.response;
+        
+        // Django REST Framework typically returns errors in this format:
+        // { "field_name": ["error message"], "non_field_errors": ["error"] }
+        // OR { "detail": "error message" }
+        
+        let message = 'An error occurred';
+        let errors: Record<string, string[]> | undefined;
 
-      // Check for detail field (common in DRF)
-      if (data.detail) {
-        message = typeof data.detail === 'string' ? data.detail : 'An error occurred';
-      }
-      // Check for non_field_errors
-      else if (data.non_field_errors) {
-        message = Array.isArray(data.non_field_errors) 
-          ? data.non_field_errors[0] 
-          : data.non_field_errors;
-      }
-      // Check if data is the errors object itself
-      else if (typeof data === 'object') {
-        // Get first error message from any field
-        const firstErrorField = Object.keys(data)[0];
-        if (firstErrorField && data[firstErrorField]) {
-          const fieldErrors = data[firstErrorField];
-          message = Array.isArray(fieldErrors) ? fieldErrors[0] : fieldErrors;
+        // Check for detail field (common in DRF)
+        if (data.detail) {
+            message = typeof data.detail === 'string' ? data.detail : 'An error occurred';
         }
-        errors = data;
-      }
+        // Check for non_field_errors
+        else if (data.non_field_errors) {
+            message = Array.isArray(data.non_field_errors) 
+            ? data.non_field_errors[0] 
+            : data.non_field_errors;
+        }
+        // Check if data is the errors object itself
+        else if (typeof data === 'object') {
+            // Get first error message from any field
+            const firstErrorField = Object.keys(data)[0];
+            if (firstErrorField && data[firstErrorField]) {
+            const fieldErrors = data[firstErrorField];
+            message = Array.isArray(fieldErrors) ? fieldErrors[0] : fieldErrors;
+            }
+            errors = data;
+        }
 
-      return {
-        message,
-        errors,
-      };
-    }
+        return {
+            message,
+            errors,
+        };
+        }
     
-    // Network error or other error
-    if (error instanceof Error) {
-      return {
-        message: error.message || 'An unexpected error occurred',
-      };
-    }
+        // Network error or other error
+        if (error instanceof Error) {
+        return {
+            message: error.message || 'An unexpected error occurred',
+        };
+        }
 
-    // Default fallback
-    return {
-      message: 'An unexpected error occurred',
-    };
-  }
+        // Default fallback
+        return {
+        message: 'An unexpected error occurred',
+        };
+    }
 }
 
 export const authService = new AuthService();
