@@ -63,25 +63,34 @@ export function SignupForm() {
     const loadingToast = toast.loading('Creating your account...');
 
     try {
-      // Prepare registration data
-      const registrationData = new FormData();
-      
-      // Add basic user data
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key !== 'password_confirm') {
-          registrationData.append(key, value.toString());
-        }
-      });
-
-      // Add professional data if provided
+      // ✅ Check if this is a professional registration
       if (professionalData && formData.role === 'professional') {
+        // ✅ Use FormData for professional registration (supports file uploads)
+        const registrationData = new FormData();
+        
+        // Add basic user data
+        // Object.entries(formData).forEach(([key, value]) => {
+        //   if (key !== 'password_confirm') {
+        //     registrationData.append(key, value.toString());
+        //   }
+        // });
+
+        Object.entries(formData).forEach(([key, value]) => {
+            registrationData.append(key, value.toString());
+        });
+
+        // Add professional-specific data
         registrationData.append('business_name', professionalData.business_name);
         registrationData.append('about', professionalData.about);
         registrationData.append('category_id', professionalData.category_id.toString());
-        registrationData.append('service_ids', JSON.stringify(professionalData.service_ids));
         registrationData.append('address', professionalData.address);
         registrationData.append('service_radius_km', professionalData.service_radius_km?.toString() || '10');
         
+        professionalData.service_ids.forEach((id) => {
+          // registrationData.append('service_ids', id.toString());
+          registrationData.append('service_ids', id.toString());
+        });
+
         if (professionalData.tagline) {
           registrationData.append('tagline', professionalData.tagline);
         }
@@ -94,56 +103,80 @@ export function SignupForm() {
           registrationData.append('banner_image', professionalData.banner_image);
         }
         
-        if (professionalData.languages) {
+        if (professionalData.languages && professionalData.languages.length > 0) {
           registrationData.append('languages', JSON.stringify(professionalData.languages));
         }
-      }
 
-      const response = await authService.register(formData);
+        // ✅ Call the professional registration method
+        const response = await authService.registerProfessional(registrationData);
+        
+        // Store tokens and user data
+        authService.setTokens(response.tokens);
+        authService.setUser(response.user);
+        setUser(response.user);
 
-      // Store tokens and user data
-      authService.setTokens(response.tokens);
-      authService.setUser(response.user);
-      setUser(response.user);
+        // Success message
+        toast.dismiss(loadingToast);
+        toast.success(`Welcome to KindaGigz, ${response.user.first_name}! 🎉`, {
+          duration: 4000,
+        });
 
-      // Dismiss loading and show success
-      toast.dismiss(loadingToast);
-      toast.success(`Welcome to KindaGigz, ${response.user.first_name}! 🎉`, {
-        duration: 4000,
-      });
-
-      // Redirect
-      setTimeout(() => {
-        if (formData.role === 'professional') {
+        // Redirect to dashboard
+        setTimeout(() => {
           router.push(ROUTES.DASHBOARD);
-        } else {
+        }, 500);
+
+      } else {
+        // ✅ Use JSON for client registration (no files)
+        const response = await authService.register(formData);
+        
+        // Store tokens and user data
+        authService.setTokens(response.tokens);
+        authService.setUser(response.user);
+        setUser(response.user);
+
+        // Success message
+        toast.dismiss(loadingToast);
+        toast.success(`Welcome to KindaGigz, ${response.user.first_name}! 🎉`, {
+          duration: 4000,
+        });
+
+        // Redirect to home
+        setTimeout(() => {
           router.push(ROUTES.HOME);
-        }
-      }, 500);
+        }, 500);
+      }
 
     } catch (err: any) {
       toast.dismiss(loadingToast);
-      const apiError = err as ApiError;
+      console.log('Caught error in SignupForm:', err);
 
-      console.log('Caught error in SignupForm:', apiError); // Debug
-      
-      if (apiError.errors) {
-        // ✅ Set field-specific errors for display
-        setErrors(apiError.errors);
-        
-        // ✅ Show user-friendly toast with specific error
-        toast.error(apiError.message, {
-          duration: 5000,
-        });
-      } else if (apiError.message) {
-        // ✅ Show the actual error message, not generic one
-        toast.error(apiError.message, {
-          duration: 5000,
-        });
-        setErrors({ general: [apiError.message] });
+      const responseData = err?.response?.data;
+
+      if (responseData) {
+        setErrors(responseData);
+
+        // Extract first readable error
+        const firstKey = Object.keys(responseData)[0];
+        let message = "Registration failed.";
+
+        if (firstKey) {
+          const value = responseData[firstKey];
+
+          if (Array.isArray(value)) {
+            message = value[0];
+          } else if (typeof value === "string") {
+            message = value;
+          }
+        }
+
+        toast.error(message, { duration: 5000 });
+
       } else {
-        // ✅ Only use generic message as last resort
-        const errorMessage = 'Registration failed. Please try again.';
+        const errorMessage =
+          err?.message ||
+          "Registration failed. Please try again.";
+
         toast.error(errorMessage);
         setErrors({ general: [errorMessage] });
       }

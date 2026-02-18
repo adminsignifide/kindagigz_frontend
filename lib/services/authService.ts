@@ -51,6 +51,44 @@ class AuthService {
     }
 
     /**
+     * Register a professional with FormData (includes files)
+     */
+    async registerProfessional(formData: FormData): Promise<AuthResponse> {
+        try {
+            console.log('Sending professional registration data');
+            
+            // Log FormData contents for debugging
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
+            const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+                method: 'POST',
+                // ✅ Don't set Content-Type - browser will set it with boundary for FormData
+                body: formData,
+            });
+
+            const responseData = await response.json();
+            console.log('Professional registration response:', responseData);
+            console.log('Response status:', response.status);
+
+            if (!response.ok) {
+                console.error('Professional registration failed:', responseData);
+                throw this.handleError({ response: { data: responseData, status: response.status } });
+            }
+
+            return responseData;
+        } catch (error) {
+            if ((error as ApiError).message) {
+                console.error('Professional registration error:', error);
+                throw error;
+            }
+            console.error('Unexpected professional registration error:', error);
+            throw this.handleError(error);
+        }
+    }
+
+    /**
      * Login user
      */
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
