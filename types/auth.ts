@@ -1,7 +1,6 @@
 // User & Authentication Types
-/**
- * Authentication Types
- */
+
+import { Service, Category, GalleryItem, WorkingHours, TimeSlot } from ".";
 
 export type UserRole = 'client' | 'professional';
 
@@ -34,6 +33,71 @@ export interface UserProfile {
   linkedin_url: string;
   tiktok_url: string;
   instagram_url: string;
+}
+
+export interface Professional {
+  id: number;
+  user: {
+    id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    city: string;
+    country: string;
+    profile_image: string | null;
+  };
+  business_name: string;
+  tagline: string;
+  about: string;
+  category: Category;
+  services: Service[];
+  status: 'online' | 'offline' | 'busy';
+  currency: string;
+  banner_image: string | null;
+  logo: string | null;
+  address: string;
+  latitude: string | null;
+  longitude: string | null;
+  service_radius_km: number;
+  location: Location;
+  is_available: boolean;
+  response_time: string;
+  working_hours: WorkingHours;
+  languages: string[];
+  average_rating: string;
+  total_reviews: number;
+  total_jobs: number;
+  completed_jobs: number;
+  badges?: Array<{ id: string; name: string; icon: string; level: number }>; // For Skills Boost
+  verification_status: 'pending' | 'approved' | 'rejected';
+  is_verified: boolean;
+  verified_at: string | null;
+  gallery?: GalleryItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+// Service Provider (what's shown in cards and lists)
+export interface ServiceProvider {
+  id: string;
+  professionalName: string;
+  serviceName: string;
+  banner: string;
+  logo: string;
+  description: string;
+  catchphrase: string;
+  categoryId: number;
+  categoryName: string;
+  price?: number;
+  priceType: 'fixed' | 'hourly' | 'negotiable';
+  location: Location;
+  openHours: WorkingHours;
+  rating: number;
+  reviewCount: number;
+  isVerified: boolean;
+  isAvailableNow: boolean;
+  currency: string;
 }
 
 export interface AuthTokens {
