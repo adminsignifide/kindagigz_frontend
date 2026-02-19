@@ -1,19 +1,84 @@
 'use client';
 
-// ============================================
-// CATEGORIES SECTION - UPDATED
-// ============================================
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardTitle, CardDescription } from '@/components/ui/Card';
 import { ROUTES } from '@/lib/constants/routes';
-import { MOCK_CATEGORIES } from '@/lib/constants/categories';
+import { categoryService } from '@/lib/services/categoryService';
+import { professionalService } from '@/lib/services/professionalService';
+import type { Category } from '@/types';
 
 export const CategoriesSection: React.FC = () => {
-  // Show only first 8 categories on homepage
-  const displayedCategories = MOCK_CATEGORIES.slice(0, 8);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [categoryProfCount, setCategoryProfCount] = useState<Record<number, number>>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Fetch categories
+        const categoriesData = await categoryService.getCategories();
+        
+        // Fetch professional stats to get accurate counts per category
+        const profStats = await professionalService.getStats();
+        
+        // Map category names to IDs for counts
+        const countMap: Record<number, number> = {};
+        categoriesData.forEach(cat => {
+          countMap[cat.id] = profStats.byCategory[cat.name] || 0;
+        });
+        
+        setCategoryProfCount(countMap);
+        setCategories(categoriesData.slice(0, 8)); // Show first 8
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="py-16 md:py-20 lg:py-24 bg-primary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+              Explore Categories
+            </h2>
+            <p className="text-lg text-white/80">
+              Browse through our wide range of service categories and find the perfect professional for your needs.
+            </p>
+          </div>
+
+          {/* Loading Skeleton */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 h-40 animate-pulse"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (categories.length === 0) {
+    return (
+      <section className="py-16 md:py-20 lg:py-24 bg-primary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-white/70">No categories available at the moment.</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-primary">
@@ -30,7 +95,7 @@ export const CategoriesSection: React.FC = () => {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
-          {displayedCategories.map((category) => (
+          {categories.map((category) => (
             <Link
               key={category.id}
               href={`${ROUTES.SERVICES}?tab=categories&category=${category.slug}`}
@@ -50,9 +115,9 @@ export const CategoriesSection: React.FC = () => {
                   {category.name}
                 </CardTitle>
 
-                {/* Service Count */}
+                {/* Professional Count */}
                 <CardDescription variant="light" className="text-white/70">
-                  {category.services_count} professionals
+                  {categoryProfCount[category.id] || 0} professional{categoryProfCount[category.id] !== 1 ? 's' : ''}
                 </CardDescription>
 
                 {/* Hover Arrow */}
@@ -96,38 +161,3 @@ export const CategoriesSection: React.FC = () => {
     </section>
   );
 };
-
-/*
-CHANGES MADE:
-=============
-
-1. ✅ Background: bg-primary (#3B3B6B - Dark blue)
-2. ✅ Cards: variant="purple-border" (#4F4F7C with #FBD430 border)
-3. ✅ Text: White text for visibility on dark background
-4. ✅ CardTitle/CardDescription: variant="light" for white text
-5. ✅ Hover arrow: text-secondary (yellow) instead of purple
-6. ✅ Removed gradient backgrounds from individual cards
-7. ✅ Category name hovers to yellow (text-secondary)
-8. ✅ Button: variant="primary" (yellow button)
-
-STYLING NOTES:
-==============
-
-Purple Cards (#4F4F7C):
-- Background is slightly lighter than primary (#3B3B6B)
-- Creates nice depth on primary background
-- Yellow border (#FBD430) provides strong contrast
-- White text is easily readable
-
-Hover Effects:
-- Icon scales up
-- Category name turns yellow
-- Arrow appears
-- Card elevates with shadow
-- Border gets slightly more transparent
-
-Responsive:
-- 2 columns on mobile
-- 3 columns on tablet
-- 4 columns on desktop
-*/

@@ -1,18 +1,42 @@
 'use client';
 
-// ============================================
-// LiveMap SECTION (HOMEPAGE)
-// ============================================
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
 import { MOCK_SERVICE_PROVIDERS } from '@/lib/constants/categories';
-
+import { Professional } from '@/types/auth';
+import { professionalService } from '@/lib/services/professionalService';
+  
 export const LiveMapSection: React.FC = () => {
   // Show only first 8 categories on homepage
-  const displayedServices = MOCK_SERVICE_PROVIDERS.slice(0, 8);
+  const [professionals, setProfessionals] = useState<Professional[]>([]);
+  const [filteredProfessionals, setFilteredProfessionals] = useState<Professional[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeFilters, setActiveFilters] = useState<{
+    category?: string;
+    city?: string;
+    minRating?: number;
+    priceRange?: [number, number];
+  }>({});
+
+  // Fetch professionals on mount
+  useEffect(() => {
+    const fetchProfessionals = async () => {
+      try {
+        setIsLoading(true);
+        const data = await professionalService.getProfessionals();
+        setProfessionals(data);
+        setFilteredProfessionals(data);
+      } catch (error) {
+        console.error('Error fetching professionals:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfessionals();
+  }, []);
 
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-primary">
