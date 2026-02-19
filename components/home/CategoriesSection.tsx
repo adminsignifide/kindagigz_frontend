@@ -115,11 +115,6 @@ export const CategoriesSection: React.FC = () => {
                   {category.name}
                 </CardTitle>
 
-                {/* Professional Count */}
-                <CardDescription variant="light" className="text-white/70">
-                  {categoryProfCount[category.id] || 0} professional{categoryProfCount[category.id] !== 1 ? 's' : ''}
-                </CardDescription>
-
                 {/* Hover Arrow */}
                 <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
                   <svg
