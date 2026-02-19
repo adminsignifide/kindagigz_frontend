@@ -78,28 +78,6 @@ export interface Professional {
   updated_at: string;
 }
 
-// Service Provider (what's shown in cards and lists)
-export interface ServiceProvider {
-  id: string;
-  professionalName: string;
-  serviceName: string;
-  banner: string;
-  logo: string;
-  description: string;
-  catchphrase: string;
-  categoryId: number;
-  categoryName: string;
-  price?: number;
-  priceType: 'fixed' | 'hourly' | 'negotiable';
-  location: Location;
-  openHours: WorkingHours;
-  rating: number;
-  reviewCount: number;
-  isVerified: boolean;
-  isAvailableNow: boolean;
-  currency: string;
-}
-
 export interface AuthTokens {
   access: string;
   refresh: string;

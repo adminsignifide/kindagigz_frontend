@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ROUTES } from '@/lib/constants/routes';
-import { MOCK_SERVICE_PROVIDERS } from '@/lib/constants/categories';
 import { Professional } from '@/types/auth';
 import { professionalService } from '@/lib/services/professionalService';
   
