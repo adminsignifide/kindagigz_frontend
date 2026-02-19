@@ -39,6 +39,7 @@ export const API_ENDPOINTS = {
     CATEGORIES: `${API_BASE_URL}/api/services/categories`,
     LIST: `${API_BASE_URL}/api/services`,
     VALIDATE: `${API_BASE_URL}/api/services/validate`,
+    PROFILE: `${API_BASE_URL}/api/professionals/profile`,
   },
 } as const;
 
