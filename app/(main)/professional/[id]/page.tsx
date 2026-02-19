@@ -3,7 +3,8 @@
 // ============================================
 
 import React from 'react';
-import { Professional } from '@/types';
+import { Professional } from '@/types/auth';
+import { notFound } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar/Navbar';
 import { ProfessionalHeader } from '@/components/professionals/ProfessionalHeader';
 import { ProfessionalHeroClient } from '@/components/professionals/ProfessionalHeroClient';
@@ -11,58 +12,7 @@ import { ProfessionalAboutandGallery } from '@/components/professionals/Professi
 import { ProfessionalOpsTimeandLocation } from '@/components/professionals/ProfessionalOpsTimeandLocation';
 import { ProfessionalSimilarServices } from '@/components/professionals/ProfessionalSimilarServices';
 import { ProfessionalContactForm } from '@/components/professionals/ProfessionalContactForm';
-
-// Mock data function provided by user
-async function getProfessional(id: string): Promise<Professional> {
-    return {
-        id,
-        userId: 'user-1',
-        first_name: 'John',
-        last_name: 'Kamau',
-        title: 'Expert Carpenter & Furniture Maker',
-        bio: 'Professional carpenter with 10+ years of experience...',
-        about: `I specialize in creating custom furniture pieces...`,
-        profile_image: '/professionals/john-kamau.jpg',
-        banner_image: '/professionals/john-kamau-banner.jpg',
-        rating: 4.8,
-        review_count: 127,
-        completed_jobs: 156,
-        response_time: '2 hours',
-        is_verified: true,
-        is_available_now: true,
-        location: {
-            lat: -1.2921,
-            lng: 36.8219,
-            address: '123 Woodwork Lane, Westlands',
-            city: 'Nairobi',
-            country: 'Kenya',
-        },
-        services: [
-            { id: 's1', name: 'Custom Furniture Making', category_id: 'cat-1', category_name: 'Carpentry', description: '...', price: 15000, priceType: 'negotiable' },
-            // ... rest of services
-        ],
-        hourly_rate: 1500,
-        currency: 'KES',
-        starting_price: 2500,
-        working_hours: {
-            monday: { open: '08:00', close: '18:00' },
-            tuesday: { open: '08:00', close: '18:00' },
-            wednesday: { open: '08:00', close: '18:00' },
-            thursday: { open: '08:00', close: '18:00' },
-            friday: { open: '08:00', close: '18:00' },
-            saturday: { open: '09:00', close: '14:00' },
-            sunday: null,
-        },
-        timezone: 'Africa/Nairobi',
-        languages: ['English', 'Swahili'],
-        status: 'online',
-        gallery: [
-            { id: 'g1', url: '/gallery/furniture-1.jpg', type: 'image', caption: 'Custom bookshelf project' },
-            { id: 'g2', url: '/gallery/furniture-2.jpg', type: 'image', caption: 'Kitchen cabinets installation' },
-            { id: 'g3', url: '/gallery/furniture-3.jpg', type: 'image', caption: 'Dining table set' },
-        ],
-    };
-}
+import { professionalService } from '@/lib/services/professionalService';
 
 export default async function ProfessionalPage({
     params
@@ -70,7 +20,22 @@ export default async function ProfessionalPage({
     params: Promise<{ id: string }>
 }) {
     const { id } = await params; // Unwrapping the promise
-    const professional = await getProfessional(id);
+
+    // Convert string to number for API call
+    const professionalId = parseInt(id, 10);
+    
+    // Validate ID is a valid number
+    if (isNaN(professionalId)) {
+        notFound();
+    }
+
+    // Fetch professional data
+    const professional = await professionalService.getProfessionalById(professionalId);
+    
+    // Show 404 if not found
+    if (!professional) {
+        notFound();
+    }
 
     return (
         <div className="min-h-screen bg-primary pb-12">
@@ -82,8 +47,8 @@ export default async function ProfessionalPage({
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
                 <ProfessionalSimilarServices
-                    category_id={professional.services[0]?.category_id || 'default'}
-                    currentProfessionalId={id}
+                    categoryId={professional.category.id}
+                    currentProfessionalId={professional.id}
                 />
             </div>
         </div>

@@ -1,128 +1,80 @@
 'use client';
 
-// ============================================
-// SERVICES PAGE (EXPLORE) - COMPLETE
-// ============================================
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Navbar } from '@/components/layout/Navbar/Navbar';
 import { FiltersPanel } from '@/components/services/FilterPanel';
 import { ServicesList } from '@/components/services/ServicesList';
 import { ServicesMapView } from '@/components/services/ServicesMapView';
 import { ProfessionalCard } from '@/components/services/ProfessionalCard';
-import { Professional, ServiceProvider } from '@/types';
-
-// Mock professionals data
-const MOCK_PROFESSIONALS: Professional[] = [
-  {
-    id: 'pro-1',
-    userId: 'user-1',
-    first_name: 'John',
-    last_name: 'Kamau',
-    title: 'Expert Carpenter & Furniture Maker',
-    bio: 'Professional carpenter with 10+ years experience',
-    rating: 4.8,
-    review_count: 127,
-    completed_jobs: 156,
-    response_time: '2 hours',
-    is_verified: true,
-    is_available_now: true,
-    location: {
-      lat: -1.2921,
-      lng: 36.8219,
-      address: 'Westlands, Nairobi',
-      city: 'Nairobi',
-      country: 'Kenya',
-      distance: 3.2,
-    },
-    services: [
-      { id: 's1', name: 'Furniture Assembly', category_id: 'cat-1', category_name: 'Carpentry', description: '', priceType: 'fixed' },
-      { id: 's2', name: 'Custom Cabinets', category_id: 'cat-1', category_name: 'Carpentry', description: '', priceType: 'fixed' },
-    ],
-    starting_price: 2500,
-    currency: 'KES',
-    working_hours: {
-        monday: { open: '08:00', close: '18:00' },
-        tuesday: { open: '08:00', close: '18:00' },
-        wednesday: { open: '08:00', close: '18:00' },
-        thursday: { open: '08:00', close: '18:00' },
-        friday: { open: '08:00', close: '18:00' },
-        saturday: null,
-        sunday: null,
-    },
-    timezone: 'Africa/Nairobi',
-    languages: ['English', 'Swahili'],
-    status: 'online',
-  },
-  {
-    id: 'pro-2',
-    userId: 'user-2',
-    first_name: 'Mary',
-    last_name: 'Wanjiku',
-    title: 'Licensed Electrician',
-    bio: 'Certified electrician specializing in home wiring',
-    rating: 4.9,
-    review_count: 203,
-    completed_jobs: 245,
-    response_time: '1 hour',
-    is_verified: true,
-    is_available_now: false,
-    location: {
-      lat: -1.2921,
-      lng: 36.8219,
-      address: 'Kilimani, Nairobi',
-      city: 'Nairobi',
-      country: 'Kenya',
-      distance: 5.1,
-    },
-    services: [
-      { id: 's3', name: 'Home Wiring', category_id: 'cat-2', category_name: 'Electrical', description: '', priceType: 'hourly' },
-    ],
-    starting_price: 3000,
-    currency: 'KES',
-    working_hours: {
-        monday: { open: '08:00', close: '18:00' },
-        tuesday: { open: '08:00', close: '18:00' },
-        wednesday: { open: '08:00', close: '18:00' },
-        thursday: { open: '08:00', close: '18:00' },
-        friday: { open: '08:00', close: '18:00' },
-        saturday: null,
-        sunday: null,
-    },
-    timezone: 'Africa/Nairobi',
-    languages: ['English', 'Swahili'],
-    status: 'online',
-  },
-  // Add more mock data as needed
-];
+import { ServiceProviderCard } from '@/components/services/ServiceProviderCard';
+import { Professional } from '@/types/auth';
+import { professionalService } from '@/lib/services/professionalService';
 
 export default function ServicesPage() {
   const [showMapView, setShowMapView] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<any>({});
+  const [professionals, setProfessionals] = useState<Professional[]>([]);
+  const [filteredProfessionals, setFilteredProfessionals] = useState<Professional[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeFilters, setActiveFilters] = useState<{
+    category?: string;
+    city?: string;
+    minRating?: number;
+    priceRange?: [number, number];
+  }>({});
 
-  // Adapter: Transforming Professional data to ServiceProvider format
-  const serviceProviders = useMemo(() => {
-    return MOCK_PROFESSIONALS.map((pro): ServiceProvider => ({
-      id: pro.id,
-      professionalName: `${pro.first_name} ${pro.last_name}`,
-      serviceName: pro.services[0]?.name || 'Professional Service',
-      banner: pro.banner_image || '',
-      logo: pro.profile_image || '',
-      description: pro.bio,
-      catchphrase: pro.title,
-      category_id: pro.services[0]?.category_id || '',
-      category_name: pro.services[0]?.category_name || 'Expert',
-      price: pro.starting_price,
-      priceType: pro.services[0]?.priceType || 'negotiable',
-      location: pro.location,
-      open_hours: pro.working_hours,
-      rating: pro.rating,
-      review_count: pro.review_count,
-      is_verified: pro.is_verified,
-      is_available_now: pro.is_available_now,
-      currency: pro.currency,
-    }));
+  // Fetch professionals on mount
+  useEffect(() => {
+    const fetchProfessionals = async () => {
+      try {
+        setIsLoading(true);
+        const data = await professionalService.getProfessionals();
+        setProfessionals(data);
+        setFilteredProfessionals(data);
+      } catch (error) {
+        console.error('Error fetching professionals:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfessionals();
   }, []);
+
+  // Apply filters whenever they change
+  useEffect(() => {
+    let filtered = [...professionals];
+
+    // Filter by category
+    if (activeFilters.category) {
+      filtered = filtered.filter(prof => 
+        prof.category.slug === activeFilters.category
+      );
+    }
+
+    // Filter by city
+    if (activeFilters.city) {
+      filtered = filtered.filter(prof => 
+        prof.user.city.toLowerCase() === activeFilters.city?.toLowerCase()
+      );
+    }
+
+    // Filter by rating
+    if (activeFilters.minRating) {
+      filtered = filtered.filter(prof => 
+        parseFloat(prof.average_rating) >= activeFilters.minRating!
+      );
+    }
+
+    setFilteredProfessionals(filtered);
+  }, [activeFilters, professionals]);
+
+  const handleFilterChange = (filters: any) => {
+    setActiveFilters(filters);
+  };
+
+  const handleClearFilters = () => {
+    setActiveFilters({});
+  };
 
   return (
     <div className="min-h-screen bg-primary">
@@ -131,7 +83,12 @@ export default function ServicesPage() {
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8  pt-24">
         <header className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Explore Services</h1>
-          <p className="text-white/70">Connecting you with {serviceProviders.length} verified experts.</p>
+          <p className="text-white/70">
+            {isLoading 
+              ? 'Loading professionals...' 
+              : `Connecting you with ${filteredProfessionals.length} verified experts.`
+            }
+          </p>
         </header>
 
         <div className="grid lg:grid-cols-12 gap-8">
@@ -141,6 +98,7 @@ export default function ServicesPage() {
               onFilterChange={setActiveFilters} 
               onShowMap={() => setShowMapView(!showMapView)} 
               showMapView={showMapView} 
+              professionals={professionals}
             />
           </aside>
 
@@ -148,15 +106,31 @@ export default function ServicesPage() {
           <section className={showMapView ? 'lg:col-span-5' : 'lg:col-span-9'}>
             <div className="bg-white rounded-3xl p-6 shadow-xl min-h-[700px]">
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
-                <h2 className="text-2xl font-bold text-primary">Results</h2>
-                <select className="bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium border-none focus:ring-2 focus:ring-secondary">
-                  <option>Most Relevant</option>
+                <h2 className="text-2xl font-bold text-primary">
+                  Results {!isLoading && `(${filteredProfessionals.length})`}
+                </h2>
+                <select 
+                  className="bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium border-none focus:ring-2 focus:ring-secondary"
+                  onChange={(e) => {
+                    const sorted = [...filteredProfessionals].sort((a, b) => {
+                      if (e.target.value === 'rating') {
+                        return parseFloat(b.average_rating) - parseFloat(a.average_rating);
+                      } else if (e.target.value === 'jobs') {
+                        return b.completed_jobs - a.completed_jobs;
+                      }
+                      return 0;
+                    });
+                    setFilteredProfessionals(sorted);
+                  }}
+                >
+                  <option value="relevant">Most Relevant</option>
                   <option>Highest Rated</option>
                 </select>
               </div>
 
               <ServicesList 
-                providers={serviceProviders} 
+                professionals={filteredProfessionals}
+                isLoading={isLoading} 
                 showMapView={showMapView} 
                 onClearFilters={() => setActiveFilters({})} 
               />
@@ -166,7 +140,10 @@ export default function ServicesPage() {
           {/* Map View */}
           {showMapView && (
             <aside className="lg:col-span-4">
-              <ServicesMapView onClose={() => setShowMapView(false)} />
+              <ServicesMapView 
+                professionals={filteredProfessionals}
+                onClose={() => setShowMapView(false)} 
+              />
             </aside>
           )}
         </div>
