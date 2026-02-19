@@ -1,26 +1,26 @@
 'use client';
 
-// ============================================
-// SERVICES FILTERS PANEL - COMPREHENSIVE
-// ============================================
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { MOCK_CATEGORIES } from '@/lib/constants/categories';
+// import { MOCK_CATEGORIES } from '@/lib/constants/categories';
+import type { Professional } from '@/types/auth';
+import type { Category } from '@/types';
 
 interface FiltersPanelProps {
   onFilterChange: (filters: any) => void;
   onShowMap: () => void;
   showMapView: boolean;
+  professionals: Professional[];
 }
 
 export const FiltersPanel: React.FC<FiltersPanelProps> = ({ 
   onFilterChange, 
   onShowMap,
-  showMapView 
+  showMapView,
+  professionals 
 }) => {
-  const [activeTab, setactiveTab] = useState<'filters' | 'categories'>('filters');
+  const [activeTab, setActiveTab] = useState<'filters' | 'categories'>('filters');
   const [filters, setFilters] = useState({
     keywords: '',
     category: '',
@@ -30,6 +30,27 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
     rating: 0,
     availability: 'all' as 'all' | 'available',
   });
+
+  // Extract unique categories from professionals
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    // Get unique categories from professionals
+    const uniqueCategories = professionals.reduce((acc, prof) => {
+      const exists = acc.find(cat => cat.id === prof.category.id);
+      if (!exists) {
+        acc.push(prof.category);
+      }
+      return acc;
+    }, [] as Category[]);
+
+    setCategories(uniqueCategories);
+  }, [professionals]);
+
+  // ✅ Get professional count per category
+  const getCategoryCount = (categoryId: number) => {
+    return professionals.filter(prof => prof.category.id === categoryId).length;
+  };
 
   const handleFilterChange = (key: string, value: any) => {
     const newFilters = { ...filters, [key]: value };
@@ -60,7 +81,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
       {/* Tab Switcher */}
       <div className="flex gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
         <button
-          onClick={() => setactiveTab('filters')}
+          onClick={() => setActiveTab('filters')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'filters'
               ? 'bg-secondary text-primary shadow-sm'
@@ -70,7 +91,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
           Filters
         </button>
         <button
-          onClick={() => setactiveTab('categories')}
+          onClick={() => setActiveTab('categories')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-semibold transition-all ${
             activeTab === 'categories'
               ? 'bg-secondary text-primary shadow-sm'
@@ -108,9 +129,9 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
               className="w-full px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
             >
               <option value="">All Categories</option>
-              {MOCK_CATEGORIES.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.slug}>
+                  {cat.icon} {cat.name} ({getCategoryCount(cat.id)})
                 </option>
               ))}
             </select>
@@ -133,8 +154,21 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  // TODO: Get user's current location
-                  handleFilterChange('location', 'Nairobi, Kenya');
+                  // Get user's current location
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                        // In a real app, you'd reverse geocode this
+                        handleFilterChange('location', 'Current Location');
+                      },
+                      (error) => {
+                        console.error('Error getting location:', error);
+                        handleFilterChange('location', 'Nairobi, Kenya');
+                      }
+                    );
+                  } else {
+                    handleFilterChange('location', 'Nairobi, Kenya');
+                  }
                 }}
               >
                 📍
@@ -243,7 +277,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
               className="w-full"
               onClick={handleSearch}
             >
-              Search
+              Apply Filters
             </Button>
             <Button
               variant="outline"
@@ -266,36 +300,46 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
       ) : (
         // Categories Tab
         <div className="space-y-3">
-          {MOCK_CATEGORIES.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => {
-                handleFilterChange('category', category.id);
-                setactiveTab('filters');
-              }}
-              className="w-full p-4 rounded-lg border-2 border-card-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-3xl group-hover:scale-110 transition-transform">
-                  {category.icon}
-                </span>
-                <div className="flex-1">
-                  <div className="font-semibold text-primary">{category.name}</div>
-                  <div className="text-sm text-gray-600">
-                    {category.services_count} professionals
-                  </div>
-                </div>
-                <svg
-                  className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+          {categories.length === 0 ? (
+            <p className="text-center text-gray-500 py-8">
+              No categories available
+            </p>
+          ) : (
+            categories.map((category) => {
+              const count = getCategoryCount(category.id);
+              
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    handleFilterChange('category', category.slug);
+                    setActiveTab('filters');
+                  }}
+                  className="w-full p-4 rounded-lg border-2 border-card-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </button>
-          ))}
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl group-hover:scale-110 transition-transform">
+                      {category.icon}
+                    </span>
+                    <div className="flex-1">
+                      <div className="font-semibold text-primary">{category.name}</div>
+                      <div className="text-sm text-gray-600">
+                        {count} professional{count !== 1 ? 's' : ''}
+                      </div>
+                    </div>
+                    <svg
+                      className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </button>
+              );
+            })
+          )}
         </div>
       )}
     </Card>
