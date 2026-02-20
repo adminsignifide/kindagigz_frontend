@@ -37,7 +37,7 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
         <div className="relative flex flex-col md:flex-row items-end -mt-16 pb-6 gap-6">
           <div className="relative w-40 h-40 rounded-3xl border-4 border-white bg-gray-400 overflow-hidden shadow-lg">
             <Image 
-              src={professional.profile_image || '/avatar.jpg'} 
+              src={professional.logo || '/avatar.jpg'} 
               fill 
               className="object-cover" 
               alt="Logo" 
@@ -45,9 +45,9 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
           </div>
           <div className="flex-1 pb-2">
             <h1 className="text-2xl font-bold text-[#4F4F7C]">
-              {professional.first_name} {professional.last_name}
+              {professional.user.first_name} {professional.user.last_name}
             </h1>
-            <p className="text-gray-600 italic">{professional.title}</p>
+            <p className="text-gray-600 italic">{professional.tagline}</p>
           </div>
           <div className="flex gap-3 pb-2">
             <Button variant="outline" size="sm">Bookmark</Button>
