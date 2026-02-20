@@ -17,14 +17,18 @@ export interface NavLink {
 
 // Service Types
 export interface Service {
-    id: number;
-    name: string;
-    category_id: string;
-    category_name: string;
-    description: string;
-    price?: number;
-    priceType: 'fixed' | 'hourly' | 'negotiable';
-    icon?: string;
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  category: number;
+  category_name: string;
+  category_slug: string;
+  price_type?: 'fixed' | 'hourly' | 'negotiable';
+  suggested_price_min?: string;
+  suggested_price_max?: string;
+  is_active: boolean;
+  order: number;
 }
 
 // Category Types
@@ -34,17 +38,20 @@ export interface Category {
     slug: string;
     description: string;
     icon?: string;
-    service_count: number;
+    services_count: number;
     color?: string;
 }
 
 //Gallery Types
 export interface GalleryItem {
   id: number;
-  url: string;
-  caption?: string;
-  type: 'image' | 'video';
+  image: string;
+  caption: string;
+  order: number;
+  created_at?: string;
 }
+
+export type DayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
 // Working Hours Type
 export interface WorkingHours {
