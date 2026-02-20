@@ -66,7 +66,9 @@ class ProfessionalService {
    */
   async getProfessionalById(id: number): Promise<Professional | null> {
     try {
-      const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.LIST}/${id}/`, {
+      const url = API_ENDPOINTS.PROFESSIONALS.DETAIL(id.toString());
+
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -75,12 +77,15 @@ class ProfessionalService {
       });
 
       if (!response.ok) {
-        throw new Error('Professional not found');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Professional not found:', errorData);
+        // throw new Error('Professional not found');
+        return null;
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error fetching professional:', error);
+      console.error('Error fetching professiona by ID:', error);
       return null;
     }
   }

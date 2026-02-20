@@ -31,7 +31,7 @@ export const API_ENDPOINTS = {
   
   // Add more endpoints as your app grows
   PROFESSIONALS: {
-    LIST: `${API_BASE_URL}/api/professionals/`,
+    LIST: `${API_BASE_URL}/api/professionals`,
     DETAIL: (id: string) => `${API_BASE_URL}/api/professionals/${id}/`,
   },
   
