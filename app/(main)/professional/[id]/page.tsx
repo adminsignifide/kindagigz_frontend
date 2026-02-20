@@ -1,17 +1,8 @@
-// ============================================
-// PROFESSIONAL DETAIL PAGE
-// ============================================
-
 import React from 'react';
-import { Professional } from '@/types/auth';
 import { notFound } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar/Navbar';
-import { ProfessionalHeader } from '@/components/professionals/ProfessionalHeader';
 import { ProfessionalHeroClient } from '@/components/professionals/ProfessionalHeroClient';
-import { ProfessionalAboutandGallery } from '@/components/professionals/ProfessionalAboutandGallery';
-import { ProfessionalOpsTimeandLocation } from '@/components/professionals/ProfessionalOpsTimeandLocation';
 import { ProfessionalSimilarServices } from '@/components/professionals/ProfessionalSimilarServices';
-import { ProfessionalContactForm } from '@/components/professionals/ProfessionalContactForm';
 import { professionalService } from '@/lib/services/professionalService';
 
 export default async function ProfessionalPage({
