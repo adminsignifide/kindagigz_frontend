@@ -54,12 +54,7 @@ export const ServicesList: React.FC<ServicesListProps> = ({
         showMapView ? "grid-cols-1 xl:grid-cols-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       )}>
         {professionals.map((professional) => (
-          <Link
-            key={professional.id}
-            href={ROUTES.PROFESSIONAL(professional.id.toString())}
-          >
-            <ServiceProviderCard key={professional.id} professional={professional} />
-          </Link>
+          <ServiceProviderCard key={professional.id} professional={professional} />
         ))}
       </div>
       
