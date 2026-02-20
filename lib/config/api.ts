@@ -29,10 +29,10 @@ export const API_ENDPOINTS = {
     UPGRADE_TO_PROFESSIONAL: `${API_BASE_URL}/api/users/upgrade-to-professional/`,
   },
   
-  // Add more endpoints as your app grows
   PROFESSIONALS: {
     LIST: `${API_BASE_URL}/api/professionals`,
     DETAIL: (id: string) => `${API_BASE_URL}/api/professionals/${id}/`,
+    PROFILE: (id: string) => `${API_BASE_URL}/api/professionals/profile/${id}/`,
   },
   
   SERVICES: {
