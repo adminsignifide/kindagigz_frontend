@@ -42,7 +42,7 @@ export const ServiceProviderCard: React.FC<ServiceProviderCardProps> = ({
 
         {/* 2. Overlapping Logo */}
         <div className="relative px-4">
-          <div className="absolute -top-10 left-4 w-20 h-20 rounded-full border-2 border-black bg-slate-500 overflow-hidden shadow-sm">
+          <div className="absolute -top-10 left-4 w-20 h-20 rounded-full border-1 bg-slate-500 overflow-hidden shadow-sm">
             <Image
               src={logo || '/placeholder-logo.jpg'}
               alt="logo"
@@ -65,13 +65,12 @@ export const ServiceProviderCard: React.FC<ServiceProviderCardProps> = ({
           <div className="mt-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
               {/* Category Icon Placeholder */}
-              <div className="w-8 h-8 rounded-lg bg-[#3F3F66] flex items-center justify-center">
-                <div className="w-4 h-4 bg-white/20 rounded-sm" />
+              <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
                 {categoryIcon}
               </div>
-              <span className="text-sm font-medium text-black">
+              {/* <span className="text-sm text-black">
                 {categoryName}
-              </span>
+              </span> */}
             </div>
 
             {/* Services - Show first 2 */}
