@@ -63,9 +63,7 @@ export function SignupForm() {
     const loadingToast = toast.loading('Creating your account...');
 
     try {
-      // ✅ Check if this is a professional registration
       if (professionalData && formData.role === 'professional') {
-        // ✅ Use FormData for professional registration (supports file uploads)
         const registrationData = new FormData();
         
         // Add basic user data
@@ -83,7 +81,17 @@ export function SignupForm() {
         registrationData.append('business_name', professionalData.business_name);
         registrationData.append('about', professionalData.about);
         registrationData.append('category_id', professionalData.category_id.toString());
-        registrationData.append('address', professionalData.address);
+        registrationData.append('location_name', professionalData.location_name || '');
+        registrationData.append('address', professionalData.address || '');
+
+        if (professionalData.latitude !== null && professionalData.latitude !== undefined) {
+          registrationData.append('latitude', professionalData.latitude.toString());
+        }
+
+        if (professionalData.longitude !== null && professionalData.longitude !== undefined) {
+          registrationData.append('longitude', professionalData.longitude.toString());
+        }
+        
         registrationData.append('service_radius_km', professionalData.service_radius_km?.toString() || '10');
         
         professionalData.service_ids.forEach((id) => {

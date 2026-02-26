@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { LocationPicker } from '../ui/LocationPicker';
 import { categoryService } from '@/lib/services/categoryService';
 import { MultiSelect } from '../ui/MultiSelect';
 import type { RegisterData, ServiceProOnboardingData } from '@/types/auth';
+import type { PlaceDetails } from '@/lib/hooks/useGooglePlaces';
 import type { Category, Service } from '@/types';
 
 interface ServiceProOnboardingFormProps {
@@ -26,7 +28,10 @@ export function ServiceProOnboardingForm({
     tagline: '',
     category_id: 0,
     service_ids: [],
+    location_name: '',
     address: basicData.city || '',
+    latitude: null,
+    longitude: null,
     service_radius_km: 10,
     languages: ['English'],
     agreeToTerms: false,
@@ -53,7 +58,6 @@ export function ServiceProOnboardingForm({
         const categoriesData = await categoryService.getCategories();
         console.log('Fetched categories:', categoriesData); // Debug log
         
-        // ENSURE it's an array before setting
         if (Array.isArray(categoriesData)) {
           setCategories(categoriesData);
         } else {
@@ -67,7 +71,6 @@ export function ServiceProOnboardingForm({
         const servicesData = await categoryService.getServices();
         console.log('Fetched services:', servicesData); // Debug log
         
-        // ENSURE it's an array before setting
         if (Array.isArray(servicesData)) {
           setAllServices(servicesData);
         } else {
@@ -77,8 +80,8 @@ export function ServiceProOnboardingForm({
         setIsLoadingServices(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setCategories([]); // Set to empty array on error
-        setAllServices([]); // Set to empty array on error
+        setCategories([]);
+        setAllServices([]); 
         setIsLoadingCategories(false);
         setIsLoadingServices(false);
       }
@@ -132,7 +135,12 @@ export function ServiceProOnboardingForm({
     }
 
     if (!formData.address.trim()) {
-      newErrors.address = 'Business address is required';
+      newErrors.address = 'Business location is required — please select from the suggestions';
+    }
+
+    if (formData.latitude === null || formData.longitude === null) {
+      newErrors.latitude =
+        'Please select your location from the dropdown suggestions so we can pin your exact position on the map.';
     }
 
     if (!formData.agreeToTerms) {
@@ -164,6 +172,21 @@ export function ServiceProOnboardingForm({
         delete newErrors[name];
         return newErrors;
       });
+    }
+  };
+
+  const handleLocationSelect = (details: PlaceDetails) => {
+    setFormData((prev) => ({
+      ...prev,
+      location_name: details.place_name,
+      address: details.address,
+      latitude: details.latitude || null,
+      longitude: details.longitude || null,
+    }));
+
+    // Clear location error if one existed
+    if (errors.address) {
+      setErrors((prev) => ({ ...prev, address: '', latitude: '' }));
     }
   };
 
@@ -432,7 +455,7 @@ export function ServiceProOnboardingForm({
       </div>
 
       {/* Address */}
-      <div>
+      {/* <div>
         <label htmlFor="address" className="block text-sm font-semibold text-primary mb-2">
           Business Address <span className="text-red-500">*</span>
         </label>
@@ -448,6 +471,32 @@ export function ServiceProOnboardingForm({
         />
         {errors.address && (
           <p className="mt-1 text-sm text-red-600">{errors.address}</p>
+        )}
+      </div> */}
+
+      {/* ─── LOCATION PICKER ─────────────────────────────────────────────── */}
+      <div id="address">
+        <LocationPicker
+          label="Business Location"
+          value={formData.address}
+          onLocationSelect={handleLocationSelect}
+          error={errors.address || errors.latitude}
+          placeholder="e.g., Galleria Mall, Ngong Road, ABC Place, Manda Hill…"
+          required
+        />
+
+        {/* Show resolved coordinates as a subtle confirmation */}
+        {formData.latitude !== null && formData.longitude !== null && (
+          <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
+            <span>📍</span>
+            <span>
+              {formData.location_name && (
+                <strong className="text-gray-700">{formData.location_name}</strong>
+              )}
+              {formData.location_name && ' · '}
+              {formData.latitude.toFixed(5)}, {formData.longitude.toFixed(5)}
+            </span>
+          </div>
         )}
       </div>
 
