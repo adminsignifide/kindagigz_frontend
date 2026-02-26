@@ -78,7 +78,7 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-primary">
-      <Navbar variant='transparent'/>
+      <Navbar />
       
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8  pt-24">
         <header className="mb-8">
