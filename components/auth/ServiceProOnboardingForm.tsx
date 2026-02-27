@@ -16,6 +16,11 @@ interface ServiceProOnboardingFormProps {
   onComplete: (data: ServiceProOnboardingData) => void;
 }
 
+function roundCoord(value: number | null | undefined): number | null {
+  if (value === null || value === undefined || value === 0) return null;
+  return parseFloat(value.toFixed(6));
+}
+
 export function ServiceProOnboardingForm({
   basicData,
   onBack,
@@ -149,6 +154,10 @@ export function ServiceProOnboardingForm({
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      const firstKey = Object.keys(newErrors)[0];
+      document
+        .getElementById(firstKey)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -180,8 +189,8 @@ export function ServiceProOnboardingForm({
       ...prev,
       location_name: details.place_name,
       address: details.address,
-      latitude: details.latitude || null,
-      longitude: details.longitude || null,
+      latitude:  roundCoord(details.latitude),
+      longitude: roundCoord(details.longitude),
     }));
 
     // Clear location error if one existed
@@ -224,6 +233,20 @@ export function ServiceProOnboardingForm({
         return newErrors;
       });
     }
+  };
+
+    const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setFormData((prev) => ({ ...prev, logo: file }));
+    setLogoPreview(URL.createObjectURL(file));
+  };
+
+  const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setFormData((prev) => ({ ...prev, banner_image: file }));
+    setBannerPreview(URL.createObjectURL(file));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'logo' | 'banner_image') => {
@@ -474,7 +497,7 @@ export function ServiceProOnboardingForm({
         )}
       </div> */}
 
-      {/* ─── LOCATION PICKER ─────────────────────────────────────────────── */}
+      {/* LOCATION PICKER */}
       <div id="address">
         <LocationPicker
           label="Business Location"
@@ -532,25 +555,21 @@ export function ServiceProOnboardingForm({
         </label>
         <div className="flex items-start gap-4">
           {logoPreview && (
-            <div className="w-24 h-24 rounded-lg overflow-hidden border-2 border-gray-200">
-              <img src={logoPreview} alt="Logo preview" className="w-full h-full object-cover" />
-            </div>
+            <img
+              src={logoPreview}
+              alt="Logo preview"
+              className="w-16 h-16 object-cover rounded-lg border-2 border-card-border"
+            />
           )}
-          <label className="flex-1 flex items-center justify-center px-4 py-6 border-2 border-dashed border-card-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-            <div className="text-center">
-              <svg className="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              <span className="text-sm text-gray-600 mt-2 block">
-                {logoPreview ? 'Change Logo' : 'Upload Logo'}
-              </span>
-              <span className="text-xs text-gray-400">PNG, JPG up to 5MB</span>
+          <label className="cursor-pointer flex-1">
+            <div className="border-2 border-dashed border-card-border rounded-lg px-4 py-3 text-sm text-gray-500 hover:border-primary transition-colors text-center">
+              {formData.logo ? formData.logo.name : 'Click to upload logo'}
             </div>
             <input
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => handleFileChange(e, 'logo')}
+              onChange={handleLogoChange}
             />
           </label>
         </div>
@@ -566,25 +585,23 @@ export function ServiceProOnboardingForm({
         </label>
         <div className="space-y-3">
           {bannerPreview && (
-            <div className="w-full h-40 rounded-lg overflow-hidden border-2 border-gray-200">
-              <img src={bannerPreview} alt="Banner preview" className="w-full h-full object-cover" />
-            </div>
+            <img
+              src={bannerPreview}
+              alt="Banner preview"
+              className="w-full h-24 object-cover rounded-lg border-2 border-card-border mb-2"
+            />
           )}
-          <label className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-card-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-            <div className="text-center">
-              <svg className="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="text-sm text-gray-600 mt-2 block">
-                {bannerPreview ? 'Change Banner' : 'Upload Banner'}
-              </span>
-              <span className="text-xs text-gray-400">PNG, JPG up to 5MB • 1200x400px recommended</span>
+          <label className="cursor-pointer">
+            <div className="border-2 border-dashed border-card-border rounded-lg px-4 py-3 text-sm text-gray-500 hover:border-primary transition-colors text-center">
+              {formData.banner_image
+                ? formData.banner_image.name
+                : 'Click to upload banner'}
             </div>
             <input
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => handleFileChange(e, 'banner_image')}
+              onChange={handleBannerChange}
             />
           </label>
         </div>

@@ -27,6 +27,15 @@ export interface PlaceDetails {
   country: string;
 }
 
+// ─── Africa/Kenya bias constants ──────────────────────────────────────────────
+// Centre point: Nairobi, Kenya
+const BIAS_LAT    = -1.2921;
+const BIAS_LNG    = 36.8219;
+// 4 500 km radius covers the entire African continent comfortably
+const BIAS_RADIUS = 4_500_000; // metres
+// CLDR region code — biases name disambiguation toward Kenya
+const BIAS_REGION = 'ke';
+
 // Module-level promise so the script is only injected once across all component mounts
 let googleMapsLoadPromise: Promise<void> | null = null;
 
@@ -35,10 +44,8 @@ function loadGoogleMapsScript(apiKey: string): Promise<void> {
 
   googleMapsLoadPromise = new Promise((resolve, reject) => {
     // If already loaded (e.g. Next.js hot reload), resolve immediately
-    if (typeof window !== 'undefined' && window.google?.maps?.places) {
-      resolve();
-      return;
-    }
+    if (typeof window === 'undefined') { reject(new Error('SSR')); return; }
+    if (window.google?.maps?.places)  { resolve(); return; }
 
     const callbackName = '__googleMapsCallback__';
     (window as any)[callbackName] = () => resolve();
@@ -65,10 +72,10 @@ export function useGooglePlaces() {
   const sessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  console.log("API KEY:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+  // console.log("API KEY:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-  console.log("API KEY 2:", apiKey);
+  // console.log("API KEY 2:", apiKey);
 
 
   useEffect(() => {
@@ -112,29 +119,43 @@ export function useGooglePlaces() {
 
       debounceTimer.current = setTimeout(() => {
         setLoading(true);
+
+        // Bias centre point (Nairobi)
+        const biasCentre = new window.google.maps.LatLng(BIAS_LAT, BIAS_LNG);
+
         autocompleteServiceRef.current!.getPlacePredictions(
           {
             input,
             sessionToken: sessionTokenRef.current ?? undefined,
-            // Bias towards Africa; omit `componentRestrictions` to allow any country
-            // but prioritise the African continent via location bias
-            locationBias: new window.google.maps.LatLngBounds(
-              new window.google.maps.LatLng(-35, -20), // SW corner of Africa
-              new window.google.maps.LatLng(38, 55),   // NE corner of Africa
-            ),
+
+            // ── Three complementary bias signals ─────────────────────────
+            //
+            // 1. Point + radius — Google strongly favours results inside
+            //    the 4 500 km circle centred on Nairobi (covers all Africa)
+            location: biasCentre,
+            radius: BIAS_RADIUS,
+            //
+            // 2. Origin — Google ranks by distance from this point, so
+            //    Nairobi results score much better than Dubai results
+            origin: biasCentre,
+            //
+            // 3. Region code — biases name disambiguation toward Kenya
+            region: BIAS_REGION,
+            // ─────────────────────────────────────────────────────────────
           },
           (results, status) => {
             setLoading(false);
+
             if (
               status === window.google.maps.places.PlacesServiceStatus.OK &&
               results
             ) {
               setPredictions(
                 results.map((r) => ({
-                  place_id: r.place_id,
-                  main_text: r.structured_formatting.main_text,
+                  place_id:       r.place_id,
+                  main_text:      r.structured_formatting.main_text,
                   secondary_text: r.structured_formatting.secondary_text || '',
-                  description: r.description,
+                  description:    r.description,
                 }))
               );
             } else {
@@ -170,8 +191,11 @@ export function useGooglePlaces() {
             sessionTokenRef.current = new window.google.maps.places.AutocompleteSessionToken();
 
             if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
-              const lat = place.geometry?.location?.lat() ?? 0;
-              const lng = place.geometry?.location?.lng() ?? 0;
+              const rawLat = place.geometry?.location?.lat() ?? 0;
+              const rawLng = place.geometry?.location?.lng() ?? 0;
+              
+              const latitude  = parseFloat(rawLat.toFixed(6));
+              const longitude = parseFloat(rawLng.toFixed(6));
 
               // Extract city and country from address_components
               let city = '';
@@ -192,8 +216,8 @@ export function useGooglePlaces() {
                 place_id: placeId,
                 place_name: place.name || '',
                 address: place.formatted_address || '',
-                latitude: lat,
-                longitude: lng,
+                latitude,
+                longitude,
                 city,
                 country,
               });

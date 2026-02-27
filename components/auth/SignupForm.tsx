@@ -11,6 +11,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { ServiceProOnboardingForm } from './ServiceProOnboardingForm';
 import type { RegisterData, UserRole, ApiError, ServiceProOnboardingData } from '@/types/auth';
 
+function formatCoord(value: number | null | undefined): string | undefined {
+  if (value === null || value === undefined) return undefined;
+  return value.toFixed(6);
+}
+
 export function SignupForm() {
   const router = useRouter();
   const { setUser } = useAuth();
@@ -84,12 +89,14 @@ export function SignupForm() {
         registrationData.append('location_name', professionalData.location_name || '');
         registrationData.append('address', professionalData.address || '');
 
-        if (professionalData.latitude !== null && professionalData.latitude !== undefined) {
-          registrationData.append('latitude', professionalData.latitude.toString());
-        }
+        const latStr = formatCoord(professionalData.latitude);
+        const lngStr = formatCoord(professionalData.longitude);
 
-        if (professionalData.longitude !== null && professionalData.longitude !== undefined) {
-          registrationData.append('longitude', professionalData.longitude.toString());
+        if (latStr !== undefined) {
+          registrationData.append('latitude', latStr);
+        }
+        if (lngStr !== undefined) {
+          registrationData.append('longitude', lngStr);
         }
         
         registrationData.append('service_radius_km', professionalData.service_radius_km?.toString() || '10');
