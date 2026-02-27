@@ -1,11 +1,13 @@
-import { Professional, DayOfWeek } from '@/types';
-import { formatInTimeZone } from 'date-fns-tz'; // Recommended library for timezone handling
+import { DayOfWeek } from '@/types';
+import { Professional } from '@/types/auth';
+import { formatInTimeZone } from 'date-fns-tz'; // For timezone handling
 
 /**
  * Checks if a professional is currently within their working hours.
  */
 export const isCurrentlyOpen = (professional: Professional): boolean => {
-  const { working_hours, timezone } = professional;
+  const { working_hours } = professional;
+  const timezone = (professional as any).timezone || 'Africa/Nairobi';
   
   // 1. Get current time in the Professional's timezone
   const now = new Date();

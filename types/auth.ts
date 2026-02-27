@@ -78,6 +78,7 @@ export interface Professional {
   created_at: string;
   updated_at: string;
   distance_km?: number | null;
+  timezone: string;
 }
 
 export interface AuthTokens {

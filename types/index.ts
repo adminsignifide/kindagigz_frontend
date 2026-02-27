@@ -4,15 +4,15 @@
 
 // Standardized Navbar type
 export interface NavLink {
+  label: string;
+  href: string;
+  public: boolean;
+  requiresAuth?: boolean;
+  hasDropdown?: boolean;
+  dropdownItems?: Array<{
     label: string;
     href: string;
-    public: boolean;
-    requiresAuth?: boolean;
-    hasDropdown?: boolean;
-    dropdownItems?: Array<{
-        label: string;
-        href: string;
-    }>;
+  }>;
 }
 
 // Service Types
@@ -33,13 +33,13 @@ export interface Service {
 
 // Category Types
 export interface Category {
-    id: number;
-    name: string;
-    slug: string;
-    description: string;
-    icon?: string;
-    services_count: number;
-    color?: string;
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  icon?: string;
+  services_count: number;
+  color?: string;
 }
 
 //Gallery Types
@@ -71,13 +71,13 @@ export interface TimeSlot {
 
 // Location Types
 export interface Location {
-    lat: number;
-    lng: number;
-    place_name: string;
-    address: string;
-    city: string;
-    country: string;
-    distance?: number; // Distance from user in km
+  lat: number;
+  lng: number;
+  place_name: string;
+  address: string;
+  city: string;
+  country: string;
+  distance?: number; // Distance from user in km
 }
 
 // Represents the browser's Geolocation API result after resolution.
@@ -89,27 +89,27 @@ export interface UserGeoLocation {
 
 // Filter Types
 export interface FilterState {
-    activeTab: 'services' | 'categories';
-    selected_categories: string[];
-    selected_services: string[];
-    price_range: [number, number];
-    rating: number;
-    distance: number;
-    availability: 'all' | 'available' | 'unavailable';
-    sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating' | 'distance';
+  activeTab: 'services' | 'categories';
+  selected_categories: string[];
+  selected_services: string[];
+  price_range: [number, number];
+  rating: number;
+  distance: number;
+  availability: 'all' | 'available' | 'unavailable';
+  sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating' | 'distance';
 }
 
 // Review Types
 export interface Review {
-    id: number;
-    professional_id: string;
-    client_id: string;
-    client_name: string;
-    client_image?: string;
-    rating: number;
-    comment: string;
-    service_type: string;
-    created_at: string;
+  id: number;
+  professional_id: string;
+  client_id: string;
+  client_name: string;
+  client_image?: string;
+  rating: number;
+  comment: string;
+  service_type: string;
+  created_at: string;
 }
 
 // Course Types (for Skills Boost)
@@ -128,10 +128,10 @@ export interface Course {
 // Wage Guide Types
 // export interface WageService {
 //   name: string;
-//   minHourly?: number;
-//   maxHourly?: number;
-//   minFixed?: number;
-//   maxFixed?: number;
+//   min_hourly?: number;
+//   max_hourly?: number;
+//   min_fixed?: number;
+//   max_fixed?: number;
 //   currency: string;
 // }
 

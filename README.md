@@ -68,7 +68,7 @@ kindagigz/
 │   │   └── ResultsGrid.tsx
 │   │   │
 │   ├── professionals/            # Professional-related components
-│   │   ├── ProfessionalCard.tsx
+│   │   ├── ServiceProviderCard.tsx
 │   │   ├── ProfileHeader.tsx
 │   │   └── ReviewsList.tsx
 │   │   │

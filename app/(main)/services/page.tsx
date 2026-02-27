@@ -5,7 +5,6 @@ import { Navbar } from '@/components/layout/Navbar/Navbar';
 import { FiltersPanel } from '@/components/services/FilterPanel';
 import { ServicesList } from '@/components/services/ServicesList';
 import { ServicesMapView } from '@/components/services/ServicesMapView';
-import { ProfessionalCard } from '@/components/services/ProfessionalCard';
 import { ServiceProviderCard } from '@/components/services/ServiceProviderCard';
 import { Professional } from '@/types/auth';
 import { professionalService } from '@/lib/services/professionalService';
