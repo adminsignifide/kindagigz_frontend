@@ -8,7 +8,7 @@ export const API_BASE_URL: string =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   (process.env.NODE_ENV === 'production'
     ? 'https://api.kindagigz.com'
-    : 'http://127.0.0.1:8000');
+    : 'http://localhost:8000');
 
 
 // API Endpoints
@@ -27,7 +27,7 @@ export const API_ENDPOINTS = {
   PROFESSIONALS: {
     LIST: `${API_BASE_URL}/api/professionals`,
     DETAIL: (id: string) => `${API_BASE_URL}/api/professionals/${id}/`,
-    PROFILE: `${API_BASE_URL}/api/professionals/profile`,
+    PROFILE: `${API_BASE_URL}/api/professionals/profile/`,
     PROFILE_DUP: (id: string) => `${API_BASE_URL}/api/professionals/profile/${id}/`,
   },
   
