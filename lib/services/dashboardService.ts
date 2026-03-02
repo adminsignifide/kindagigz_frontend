@@ -3,11 +3,12 @@ import { authService } from './authService';
 import type { DashboardStats, Booking, Message, Client, Review, Payment, AnalyticsData } from '@/types/dashboard';
 
 class DashboardService {
+  /**
+   * Get auth headers - NO TOKEN NEEDED (cookies sent automatically)
+   */
   private getAuthHeaders() {
-    const token = authService.getAccessToken();
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
     };
   }
 
@@ -18,6 +19,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/stats/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return null;
@@ -39,6 +41,7 @@ class DashboardService {
 
       const response = await fetch(url, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return [];
@@ -57,6 +60,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/messages/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return [];
@@ -75,6 +79,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/clients/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return [];
@@ -93,6 +98,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/reviews/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return [];
@@ -111,6 +117,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/payments/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return [];
@@ -129,6 +136,7 @@ class DashboardService {
     try {
       const response = await fetch(`${API_ENDPOINTS.PROFESSIONALS.PROFILE}/analytics/`, {
         headers: this.getAuthHeaders(),
+        credentials: 'include', // Send cookies
       });
 
       if (!response.ok) return null;

@@ -7,12 +7,15 @@ import { professionalService } from '@/lib/services/professionalService';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { ROUTES } from '@/lib/constants/routes';
 import type { Professional } from '@/types/auth';
+import { API_ENDPOINTS } from '@/lib/config/api';
+import toast from 'react-hot-toast';
 
 export default function DashboardPage() {
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const [professional, setProfessional] = React.useState<Professional | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   useEffect(() => {
     // Wait for auth to initialize
@@ -28,25 +31,58 @@ export default function DashboardPage() {
     // Redirect if not a professional
     if (user?.role !== 'professional') {
       console.log('Not a professional, redirecting to home');
+      toast.error("Not a professional, redirecting to home")
       router.push(ROUTES.HOME);
       return;
     }
 
-    // Fetch professional profile
+    // Fetch professional profile using authenticated endpoint
     const fetchProfessional = async () => {
       try {
         setLoading(true);
-        const prof = await professionalService.getProfessionalById(user.id);
+        setError(null);
+
+        console.log('Fetching professional profile from:', API_ENDPOINTS.PROFESSIONALS.PROFILE);
         
-        if (!prof) {
-          console.error('Professional profile not found');
-          router.push(ROUTES.HOME);
-          return;
+        // Log cookies being sent
+        console.log('Document cookies:', document.cookie);
+
+        // Use the profile endpoint instead of detail endpoint
+        const response = await fetch(API_ENDPOINTS.PROFESSIONALS.PROFILE, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Include cookies
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          console.error('Failed to fetch professional profile:', errorData);
+          
+          if (response.status === 401) {
+            // Unauthorized - redirect to login
+            router.push(ROUTES.LOGIN);
+            return;
+          }
+          
+          if (response.status === 404) {
+            // Professional profile not found
+            setError('Professional profile not found. Please complete your profile setup.');
+            return;
+          }
+          
+          throw new Error('Failed to fetch professional profile');
         }
+
+        const prof = await response.json();
+        console.log('Professional profile fetched:', prof);
 
         setProfessional(prof);
       } catch (error) {
         console.error('Error fetching professional:', error);
+        setError('Failed to load dashboard. Please try again.');
+        toast.error('Failed to load dashboard. Please try again.');
         router.push(ROUTES.HOME);
       } finally {
         setLoading(false);
@@ -63,6 +99,24 @@ export default function DashboardPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Dashboard</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <button
+            onClick={() => router.push(ROUTES.HOME)}
+            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90"
+          >
+            Go to Home
+          </button>
         </div>
       </div>
     );
