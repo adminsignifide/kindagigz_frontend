@@ -38,10 +38,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     const confirmed = confirm('Are you sure you want to log out?');
     if (!confirmed) return;
 
-    const refreshToken = authService.getRefreshToken();
-    if (refreshToken) {
-      await authService.logout(refreshToken);
-    }
+    await authService.logout();
+    
     setUser(null);
     router.push('/login');
   };

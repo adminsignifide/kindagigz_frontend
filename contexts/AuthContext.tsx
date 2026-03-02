@@ -40,10 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = async () => {
-    const refreshToken = authService.getRefreshToken();
-    if (refreshToken) {
-      await authService.logout(refreshToken);
-    }
+    await authService.logout();
     setUser(null);
   };
 
