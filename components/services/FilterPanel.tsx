@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-// import { MOCK_CATEGORIES } from '@/lib/constants/categories';
+import { LocationPicker } from '../ui/LocationPicker';
 import type { Professional } from '@/types/auth';
 import type { Category } from '@/types';
+import type { PlaceDetails } from '@/lib/hooks/useGooglePlaces';
 
 interface FiltersPanelProps {
   onFilterChange: (filters: any) => void;
@@ -24,8 +25,10 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
   const [filters, setFilters] = useState({
     keywords: '',
     category: '',
-    location: '',
-    proximity: 10, // km
+    address: '',
+    lat: null as number | null,
+    lng: null as number | null,
+    proximity: 10, // Default km
     price_range: [0, 100000] as [number, number],
     rating: 0,
     availability: 'all' as 'all' | 'available',
@@ -47,6 +50,36 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
     setCategories(uniqueCategories);
   }, [professionals]);
 
+  const handleLocationSelect = (details: PlaceDetails) => {
+    const newFilters = { 
+      ...filters, 
+      address: details.address,
+      lat: details.latitude,
+      lng: details.longitude 
+    };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
+  };
+
+  const handleLiveLocation = () => {
+    if (!navigator.geolocation) return;
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const newFilters = { 
+          ...filters, 
+          address: 'Current Location', 
+          lat: latitude, 
+          lng: longitude 
+        };
+        setFilters(newFilters);
+        onFilterChange(newFilters);
+      },
+      (error) => console.error("Error fetching location", error)
+    );
+  };
+
   // ✅ Get professional count per category
   const getCategoryCount = (categoryId: number) => {
     return professionals.filter(prof => prof.category.id === categoryId).length;
@@ -66,7 +99,9 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
     const resetFilters = {
       keywords: '',
       category: '',
-      location: '',
+      address: '',
+      lat: null as number | null,
+      lng: null as number | null,
       proximity: 10,
       price_range: [0, 100000] as [number, number],
       rating: 0,
@@ -139,61 +174,45 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
 
           {/* Location */}
           <div>
-            <label className="block text-sm font-semibold text-primary mb-2">
-              Where to look
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={filters.location}
-                onChange={(e) => handleFilterChange('location', e.target.value)}
-                placeholder="Enter location..."
-                className="flex-1 px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
+            <div className="">
+              <LocationPicker
+                label="Where to look"
+                value={filters.address}
+                onLocationSelect={handleLocationSelect}
+                placeholder="Search city or area..."
               />
               <Button
+                className="mt-6"
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  // Get user's current location
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                      (position) => {
-                        // In a real app, you'd reverse geocode this
-                        handleFilterChange('location', 'Current Location');
-                      },
-                      (error) => {
-                        console.error('Error getting location:', error);
-                        handleFilterChange('location', 'Nairobi, Kenya');
-                      }
-                    );
-                  } else {
-                    handleFilterChange('location', 'Nairobi, Kenya');
-                  }
-                }}
+                title='Use My Location'
+                onClick={handleLiveLocation}
               >
-                📍
+                📍Use My Location
               </Button>
             </div>
           </div>
 
           {/* Proximity */}
-          <div>
-            <label className="block text-sm font-semibold text-primary mb-2">
-              Proximity: {filters.proximity} km
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="50"
-              value={filters.proximity}
-              onChange={(e) => handleFilterChange('proximity', parseInt(e.target.value))}
-              className="w-full"
-            />
-            <div className="flex justify-between text-xs text-gray-500 mt-1">
-              <span>1 km</span>
-              <span>50 km</span>
+          {filters.lat && (
+            <div className="animate-in fade-in slide-in-from-top-2">
+              <label className="block text-sm font-semibold text-primary mb-2">
+                Proximity: {filters.proximity} km
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value={filters.proximity}
+                onChange={(e) => handleFilterChange('proximity', parseInt(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-secondary"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>1km</span>
+                <span>100km</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Price Range */}
           <div>

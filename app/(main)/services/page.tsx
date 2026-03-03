@@ -7,6 +7,7 @@ import { ServicesList } from '@/components/services/ServicesList';
 import { ServicesMapView } from '@/components/services/ServicesMapView';
 import { Professional } from '@/types/auth';
 import { professionalService } from '@/lib/services/professionalService';
+import { getDistanceKm } from '@/lib/utils/location';
 
 export default function ServicesPage() {
   const [showMapView, setShowMapView] = useState(false);
@@ -17,7 +18,8 @@ export default function ServicesPage() {
   const [activeFilters, setActiveFilters] = useState<{
     keywords?: string;
     category?: string;
-    location?: string;
+    lat?: number | null,
+    lng?: number | null,
     proximity?: number;
     minRating?: number;
     priceRange?: [number, number];
@@ -83,12 +85,26 @@ export default function ServicesPage() {
       );
     }
 
-    // 3. Location Filter (City Match)
-    if (activeFilters.location && activeFilters.location !== 'Current Location') {
-      const locQuery = activeFilters.location.toLowerCase();
-      filtered = filtered.filter(prof => 
-        prof.user.city?.toLowerCase().includes(locQuery)
-      );
+    // 3. Proximity & Location Logic
+    if (activeFilters.lat && activeFilters.lng) {
+      filtered = filtered.filter(prof => {
+        if (!prof.latitude || !prof.longitude) return false;
+        
+        const distance = getDistanceKm(
+          activeFilters.lat!, 
+          activeFilters.lng!, 
+          parseFloat(prof.latitude), 
+          parseFloat(prof.longitude)
+        );
+
+        // Attach distance to the object for sorting or display
+        prof.distance_km = distance; 
+
+        return distance <= (activeFilters.proximity || 25);
+      });
+
+      // Sort by nearest
+      filtered.sort((a, b) => (a.distance_km || 0) - (b.distance_km || 0));
     }
 
     setFilteredProfessionals(filtered);
