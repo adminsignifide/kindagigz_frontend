@@ -47,12 +47,32 @@ export default function ServicesPage() {
 
     // 1. Keyword Search (Name or Service)
     if (activeFilters.keywords) {
-      const query = activeFilters.keywords.toLowerCase();
+      const query = activeFilters.keywords.toLowerCase().trim();
+      
       filtered = filtered.filter(prof => {
-        const nameMatch = prof.business_name?.toLowerCase().includes(query);
-        const serviceMatch = prof.services?.some(s => s.name.toLowerCase().includes(query));
-        const aboutMatch = prof.about?.toLowerCase().includes(query);
-        return nameMatch || serviceMatch || aboutMatch;
+        // Human Name checks (nested in user object)
+        const firstName = prof.user?.first_name?.toLowerCase() || '';
+        const lastName = prof.user?.last_name?.toLowerCase() || '';
+        const fullName = `${firstName} ${lastName}`;
+
+        // Business Info checks
+        const bizName = prof.business_name?.toLowerCase() || '';
+        const tagline = prof.tagline?.toLowerCase() || '';
+        const aboutText = prof.about?.toLowerCase() || '';
+
+        // Services check (matching the name of any service they offer)
+        const serviceMatch = prof.services?.some(s => 
+          s.name.toLowerCase().includes(query) || 
+          s.category_name?.toLowerCase().includes(query)
+        );
+
+        return (
+          bizName.includes(query) ||
+          fullName.includes(query) ||
+          tagline.includes(query) ||
+          aboutText.includes(query) ||
+          serviceMatch
+        );
       });
     }
 
