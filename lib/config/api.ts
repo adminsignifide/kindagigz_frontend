@@ -10,9 +10,32 @@ export const API_BASE_URL: string =
     ? 'https://api.kindagigz.com'
     : 'http://localhost:8000');
 
+// Define the Shape
+interface ApiEndpoints {
+  AUTH: {
+    REGISTER: string;
+    LOGIN: string;
+    LOGOUT: string;
+    REFRESH_TOKEN: string;
+    CURRENT_USER: string;
+    PROFILE: string;
+    UPGRADE_TO_PROFESSIONAL: string;
+  };
+  PROFESSIONALS: {
+    LIST: string;
+    DETAIL: (id: string) => string;
+    PROFILE: string;
+  };
+  SERVICES: {
+    CATEGORIES: string;
+    LIST: string;
+    VALIDATE: string;
+    PROFILE: string;
+  };
+}
 
 // API Endpoints
-export const API_ENDPOINTS = {
+export const API_ENDPOINTS: ApiEndpoints = {
   // Authentication
   AUTH: {
     REGISTER: `${API_BASE_URL}/api/users/register/`,
