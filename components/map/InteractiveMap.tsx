@@ -8,6 +8,7 @@ interface MapMarker {
   lat: number;
   lng: number;
   icon?: string;
+  color?: string;
   data: any;
 }
 

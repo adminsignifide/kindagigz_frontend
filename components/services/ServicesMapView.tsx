@@ -5,6 +5,15 @@ import { useRouter } from 'next/navigation';
 import { InteractiveMap } from '../map/InteractiveMap';
 import type { Professional } from '@/types/auth';
 
+// Define colors for your categories
+const CATEGORY_COLORS: Record<string, string> = {
+  'Plumbing': '#ef4444', // Red
+  'Electrical': '#eab308', // Yellow
+  'Cleaning': '#3b82f6', // Blue
+  'Gardening': '#22c55e', // Green
+  'Default': '#6366f1'    // Indigo
+};
+
 interface ServicesMapViewProps {
   professionals: Professional[];
   onClose: () => void;
@@ -25,6 +34,7 @@ export const ServicesMapView: React.FC<ServicesMapViewProps> = ({
       lat: parseFloat(p.latitude!),
       lng: parseFloat(p.longitude!),
       icon: p.logo || p.user.profile_image || '/default-avatar.png', 
+      color: CATEGORY_COLORS[p.category.name] || CATEGORY_COLORS['Default'],
       data: p
     }));
 
@@ -61,22 +71,32 @@ export const ServicesMapView: React.FC<ServicesMapViewProps> = ({
             return (
               <div 
                 onClick={() => router.push(`/professionals/${prof.id}`)}
-                className="min-w-[180px] p-1 cursor-pointer group"
+                className="w-[220px] bg-white cursor-pointer group p-1"
               >
-                <img 
-                  src={prof.banner_image || '/api/placeholder/400/200'} 
-                  className="w-full h-20 object-cover rounded-lg mb-2" 
-                  alt=""
-                />
-                <h4 className="font-bold text-sm text-primary group-hover:text-secondary truncate">
+                <div className="relative h-24 w-full rounded-lg overflow-hidden mb-2">
+                   <img 
+                    src={prof.banner_image || '/api/placeholder/400/200'} 
+                    className="w-full h-full object-cover transition-transform group-hover:scale-105" 
+                    alt=""
+                  />
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-white/90 backdrop-blur-sm rounded text-[10px] font-bold text-primary">
+                    {prof.category.name}
+                  </div>
+                </div>
+                
+                <h4 className="font-bold text-sm text-gray-900 leading-tight mb-1 group-hover:text-primary">
                   {prof.business_name}
                 </h4>
-                <div className="flex items-center gap-1 mt-1 text-xs">
-                  <span className="text-yellow-500">★</span>
-                  <span className="font-bold">{parseFloat(prof.average_rating).toFixed(1)}</span>
-                  <span className="text-gray-400">({prof.total_reviews})</span>
+                
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center gap-0.5 text-yellow-500 text-xs">
+                    <span>★</span>
+                    <span className="font-bold text-gray-700">{parseFloat(prof.average_rating).toFixed(1)}</span>
+                  </div>
+                  <span className="text-[10px] text-gray-400">({prof.total_reviews} reviews)</span>
                 </div>
-                <button className="w-full mt-2 py-1.5 bg-primary text-white text-[10px] rounded-md font-bold uppercase tracking-wider group-hover:bg-secondary transition-colors">
+
+                <button className="w-full py-2 bg-gray-900 text-white text-[10px] rounded font-bold uppercase tracking-widest hover:bg-primary transition-colors">
                   View Profile
                 </button>
               </div>
