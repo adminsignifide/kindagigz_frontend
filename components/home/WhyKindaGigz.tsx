@@ -17,16 +17,6 @@ const features = [
     description: 'Find skilled workers in your neighborhood. Get jobs done quickly with professionals nearby.',
   },
   {
-    icon: '💰',
-    title: 'Fair Pricing',
-    description: 'Transparent pricing with no hidden fees. Know what you\'re paying before you book.',
-  },
-  {
-    icon: '⭐',
-    title: 'Rated & Reviewed',
-    description: 'Read real reviews from verified clients to make informed hiring decisions.',
-  },
-  {
     icon: '🔒',
     title: 'Secure Payments',
     description: 'Safe and secure payment processing. Your money is protected until the job is complete.',
@@ -40,43 +30,43 @@ const features = [
 
 export const WhyKindaGigz: React.FC = () => {
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-white">
+    <section className="py-12 md:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 lg:mb-12">
+          <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-4">
             Why Choose <span className="text-primary">KindaGigz</span>?
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-sm lg:text-lg text-gray-600">
             We're building the future of work in Africa by connecting skilled professionals 
             with people who need their services—fast, fair, and hassle-free.
           </p>
         </div>
 
         {/* Features Grid - 2 columns on mobile, 3 on desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {features.map((feature, index) => (
             <Card 
               key={index}
               variant="gray"
               hoverable
-              className="group"
+              className="group flex flex-row items-center"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+              <div className="text-2xl lg:text-4xl group-hover:scale-110 transition-transform">
                 {feature.icon}
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+              <h3 className="text-xs md:text-md lg:text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-sm text-gray-700">
+              {/*  <p className="text-sm text-gray-700">
                 {feature.description}
-              </p>
+              </p> */}
             </Card>
           ))}
         </div>
 
         {/* Stats Bar */}
-        <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary to-accent rounded-2xl p-8 lg:p-12">
+        {/* <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary to-accent rounded-2xl p-8 lg:p-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center text-white">
             <div>
               <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">150+</div>
@@ -95,7 +85,7 @@ export const WhyKindaGigz: React.FC = () => {
               <div className="text-sm lg:text-base text-white/80">Client Satisfaction</div>
             </div>
           </div>
-        </div>
+        </div>  */}
       </div>
     </section>
   );

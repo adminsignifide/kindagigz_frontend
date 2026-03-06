@@ -15,7 +15,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Card: React.FC<CardProps> = ({
   children,
   variant = 'default',
-  padding = 'md',
+  padding = 'sm',
   hoverable = false,
   className,
   ...props
