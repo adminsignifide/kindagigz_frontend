@@ -101,22 +101,6 @@ export const HeroSection: React.FC = () => {
                 </Button>
               </Link>
             </div>
-
-            {/* Trust Indicators */}
-            {/* <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/20">
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-secondary">10,000+</div>
-                <div className="text-sm text-white/70 mt-1">Active Professionals</div>
-              </div>
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-secondary">50,000+</div>
-                <div className="text-sm text-white/70 mt-1">Jobs Completed</div>
-              </div>
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-secondary">4.8★</div>
-                <div className="text-sm text-white/70 mt-1">Average Rating</div>
-              </div>
-            </div> */}
           </div> 
 
           {/* Right Content - Hero Image with Floating Animation */}
@@ -132,28 +116,6 @@ export const HeroSection: React.FC = () => {
                 priority
               />
             </div>
-
-            {/* Floating Badge 1 - Top Right */}
-            {/* <div className="absolute -top-4 -right-4 animate-float-delayed-1">
-              <div className="bg-secondary text-primary px-4 py-2 rounded-full font-bold shadow-xl border-2 border-white/20">
-                ✓ Verified
-              </div>
-            </div> */}
-
-            {/* Floating Badge 2 - Bottom Left */}
-            {/* <div className="absolute -bottom-4 -left-4 animate-float-delayed-2">
-              <div className="bg-green-400 text-primary px-4 py-2 rounded-full font-bold shadow-xl border-2 border-white/20">
-                🟢 Available Now
-              </div>
-            </div> */}
-
-            {/* Floating Badge 3 - Top Left */}
-            {/* <div className="absolute top-1/4 -left-6 animate-float-delayed-3">
-              <div className="bg-white/90 backdrop-blur-sm text-primary px-3 py-2 rounded-lg shadow-lg border border-secondary/30">
-                <div className="text-xs font-semibold">Response Time</div>
-                <div className="text-lg font-bold">2 hours</div>
-              </div>
-            </div> */}
 
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-72 h-72 bg-secondary/10 rounded-full blur-3xl -z-10" />
