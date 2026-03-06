@@ -13,9 +13,9 @@ import { Navbar } from '../layout/Navbar/Navbar';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-primary text-white overflow-hidden min-h-screen">
+    <section className="relative bg-primary text-white overflow-hidden min-h-screen max-h-[110vh] flex flex-col">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 z-0">
         <div
           className="absolute inset-0"
           style={{
@@ -25,17 +25,20 @@ export const HeroSection: React.FC = () => {
         />
       </div>
 
-      {/* Mobile Hero Image - Background Overlay Effect */}
-      <div className="lg:hidden absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/90 to-primary z-10" />
-        <Image
-          src="/images/hero-section-image-without-bg.png"
-          alt="KindaGigz professionals"
-          width={800}
-          height={800}
-          className="absolute top-0 right-0 w-full h-full object-cover object-right opacity-20 scale-110"
-          priority
-        />
+      {/* 2. Mobile Hero Image - Fixed Z-index and subtly animated */}
+      <div className="lg:hidden absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Darker gradient to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/90 to-primary z-10" />
+        
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full animate-float opacity-80"> {/* Animation added back to mobile bg */}
+            <Image
+            src="/images/hero-section-image-without-bg.png"
+            alt="KindaGigz professionals"
+            fill
+            className="object-contain"
+            priority
+            />
+        </div>
       </div>
 
       {/* Integrated Navbar */}
@@ -45,17 +48,17 @@ export const HeroSection: React.FC = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-6 lg:space-y-8 ">
+          <div className="flex flex-col justify-center h-full min-h-[450px] md:min-h-[550px] gap-y-6 lg:gap-y-[clamp(1.5rem,6vh,4rem)]">
             {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-secondary/30">
+            <div className="w-fit inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-secondary/30">
               <span className="text-secondary mr-2">✨</span>
               <span className="text-sm font-semibold">Connecting Africa's Workforce</span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Find Top Tier Service Pros & Real Jobs.
-              <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-secondary via-secondary to-white">
+              <span className="block mt-6 text-transparent bg-clip-text bg-gradient-to-r from-secondary via-secondary to-white">
                 Get the job done—locally, reliably
               </span>
             </h1>
@@ -67,14 +70,14 @@ export const HeroSection: React.FC = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 flex-wrap">
+            <div className="flex flex-row justify-between items-center gap-3 pt-10 w-full sm:justify-start sm:w-auto">
               <Link href={ROUTES.SERVICES} className="flex-1 min-w-[160px] sm:flex-none">
                 <Button 
                   variant="primary" 
                   size="lg"
-                  className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-3"
+                  className="w-full sm:w-auto text-xs sm:text-base px-3 sm:px-6 py-3"
                   rightIcon={
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   }
@@ -87,9 +90,9 @@ export const HeroSection: React.FC = () => {
                 <Button 
                   variant="tertiary" 
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto text-xs sm:text-base px-3 sm:px-6 py-3"
                   rightIcon={
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   }
@@ -123,9 +126,9 @@ export const HeroSection: React.FC = () => {
               <Image
                 src="/images/hero-section-image-without-bg.png"
                 alt="KindaGigz hero section"
-                width={600}
-                height={600}
-                className="w-full h-auto rounded-2xl"
+                width={500}
+                height={500}
+                className="h-auto rounded-2xl"
                 priority
               />
             </div>
