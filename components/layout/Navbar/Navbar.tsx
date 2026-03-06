@@ -97,25 +97,26 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
         isTransparent ? "absolute top-0 left-0 right-0 px-4 pt-4" : "sticky top-0 px-4 pt-4"
       )}>
         <nav className={cn(
-          "border-2 shadow-md max-w-7xl mx-auto transition-all duration-200",
+          "relative border-2 shadow-md max-w-7xl mx-auto transition-all duration-200",
           // Dynamic border radius - full when closed, only top when mobile menu is open
-          isMobileMenuOpen ? "rounded-lg" : "rounded-full",
+          isMobileMenuOpen ? "rounded-2xl rounded-br-none" : "rounded-full",
           isTransparent
-            ? "bg-secondary/80 backdrop-blur-lg border-secondary/30"
+            ? "bg-secondary/80 backdrop-blur-md border-secondary/30"
             : "bg-secondary border-black/10"
         )}>
           <div className="px-6 sm:px-8 lg:px-10">
             <div className="flex items-center justify-between h-16">
               {/* Logo */}
               <Link href={ROUTES.HOME} className="flex items-center space-x-2 shrink-0">
-                <Image
-                  src="/kinda-gigz-logo-zoomed.png"
-                  alt="KindaGigz logo"
-                  width={40}
-                  height={40}
-                  className="rounded-sm"
-                  priority
-                />
+                <div className="relative w-8 h-8 md:w-10 md:h-10"> 
+                  <Image
+                    src="/kinda-gigz-logo-zoomed.png"
+                    alt="KindaGigz logo"
+                    fill
+                    className="rounded-sm object-contain"
+                    priority
+                  />
+                </div>
               </Link>
 
               {/* Desktop Navigation */}
@@ -145,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
               </div>
 
               {/* Right Side - Auth Buttons or User Menu */}
-              <div className="hidden md:flex items-center space-x-3 shrink-0">
+              <div className="hidden md:flex items-center space-x-5 shrink-0">
                 {isLoading ? (
                   <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
                 ) : isAuthenticated && user ? (
@@ -153,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                 ) : (
                   <>
                     <Link href={ROUTES.LOGIN}>
-                      <Button variant="ghost" size="sm">
+                      <Button variant="outline" size="sm">
                         Log In
                       </Button>
                     </Link>
@@ -200,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-primary/10 bg-secondary/50 backdrop-blur-sm rounded-b-2xl">
+            <div className="absolute right-0 md:hidden py-4 bg-secondary/95 backdrop-blur-md border border-black/5 shadow-2xl animate-in fade-in zoom-in-95 duration-200 md:hidden py-4 border-t border-primary/10 bg-secondary/50 backdrop-blur-sm rounded-b-2xl">
               <div className="flex flex-col space-y-1 px-4">
                 {/* Navigation Links */}
                 {NAV_LINKS.map((link) => {
@@ -342,20 +343,14 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
                       )}
                     </>
                   ) : (
-                    <div className="flex flex-row items-center gap-2 sm:gap-3">
+                    <div className="flex flex-row items-center gap-2 sm:gap-8">
                       <Link href={ROUTES.LOGIN}>
-                          {/* <button className="px-3 sm:px-4 py-2 text-sm font-semibold text-primary bg-white/90 hover:bg-white border-2 border-primary rounded-lg transition-all duration-200 hover:scale-105">
-                            Log In
-                          </button>
-                        </Link>
-                        <Link href={ROUTES.SIGNUP}>
-                          <button className="px-3 sm:px-4 py-2 text-sm font-semibold text-primary bg-secondary hover:bg-secondary/90 rounded-lg transition-all duration-200 hover:scale-105 shadow-md"></button> */}
-                        <Button variant="ghost" size="md" className="w-full">
+                        <Button variant="outline" size="sm" className="w-full">
                           Log In
                         </Button>
                       </Link>
                       <Link href={ROUTES.SIGNUP}>
-                        <Button variant="secondary" size="md" className="w-full">
+                        <Button variant="secondary" size="sm" className="w-full">
                           Sign Up
                         </Button>
                       </Link>
