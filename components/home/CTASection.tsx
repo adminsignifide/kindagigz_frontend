@@ -36,13 +36,13 @@ export const CTASection: React.FC = () => {
             </p>
 
             {/* CTA Cards - Stacked */}
-            <div className="flex flex-col md:flex-row gap-4 space-y-1 md:space-y-4 pt-4">
+            <div className="flex flex-col md:flex-row gap-4 pt-4">
               {/* For Clients Card */}
-              <Card variant="faded-primary" padding="md" className="group hover:shadow-lg transition-all">
+              <Card variant="faded-primary" padding="md" className="group hover:shadow-lg transition-all flex-1 h-full">
                 <div className="flex flex-col items-start gap-4">
                   <div className="flex flex-row items-center">
-                    <div className="text-2xl md:text-4xl shrink-0">👨‍💼</div>
-                    <h3 className="text-sm md:text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
+                    <div className="text-xl md:text-2xl shrink-0">👨‍💼</div>
+                    <h3 className="text-sm md:text-lg font-bold text-primary group-hover:text-primary/80 transition-colors">
                       For Clients
                     </h3>
                   </div>
@@ -70,11 +70,11 @@ export const CTASection: React.FC = () => {
               </Card>
 
               {/* For Professionals Card */}
-              <Card variant="faded-secondary" padding="md" className="group hover:shadow-lg transition-all">
+              <Card variant="faded-secondary" padding="md" className="group hover:shadow-lg transition-all flex-1 h-full">
                 <div className="flex flex-col items-start gap-4">
                   <div className="flex flex-row items-center">
-                    <div className="text-2xl md:text-4xl shrink-0">⚡</div>
-                    <h3 className="text-sm md:text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
+                    <div className="text-xl md:text-2xl shrink-0">⚡</div>
+                    <h3 className="text-sm md:text-lg font-bold text-primary group-hover:text-primary/80 transition-colors">
                       For Service Providers
                     </h3>
                   </div>

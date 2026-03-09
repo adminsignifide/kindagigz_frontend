@@ -38,15 +38,15 @@ export const LiveMapSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-primary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 md:py-16 lg:py-20 bg-primary">
+      <div className="max-w-7xl mx-auto px-2 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 lg:mb-12">
+          <h2 className="text-2xl lg:text-4xl font-bold text-white mb-4">
             Live Map - Who's Around
           </h2>
-          <p className="text-lg text-white/80">
-            Browse through nearby services to explore who you ight hire.
+          <p className="text-sm lg:text-lg text-white/80">
+            Browse through nearby services to explore who you might hire.
           </p>
         </div>
 
@@ -61,13 +61,14 @@ export const LiveMapSection: React.FC = () => {
             <Button 
               variant="primary" 
               size="lg"
+              className="text-sm md:text-lg"
               rightIcon={
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               }
             >
-              Explore More Services
+              Explore More In Map
             </Button>
           </Link>
         </div>
