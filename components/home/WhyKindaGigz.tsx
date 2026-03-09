@@ -1,6 +1,3 @@
-// ============================================
-// WHY KINDAGIGZ SECTION - UPDATED
-// ============================================
 
 import React from 'react';
 import { Card } from '@/components/ui/Card';
@@ -43,7 +40,7 @@ export const WhyKindaGigz: React.FC = () => {
           </p>
         </div>
 
-        {/* Features Grid - 2 columns on mobile, 3 on desktop */}
+        {/* Features Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {features.map((feature, index) => (
             <Card 
@@ -64,59 +61,7 @@ export const WhyKindaGigz: React.FC = () => {
             </Card>
           ))}
         </div>
-
-        {/* Stats Bar */}
-        {/* <div className="mt-12 lg:mt-16 bg-gradient-to-r from-primary to-accent rounded-2xl p-8 lg:p-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center text-white">
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">150+</div>
-              <div className="text-sm lg:text-base text-white/80">Service Categories</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">10K+</div>
-              <div className="text-sm lg:text-base text-white/80">Active Professionals</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">50K+</div>
-              <div className="text-sm lg:text-base text-white/80">Successful Jobs</div>
-            </div>
-            <div>
-              <div className="text-3xl lg:text-4xl font-bold mb-2 text-secondary">98%</div>
-              <div className="text-sm lg:text-base text-white/80">Client Satisfaction</div>
-            </div>
-          </div>
-        </div>  */}
       </div>
     </section>
   );
 };
-
-/*
-RESPONSIVE DESIGN:
-==================
-
-MOBILE (< 768px):
-- 2 columns grid (grid-cols-2)
-- Smaller gaps (gap-4)
-- Smaller text sizes
-- Stats in 2 rows (2x2 grid)
-
-TABLET (768px - 1024px):
-- Still 2 columns
-- Stats in 1 row (4 columns)
-
-DESKTOP (1024px+):
-- 3 columns (lg:grid-cols-3)
-- Larger gaps (lg:gap-6)
-- Larger text sizes
-- Stats in 1 row with more spacing
-
-CHANGES MADE:
-=============
-1. ✅ Cards now use variant="gray" (#D9D9D9 background)
-2. ✅ Mobile: 2 cards per row instead of 1
-3. ✅ Updated brand colors (purple → primary)
-4. ✅ Stats bar uses primary gradient
-5. ✅ Stats numbers now in secondary color (yellow)
-6. ✅ Responsive padding and spacing
-*/

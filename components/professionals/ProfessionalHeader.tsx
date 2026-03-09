@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils/cn';
 
 interface ProfessionalHeaderProps {
-  professional: any; // Ideally use the Professional type from your types file
+  professional: any;
   activeTab: 'profile' | 'reviews';
   onTabChange: (tab: 'profile' | 'reviews') => void;
 }

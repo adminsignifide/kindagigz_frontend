@@ -1,6 +1,3 @@
-// ============================================
-// HOW IT WORKS PAGE
-// ============================================
 
 import React from 'react';
 import { Navbar } from '@/components/layout/Navbar/Navbar';

@@ -1,9 +1,5 @@
 'use client';
 
-// ============================================
-// RESOURCES DROPDOWN COMPONENT
-// ============================================
-
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/constants/routes';

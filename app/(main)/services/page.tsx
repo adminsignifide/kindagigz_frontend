@@ -148,23 +148,6 @@ export default function ServicesPage() {
                 <h2 className="text-2xl font-bold text-primary">
                   Results {!isLoading && `(${filteredProfessionals.length})`}
                 </h2>
-                {/* <select 
-                  className="bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium border-none focus:ring-2 focus:ring-secondary"
-                  onChange={(e) => {
-                    const sorted = [...filteredProfessionals].sort((a, b) => {
-                      if (e.target.value === 'rating') {
-                        return parseFloat(b.average_rating) - parseFloat(a.average_rating);
-                      } else if (e.target.value === 'jobs') {
-                        return b.completed_jobs - a.completed_jobs;
-                      }
-                      return 0;
-                    });
-                    setFilteredProfessionals(sorted);
-                  }}
-                >
-                  <option value="relevant">Most Relevant</option>
-                  <option>Highest Rated</option>
-                </select> */}
               </div>
 
               <ServicesList 
@@ -192,42 +175,3 @@ export default function ServicesPage() {
     </div>
   );
 }
-
-/*
-SERVICES PAGE STRUCTURE:
-========================
-
-1. LAYOUT:
-   - Primary background (#3B3B6B)
-   - White content containers with rounded corners
-   - Small vertical margin (py-6)
-
-2. GRID SYSTEM:
-   - 3 columns on desktop: Filters (3) | Results (5/9) | Map (4/hidden)
-   - Filters: Sticky sidebar, always visible
-   - Results: Main content area, scrollable
-   - Map: Toggleable, sticky when shown
-
-3. FILTERS:
-   - Two tabs: "Filters" (default) and "Categories"
-   - Comprehensive search options
-   - "Show on Map" button toggles map view
-   
-4. RESULTS:
-   - Grid of professional cards (2-3 columns based on map visibility)
-   - Sort dropdown
-   - Load more functionality
-   - Empty state with clear filters button
-
-5. MAP VIEW:
-   - Toggle on/off with button in filters
-   - Sticky position
-   - Shows professionals' locations
-   - Can be closed with X button
-
-RESPONSIVE BEHAVIOR:
-====================
-- Mobile: Stack vertically (Filters → Results)
-- Tablet: 2 columns (Filters | Results)
-- Desktop: 3 columns when map shown, 2 when hidden
-*/

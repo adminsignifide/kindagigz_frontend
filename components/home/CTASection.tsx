@@ -1,9 +1,5 @@
 'use client';
 
-// ============================================
-// CTA SECTION - WHITE BACKGROUND WITH IMAGE
-// ============================================
-
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -163,49 +159,3 @@ export const CTASection: React.FC = () => {
     </section>
   );
 };
-
-/*
-CHANGES MADE:
-=============
-
-1. ✅ Background: White (bg-white) instead of purple gradient
-2. ✅ Layout: Two columns (text + image side by side)
-3. ✅ Image: Right side with placeholder
-4. ✅ CTA Cards: Gray background (#D9D9D9) using Card component
-5. ✅ Buttons: variant="primary" and variant="secondary"
-6. ✅ Stacked cards instead of side-by-side for better mobile
-7. ✅ Added floating stats badge on image
-8. ✅ Added trust badges below CTAs
-9. ✅ Responsive: Image above on mobile, side-by-side on desktop
-
-RESPONSIVE DESIGN:
-==================
-
-MOBILE (< 1024px):
-- Single column
-- Image ABOVE (order-1)
-- Content BELOW (order-2)
-- Cards stack vertically
-- Buttons full width on mobile
-
-DESKTOP (1024px+):
-- Two columns
-- Content LEFT (order-1)
-- Image RIGHT (order-2)
-- Cards stack in left column
-- Buttons auto width
-
-IMAGE SETUP:
-============
-
-1. Place your CTA image at /public/cta-image.png
-2. Recommended: 600x600px or larger, square/portrait
-3. Should show happy professional/client using the platform
-4. Or show multiple professionals working
-
-ALTERNATIVE: If no image yet, you can use:
-- Illustration
-- Pattern/abstract design
-- Photo collage
-- Or keep as colored background temporarily
-*/

@@ -1,6 +1,7 @@
 //============================================
 // APPLICATION ROUTES CONSTANTS
 // ============================================
+
 import { NavLink } from "@/types";
 
 export const ROUTES = {

@@ -1,9 +1,5 @@
 'use client';
 
-// ============================================
-// HOMEPAGE HERO SECTION
-// ============================================
-
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -124,7 +120,7 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Add CSS for animations */}
+      {/* CSS for animations */}
       <style jsx>{`
         @keyframes float {
           0%, 100% {

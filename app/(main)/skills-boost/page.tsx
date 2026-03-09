@@ -1,6 +1,3 @@
-// ============================================
-// SKILLS BOOST PAGE
-// ============================================
 
 import React from 'react';
 import { Navbar } from '@/components/layout/Navbar/Navbar';
@@ -254,4 +251,4 @@ export default function SkillsBoostPage() {
   );
 }
 
-const ROUTES = { SIGNUP: '/signup' }; // Import from your routes file
+const ROUTES = { SIGNUP: '/signup' }; 
