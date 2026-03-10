@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ROUTES } from '@/lib/constants/routes';
 import { professionalService } from '@/lib/services/professionalService';
 import type { Professional } from '@/types/auth';
 import { ServiceProviderCard } from '@/components/services/ServiceProviderCard';
@@ -58,9 +56,9 @@ export const ProfessionalSimilarServices: React.FC<ProfessionalSimilarServicesPr
     return null;
   }
   return (
-    <section className="py-12 border-t border-gray-200">
-      <h2 className="text-2xl font-bold text-center mb-10 text-secondary">You May Be Interested In</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section className="py-8 md:py-12 border-t border-gray-200">
+      <h2 className="text-lg md:text-2xl font-bold text-center mb-4 md:mb-10 text-secondary">You May Be Interested In</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
         {similarProfessionals.map((professional) => (
           <ServiceProviderCard key={professional.id} professional={professional} />
         ))}

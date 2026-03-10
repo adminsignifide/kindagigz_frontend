@@ -23,7 +23,7 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
   return (
     <div className="bg-white border-b border-gray-200">
       {/* Banner */}
-      <div className="relative h-80 w-full bg-gray-200 pt-20">
+      <div className="relative h-50 md:h-80 w-full bg-gray-200 pt-20">
         <Image 
           src={professional.banner_image || '/banner.jpg'} 
           fill 
@@ -34,8 +34,8 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Profile Info Row */}
-        <div className="relative flex flex-col md:flex-row items-end -mt-16 pb-6 gap-6">
-          <div className="relative w-40 h-40 rounded-3xl border-4 border-white bg-gray-400 overflow-hidden shadow-lg">
+        <div className="relative flex flex-col md:flex-row lg:items-end -mt-16 pb-6 gap-6">
+          <div className="relative w-25 h-25 md:w-40 md:h-40 rounded-3xl border lg:border-2 border-secondary bg-gray-400 overflow-hidden shadow-lg">
             <Image 
               src={professional.logo || '/avatar.jpg'} 
               fill 
@@ -43,20 +43,20 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
               alt="Logo" 
             />
           </div>
-          <div className="flex-1 pb-2">
-            <h1 className="text-2xl font-bold text-[#4F4F7C]">
-              {professional.user.first_name} {professional.user.last_name}
+          <div className="flex-1 md:pb-2 md:pt-20">
+            <h1 className="text-lg lg:text-2xl font-bold text-primary">
+              {professional.business_name}
             </h1>
-            <p className="text-gray-600 italic">{professional.tagline}</p>
+            <p className="text-sm md:text-md lg:text-lg text-gray-600 italic">{professional.tagline}</p>
           </div>
-          <div className="flex gap-3 pb-2">
+          <div className="flex gap-3 pb-2 md:pt-20 md:pb-10">
             <Button variant="outline" size="sm">Bookmark</Button>
             <Button variant="outline" size="sm">Share</Button>
           </div>
         </div>
 
         {/* Interactive Tabs */}
-        <div className="flex gap-8 text-sm font-medium text-gray-500">
+        <div className="flex gap-4 md:gap-8 text-sm font-medium text-gray-500">
           <button
             onClick={() => onTabChange('profile')}
             className={cn(
@@ -69,7 +69,6 @@ export const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
             About
           </button>
           
-          {/* Note: Portfolio and Services are placeholders in this current logic */}
           <span className="pb-4 text-gray-300 cursor-not-allowed">Portfolio</span>
           <span className="pb-4 text-gray-300 cursor-not-allowed">Services & Pricing</span>
 

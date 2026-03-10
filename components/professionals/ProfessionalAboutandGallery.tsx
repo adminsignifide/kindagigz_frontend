@@ -13,23 +13,21 @@ export const ProfessionalAboutandGallery: React.FC<{ professional: Professional 
   return (
     <div className="space-y-8">
       {/* About Section */}
-      <Card padding="lg">
-        <h2 className="text-xl font-bold mb-4 text-primary">About</h2>
-
-        {/* About Text */}
-        <div className="prose prose-sm max-w-none text-gray-600 whitespace-pre-line mb-6">
+      <Card padding="md">
+        <h2 className="text-sm md:text-lg lg:text-xl font-bold mb-4 text-primary">About</h2>
+        <div className="text-sm md:text-md prose prose-sm max-w-none text-gray-600 whitespace-pre-line mb-6">
           {professional.about}
         </div>
         
         {/* Category & Services */}
-        <div className="pt-6 border-t border-gray-100 space-y-4">
+        <div className="flex flex-col md:flex-row flex-wrap md:gap-8 pt-2 border-t border-gray-100 space-y-4">
           {/* Category */}
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
               Category
             </p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full">
-              <span className="text-xl">{professional.category.icon}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg lg:rounded-full text-xs md:text-sm">
+              <span>{professional.category.icon}</span>
               <span className="font-semibold">{professional.category.name}</span>
             </div>
           </div>
@@ -44,20 +42,37 @@ export const ProfessionalAboutandGallery: React.FC<{ professional: Professional 
                 {professional.services.map((service) => (
                   <div
                     key={service.id}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm"
+                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs md:text-sm"
                   >
                     <p className="font-semibold">{service.name}</p>
-                    {service.suggested_price_min && service.suggested_price_max && (
+                    {/* {service.suggested_price_min && service.suggested_price_max && (
                       <p className="text-xs text-gray-500 mt-1">
                         KES {service.suggested_price_min} - {service.suggested_price_max}
                         {service.price_type && ` (${service.price_type})`}
                       </p>
-                    )}
+                    )} */}
                   </div>
                 ))}
               </div>
             </div>
           )}
+
+          {/* Contact Section */}
+          <div>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+              Contact
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-primary rounded-sm lg:rounded-full text-sm">
+              <Image
+                src="/icons/telephone.png"
+                alt='Call image' 
+                height={20} 
+                width={20}
+                className="object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <span>{professional.user.phone}</span>
+            </div>
+          </div>
 
           {/* Languages */}
           {professional.languages.length > 0 && (
@@ -79,7 +94,7 @@ export const ProfessionalAboutandGallery: React.FC<{ professional: Professional 
           )}
 
           {/* Stats */}
-          <div className="pt-4 border-t border-gray-100">
+          {/* <div className="pt-4 border-t border-gray-100">
             <div className="grid grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
@@ -100,7 +115,7 @@ export const ProfessionalAboutandGallery: React.FC<{ professional: Professional 
                 <div className="text-xs text-gray-500 mt-1">Reviews</div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Card>
 
@@ -116,7 +131,7 @@ export const ProfessionalAboutandGallery: React.FC<{ professional: Professional 
                 className="group relative aspect-square rounded-xl overflow-hidden bg-gray-100 cursor-pointer"
               >
                 <Image 
-                  src={item.image} // ✅ Changed from url
+                  src={item.image}
                   alt={item.caption || 'Gallery image'} 
                   fill 
                   className="object-cover transition-transform duration-300 group-hover:scale-110"

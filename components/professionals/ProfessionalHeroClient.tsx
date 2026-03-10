@@ -32,7 +32,7 @@ export function ProfessionalHeroClient({ professional }: { professional: Profess
         ) : (
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
             <h2 className="text-xl font-bold mb-4">
-              Reviews ({professional.total_reviews}) {/* ✅ Fixed field name */}
+              Reviews ({professional.total_reviews})
             </h2>
             <div className="space-y-4">
               {/* Rating Overview */}

@@ -52,12 +52,12 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
 
   return (
     <Card padding="lg">
-      <h3 className="text-xl font-bold mb-4 text-primary">Request Service</h3>
+      <h3 className="text-lg lg:text-xl font-bold mb-4 text-primary">Request Service</h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Your Name *
           </label>
           <input
@@ -65,14 +65,14 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
             placeholder="John Doe"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Email *
           </label>
           <input
@@ -80,14 +80,14 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
             required
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
             placeholder="john@example.com"
           />
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Phone *
           </label>
           <input
@@ -95,14 +95,14 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
             required
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
             placeholder="+254 712 345 678"
           />
         </div>
 
         {/* Preferred Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Preferred Date
           </label>
           <input
@@ -110,19 +110,19 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
             value={formData.preferredDate}
             onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
             min={new Date().toISOString().split('T')[0]}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none"
           />
         </div>
 
         {/* Preferred Time */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Preferred Time
           </label>
           <select
             value={formData.preferredTime}
             onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none bg-white"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none bg-white"
           >
             <option value="">Select time...</option>
             <option value="morning">Morning (8AM - 12PM)</option>
@@ -133,7 +133,7 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
 
         {/* Message */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2">
             Message *
           </label>
           <textarea
@@ -141,7 +141,7 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             rows={4}
-            className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none resize-none"
+            className="w-full text-xs md:text-sm px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-primary focus:outline-none resize-none"
             placeholder="Describe the service you need..."
           />
         </div>
@@ -150,14 +150,14 @@ export const ProfessionalContactForm: React.FC<ProfessionalContactFormProps> = (
         <Button
           type="submit"
           variant="primary"
-          className="w-full"
+          className="w-full text-sm md:text-md"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Sending...' : 'Send Request'}
         </Button>
 
         <p className="text-xs text-gray-500 text-center">
-          {professional.user.first_name} typically responds within {professional.response_time}
+          {professional.business_name} typically responds within {professional.response_time}
         </p>
       </form>
     </Card>
