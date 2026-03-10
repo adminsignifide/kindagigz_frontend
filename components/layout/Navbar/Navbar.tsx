@@ -104,8 +104,8 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
             ? "bg-secondary/80 backdrop-blur-md border-secondary/30"
             : "bg-secondary border-black/10"
         )}>
-          <div className="px-6 sm:px-8 lg:px-10">
-            <div className="flex items-center justify-between h-16">
+          <div className="px-6 lg:px-10">
+            <div className="flex items-center justify-between h-14 lg:h-16">
               {/* Logo */}
               <Link href={ROUTES.HOME} className="flex items-center space-x-2 shrink-0">
                 <div className="relative w-8 h-8 md:w-10 md:h-10"> 
@@ -201,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({ variant = 'default' }) => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="absolute right-0 md:hidden py-4 bg-secondary/95 backdrop-blur-md border border-black/5 shadow-2xl animate-in fade-in zoom-in-95 duration-200 md:hidden py-4 border-t border-primary/10 bg-secondary/50 backdrop-blur-sm rounded-b-2xl">
+            <div className="absolute right-0 md:hidden py-4 bg-secondary/95 backdrop-blur-md border border-black/5 shadow-2xl animate-in fade-in zoom-in-95 duration-200 border-t rounded-b-2xl">
               <div className="flex flex-col space-y-1 px-4">
                 {/* Navigation Links */}
                 {NAV_LINKS.map((link) => {
