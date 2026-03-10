@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { InteractiveMap } from '../map/InteractiveMap';
 import type { Professional } from '@/types/auth';
 
-// Define colors for your categories
 const CATEGORY_COLORS: Record<string, string> = {
   'Plumbing': '#ef4444', // Red
   'Electrical': '#eab308', // Yellow

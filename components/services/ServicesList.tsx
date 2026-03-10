@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import { ROUTES } from '@/lib/constants/routes';
 import { ServiceProviderCard } from './ServiceProviderCard';
 import { Professional } from '@/types/auth';
 import { cn } from '@/lib/utils/cn';
@@ -22,7 +20,6 @@ export const ServicesList: React.FC<ServicesListProps> = ({
   showMapView, 
   onClearFilters
 }) => {
-  // Slicing the professionals based on visibleCount
   const displayedProfessionals = professionals.slice(0, visibleCount);
   const hasMore = professionals.length > visibleCount;
 
@@ -42,8 +39,8 @@ export const ServicesList: React.FC<ServicesListProps> = ({
   if (professionals.length === 0) {
     return (
       <div className="text-center py-16">
-        <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">No professionals found</h3>
+        <div className="text-2xl md:text-4xl lg:text-6xl mb-4">🔍</div>
+        <h3 className="md:text-xl font-bold text-gray-900 mb-2">No professionals found</h3>
         <p className="text-gray-600 mb-6">Try adjusting your filters or search criteria</p>
         <button 
           onClick={onClearFilters} 
@@ -66,14 +63,13 @@ export const ServicesList: React.FC<ServicesListProps> = ({
         ))}
       </div>
       
-      {/* Only show "Load More" button if there are items left in the full array */}
       {hasMore && (
-        <div className="text-center pt-8">
+        <div className="text-center md:pt-8">
           <button 
             onClick={onLoadMore}
-            className="px-8 py-3 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all font-bold shadow-sm"
+            className="text-sm px-8 py-3 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all font-bold shadow-sm"
           >
-            Load More Professionals ({professionals.length - visibleCount} remaining)
+            Load More
           </button>
         </div>
       )}

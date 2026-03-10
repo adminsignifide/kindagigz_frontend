@@ -35,11 +35,9 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
     availability: 'all' as 'all' | 'available',
   });
 
-  // Extract unique categories from professionals
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    // Get unique categories from professionals
     const uniqueCategories = professionals.reduce((acc, prof) => {
       const exists = acc.find(cat => cat.id === prof.category.id);
       if (!exists) {
@@ -106,7 +104,6 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
     );
   };
 
-  // Get professional count per category
   const getCategoryCount = (categoryId: number) => {
     return professionals.filter(prof => prof.category.id === categoryId).length;
   };
@@ -138,7 +135,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
   };
 
   return (
-    <Card variant="default" padding="lg" className="sticky top-24">
+    <Card variant="default" padding="md" className="sticky top-24">
       {/* Tab Switcher */}
       <div className="flex gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
         <button
@@ -175,7 +172,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
               value={filters.keywords}
               onChange={(e) => handleFilterChange('keywords', e.target.value)}
               placeholder="e.g., plumber, electrician..."
-              className="w-full px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
+              className="w-full text-sm px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
             />
           </div>
 
@@ -187,7 +184,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange('category', e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
+              className="w-full text-sm px-4 py-2 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none"
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
@@ -319,7 +316,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
             <Button
               variant="primary"
               size="md"
-              className="w-full"
+              className="w-full text-sm md:text-md"
               onClick={handleSearch}
             >
               Apply Filters
@@ -327,7 +324,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
             <Button
               variant="outline"
               size="md"
-              className="w-full"
+              className="w-full text-sm md:text-md"
               onClick={handleReset}
             >
               Reset Filters
@@ -335,7 +332,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
             <Button
               variant="tertiary"
               size="md"
-              className="w-full"
+              className="w-full hidden lg:block text-sm md:text-md"
               onClick={onShowMap}
             >
               {showMapView ? '📋 Hide Map' : '🗺️ Show on Map'}
@@ -363,17 +360,17 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({
                   className="w-full p-4 rounded-lg border-2 border-card-border hover:border-primary hover:bg-primary/5 transition-all text-left group"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl group-hover:scale-110 transition-transform">
+                    <span className="text-lg md:text-3xl group-hover:scale-110 transition-transform">
                       {category.icon}
                     </span>
                     <div className="flex-1">
-                      <div className="font-semibold text-primary">{category.name}</div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm font-semibold text-primary">{category.name}</div>
+                      {/* <div className="text-sm text-gray-600">
                         {count} professional{count !== 1 ? 's' : ''}
-                      </div>
+                      </div> */}
                     </div>
                     <svg
-                      className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"
+                      className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-primary transition-colors"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
