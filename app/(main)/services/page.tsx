@@ -165,7 +165,7 @@ export default function ServicesPage() {
           <aside className={cn(
             "lg:col-span-3 transition-all duration-300 ease-in-out z-50",
             // Mobile Styles
-            "fixed inset-y-0 left-0 w-[85%] max-w-xs bg-white p-4 lg:static lg:bg-transparent lg:p-0 lg:w-auto",
+            "fixed inset-y-0 left-0 w-[85%] max-w-xs bg-white p-4 lg:static lg:bg-transparent lg:p-0 lg:w-auto rounded-tr-2xl rounded-br-2xl",
             isFilterOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           )}>
             <div className="flex items-center justify-between mb-6 lg:hidden">
