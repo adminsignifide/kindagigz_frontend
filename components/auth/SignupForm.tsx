@@ -234,13 +234,6 @@ export function SignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* General Error */}
-      {errors.general && (
-        <div className="p-4 rounded-lg bg-red-50 border border-red-200">
-          <p className="text-sm text-red-600">{errors.general[0]}</p>
-        </div>
-      )}
-
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold text-primary mb-2">
