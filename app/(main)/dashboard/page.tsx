@@ -18,17 +18,14 @@ export default function DashboardPage() {
   const [error, setError] = React.useState<string | null>(null);
 
   useEffect(() => {
-    // Wait for auth to initialize
     if (isLoading) return;
 
-    // Redirect if not authenticated
     if (!isAuthenticated) {
       console.log('Not authenticated, redirecting to login');
       router.push(ROUTES.LOGIN);
       return;
     }
 
-    // Redirect if not a professional
     if (user?.role !== 'professional') {
       console.log('Not a professional, redirecting to home');
       toast.error("Not a professional, redirecting to home")
@@ -36,7 +33,6 @@ export default function DashboardPage() {
       return;
     }
 
-    // Fetch professional profile using authenticated endpoint
     const fetchProfessional = async () => {
       try {
         setLoading(true);
@@ -44,16 +40,14 @@ export default function DashboardPage() {
 
         console.log('Fetching professional profile from:', API_ENDPOINTS.PROFESSIONALS.PROFILE);
         
-        // Log cookies being sent
         console.log('Document cookies:', document.cookie);
 
-        // Use the profile endpoint instead of detail endpoint
         const response = await fetch(API_ENDPOINTS.PROFESSIONALS.PROFILE, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', // Include cookies
+          credentials: 'include', 
         });
 
         if (!response.ok) {
@@ -61,13 +55,11 @@ export default function DashboardPage() {
           console.error('Failed to fetch professional profile:', errorData);
           
           if (response.status === 401) {
-            // Unauthorized - redirect to login
             router.push(ROUTES.LOGIN);
             return;
           }
           
           if (response.status === 404) {
-            // Professional profile not found
             setError('Professional profile not found. Please complete your profile setup.');
             return;
           }
@@ -122,7 +114,6 @@ export default function DashboardPage() {
     );
   }
 
-  // Don't render until we have professional data
   if (!professional) {
     return null;
   }

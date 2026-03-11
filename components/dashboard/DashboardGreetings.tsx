@@ -15,7 +15,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({ profession
     const hour = new Date().getHours();
     const firstName = professional.user.first_name;
 
-    // Generate greeting based on time
+    // Greetings based on time of day
     if (hour < 12) {
       setGreeting(`Good Morning, ${firstName}`);
       setMessage('Ready to make today productive?');
@@ -30,7 +30,6 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({ profession
       setMessage("Don't forget to rest!");
     }
 
-    // Add personalized messages based on stats
     if (professional.total_reviews > 5 && parseFloat(professional.average_rating) >= 4.5) {
       const messages = [
         `Your ${professional.average_rating}⭐ rating is impressive!`,
@@ -42,13 +41,13 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({ profession
   }, [professional]);
 
   return (
-    <div className="bg-gradient-to-r from-primary to-primary/80 text-white py-8 px-6 rounded-2xl mb-8 shadow-lg">
+    <div className="bg-linear-to-r from-primary to-primary/80 text-white py-8 px-6 rounded-2xl mb-8 shadow-lg">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">{greeting} 👋</h1>
         <p className="text-white/90 text-lg">{message}</p>
         
         {/* Quick Stats */}
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3">
             <p className="text-white/70 text-xs mb-1">Total Jobs</p>
             <p className="text-2xl font-bold">{professional.completed_jobs}</p>
@@ -65,7 +64,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({ profession
             <p className="text-white/70 text-xs mb-1">Response Time</p>
             <p className="text-xl font-bold">{professional.response_time}</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
