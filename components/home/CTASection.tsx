@@ -12,13 +12,13 @@ export const CTASection: React.FC = () => {
     <section className="py-16 md:py-20 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
+
           {/* Left Side - CTA Content */}
           <div className="space-y-6">
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-secondary/10 rounded-full border border-secondary/30">
               <span className="text-secondary mr-2">🚀</span>
-              <span className="text-sm font-semibold text-primary">Join thousands of professionals</span>
+              <span className="text-sm font-semibold text-primary">Join thousands of Service Providers</span>
             </div>
 
             {/* Heading */}
@@ -27,7 +27,7 @@ export const CTASection: React.FC = () => {
             </h2>
 
             <p className="text-sm lg:text-lg text-gray-700">
-              Whether you're looking to hire a professional or list your services, 
+              Whether you're looking to hire a professional or list your services,
               KindaGigz makes it easy to connect and get the job done.
             </p>
 
@@ -42,7 +42,7 @@ export const CTASection: React.FC = () => {
                       For Clients
                     </h3>
                   </div>
-                  
+
                   <div className="flex-1">
                     <p className="text-xs md:text-md text-gray-700 mb-4">
                       Find verified professionals for any job, big or small. Get it done right the first time.
@@ -74,7 +74,7 @@ export const CTASection: React.FC = () => {
                       For Service Providers
                     </h3>
                   </div>
-                  
+
                   <div className="flex-1">
                     <p className="text-xs md:text-md text-gray-700 mb-4">
                       List your services, build your reputation, and earn on your terms. It's free to join!
@@ -132,7 +132,7 @@ export const CTASection: React.FC = () => {
                 className="object-cover"
                 priority
               />
-              
+
               {/* Overlay gradient for better text readability if needed */}
               <div className="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent" />
             </div>

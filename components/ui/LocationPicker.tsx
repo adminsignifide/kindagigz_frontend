@@ -37,7 +37,7 @@ export function LocationPicker({
   placeholder = 'e.g. Galleria Mall, Ngong Road, ABC Place…',
   required = false,
   disabled = false,
-  label = 'Business Location',
+  label = 'Service Location',
 }: LocationPickerProps) {
   const inputId = useId();
   const listboxId = useId();

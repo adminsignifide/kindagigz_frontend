@@ -239,7 +239,7 @@ export function SignupForm() {
           Create Account
         </h1>
         <p className="text-sm md:text-md text-gray-600">
-          Join thousands of professionals and clients on KindaGigz
+          Join thousands of Service Providers and Clients on KindaGigz
         </p>
       </div>
 
@@ -387,7 +387,7 @@ export function SignupForm() {
                 <span className="font-semibold text-primary">Client</span>
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                Looking to hire service providers
+                Looking to hire Service Providers
               </p>
             </div>
           </label>
@@ -405,10 +405,10 @@ export function SignupForm() {
             <div className="ml-3 flex-1">
               <div className="flex items-center gap-2">
                 <span className="text-lg">⚡</span>
-                <span className="font-semibold text-primary">Professional</span>
+                <span className="font-semibold text-primary">Service Provider</span>
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                Offering services to clients
+                Offering services to Clients
               </p>
             </div>
           </label>

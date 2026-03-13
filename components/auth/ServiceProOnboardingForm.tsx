@@ -111,11 +111,11 @@ export function ServiceProOnboardingForm({
     const newErrors: Record<string, string> = {};
 
     if (!formData.business_name.trim()) {
-      newErrors.business_name = 'Business name is required';
+      newErrors.business_name = 'Display name is required';
     }
 
     if (!formData.about.trim()) {
-      newErrors.about = 'Business description is required';
+      newErrors.about = 'Service description is required';
     }
 
     if (formData.about.length > 500) {
@@ -135,7 +135,7 @@ export function ServiceProOnboardingForm({
     }
 
     if (!formData.address.trim()) {
-      newErrors.address = 'Business location is required — please select from the suggestions';
+      newErrors.address = 'Service location is required — please select from the suggestions';
     }
 
     if (formData.latitude === null || formData.longitude === null) {
@@ -296,16 +296,16 @@ export function ServiceProOnboardingForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h3 className="text-2xl md:text-3xl font-bold text-primary">Professional Details</h3>
+        <h3 className="text-2xl md:text-3xl font-bold text-primary">Your Service Information</h3>
         <p className="text-sm text-gray-600 mt-1">
-          Tell us about your business and services
+          Tell us about yourself and the services you offer
         </p>
       </div>
 
       {/* Business Name */}
       <div>
         <label htmlFor="business_name" className="block text-sm font-semibold text-primary mb-2">
-          Business Name <span className="text-red-500">*</span>
+          Display Name <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -315,7 +315,7 @@ export function ServiceProOnboardingForm({
           onChange={handleChange}
           required
           className="text-sm md:text-md w-full px-4 py-3 rounded-lg border-2 border-card-border focus:border-primary focus:outline-none transition-colors"
-          placeholder="e.g., John's Plumbing Services"
+          placeholder="e.g., John's Plumbing or Sarah's Beauty Salon"
         />
         {errors.business_name && (
           <p className="mt-1 text-sm text-red-600">{errors.business_name}</p>
@@ -449,7 +449,7 @@ export function ServiceProOnboardingForm({
       {/* About/Bio */}
       <div>
         <label htmlFor="about" className="block text-sm font-semibold text-primary mb-2">
-          About Your Business <span className="text-red-500">*</span>
+          About the Services you Offer <span className="text-red-500">*</span>
         </label>
         <textarea
           id="about"
@@ -473,7 +473,7 @@ export function ServiceProOnboardingForm({
       {/* Address - Location Picker */}
       <div id="address">
         <LocationPicker
-          label="Business Location"
+          label="Service Location"
           value={formData.address}
           onLocationSelect={handleLocationSelect}
           error={errors.address || errors.latitude}
@@ -510,7 +510,7 @@ export function ServiceProOnboardingForm({
       {/* Logo Upload */}
       <div>
         <label className="block text-sm font-semibold text-primary mb-2">
-          Business Logo <span className="text-gray-400 text-xs">(Optional)</span>
+          Service Logo <span className="text-gray-400 text-xs">(Optional)</span>
         </label>
         <div className="flex items-start gap-4">
           {logoPreview && (

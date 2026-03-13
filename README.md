@@ -122,7 +122,7 @@ Homepage → Browse Categories/Services → View Service Providers → Learn Abo
         Onboarding Form    Fill Profile
         (if first time)        │
             │                 │
-        Business Details,  Dashboard `/dashboard`
+ Service/Business Details,  Dashboard `/dashboard`
         Services,          │
         Availability,      ├─ Analytics `/dashboard/analytics`
         Pricing,           │  (Track performance, jobs)
@@ -137,7 +137,7 @@ Homepage → Browse Categories/Services → View Service Providers → Learn Abo
 
 **Key Professional Routes & Features:**
 - **Signup** (`/signup`) - Professional registration with:
-  - Business information
+  - Service information
   - Service category selection
   - Location setup
   - Initial onboarding form

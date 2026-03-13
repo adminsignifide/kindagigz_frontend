@@ -45,11 +45,11 @@ export const Settings: React.FC<SettingsProps> = ({ professional }) => {
       {activeTab === 'profile' && (
         <div className="space-y-6">
           <Card padding="lg">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Business Information</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Service Information</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Business Name
+                  Display Name
                 </label>
                 <input
                   type="text"

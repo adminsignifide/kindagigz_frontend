@@ -110,7 +110,7 @@ export default function SkillsBoostPage() {
   return (
     <div className="min-h-screen bg-primary">
       <Navbar />
-      
+
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Content Container */}
         <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl">
@@ -124,7 +124,7 @@ export default function SkillsBoostPage() {
               Skills Boost Training
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Invest in yourself with professional training courses. Gain certifications, 
+              Invest in yourself with professional training courses. Gain certifications,
               learn new skills, and increase your earning potential.
             </p>
           </div>
@@ -165,7 +165,7 @@ export default function SkillsBoostPage() {
                       <div className="flex-1">
                         <CardTitle className="mb-3">{course.title}</CardTitle>
                         <CardDescription className="mb-4">{course.description}</CardDescription>
-                        
+
                         {/* Course Details */}
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2 text-gray-600">
@@ -204,7 +204,7 @@ export default function SkillsBoostPage() {
                 Ready to Boost Your Skills?
               </CardTitle>
               <CardDescription variant="light" className="mb-6 text-base">
-                Join thousands of professionals who have advanced their careers through our training programs.
+                Join thousands of Service Providers who have advanced their careers through our training programs.
               </CardDescription>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href={ROUTES.SIGNUP}>

@@ -133,17 +133,17 @@ export default function HowItWorksPage() {
                 Ready to Get Started?
               </h3>
               <p className="text-gray-600 mb-6">
-                Join thousands of professionals and clients making work happen on KindaGigz
+                Join thousands of Service Providers and Clients making work happen on KindaGigz
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href={ROUTES.SERVICES}>
                   <Button variant="primary" size="lg">
-                    Find a Professional
+                    Find a Service Pro
                   </Button>
                 </Link>
                 <Link href={ROUTES.SIGNUP}>
                   <Button variant="secondary" size="lg">
-                    Become a Professional
+                    Become a Service Pro
                   </Button>
                 </Link>
               </div>
