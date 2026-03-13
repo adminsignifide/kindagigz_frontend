@@ -52,7 +52,7 @@ export const CategoriesSection: React.FC = () => {
               Explore Categories
             </h2>
             <p className="text-sm lg:text-lg text-white/80">
-              Browse through our wide range of service categories and find the perfect professional for your needs.
+              Browse through our wide range of service categories and find the perfect service provider for your needs.
             </p>
           </div>
 
@@ -89,7 +89,7 @@ export const CategoriesSection: React.FC = () => {
             Explore Categories
           </h2>
           <p className="text-sm lg:text-lg text-white/80">
-            Browse through our wide range of service categories and find the perfect professional for your needs.
+            Browse through our wide range of service categories and find the perfect service provider for your needs.
           </p>
         </div>
 

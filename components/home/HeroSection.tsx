@@ -28,11 +28,11 @@ export const HeroSection: React.FC = () => {
         
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full animate-float opacity-80"> {/* Animation added back to mobile bg */}
             <Image
-            src="/images/hero-section-image-without-bg.png"
-            alt="KindaGigz professionals"
-            fill
-            className="object-contain"
-            priority
+              src="/images/hero-section-image-without-bg.png"
+              alt="KindaGigz Service Pros"
+              fill
+              className="object-contain"
+              priority
             />
         </div>
       </div>
@@ -61,7 +61,7 @@ export const HeroSection: React.FC = () => {
 
             {/* Description */}
             <p className="text-lg lg:text-xl text-white/80 max-w-xl leading-relaxed">
-              Connect with verified professionals in your area for any job, big or small. 
+              Connect with verified service providers in your area for any job, big or small. 
               From carpenters to cleaners, find skilled workers ready to help—instantly.
             </p>
 

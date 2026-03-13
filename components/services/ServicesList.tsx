@@ -40,7 +40,7 @@ export const ServicesList: React.FC<ServicesListProps> = ({
     return (
       <div className="text-center py-16">
         <div className="text-2xl md:text-4xl lg:text-6xl mb-4">🔍</div>
-        <h3 className="md:text-xl font-bold text-gray-900 mb-2">No professionals found</h3>
+        <h3 className="md:text-xl font-bold text-gray-900 mb-2">No Service Providers found</h3>
         <p className="text-gray-600 mb-6">Try adjusting your filters or search criteria</p>
         <button 
           onClick={onClearFilters} 

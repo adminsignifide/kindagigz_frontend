@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
       ],
     },
     {
-      title: 'For Professionals',
+      title: 'For Service Pro',
       links: [
         { label: 'Become a Pro', href: ROUTES.SIGNUP },
         { label: 'Skills Boost', href: ROUTES.SKILLS_BOOST },
@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-xs md:text-sm text-gray-400 mb-4">
-              Connecting Africa's skilled professionals with real opportunities. Building the future of work, one job at a time.
+              Connecting Africa's skilled service providers with real opportunities. Building the future of work, one job at a time.
             </p>
             {/* Social Links */}
             <div className="flex space-x-4">

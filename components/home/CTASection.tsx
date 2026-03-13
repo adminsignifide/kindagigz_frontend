@@ -27,7 +27,7 @@ export const CTASection: React.FC = () => {
             </h2>
 
             <p className="text-sm lg:text-lg text-gray-700">
-              Whether you're looking to hire a professional or list your services,
+              Whether you're looking to hire a service providers or list your services,
               KindaGigz makes it easy to connect and get the job done.
             </p>
 
@@ -45,7 +45,7 @@ export const CTASection: React.FC = () => {
 
                   <div className="flex-1">
                     <p className="text-xs md:text-md text-gray-700 mb-4">
-                      Find verified professionals for any job, big or small. Get it done right the first time.
+                      Find verified services providers for any job, big or small. Get it done right the first time.
                     </p>
                     <Link href={ROUTES.SERVICES}>
                       <Button

@@ -35,7 +35,7 @@ export const WhyKindaGigz: React.FC = () => {
             Why Choose <span className="text-primary">KindaGigz</span>?
           </h2>
           <p className="text-sm lg:text-lg text-gray-600">
-            We're building the future of work in Africa by connecting skilled professionals 
+            We're building the future of work in Africa by connecting skilled service providers 
             with people who need their services—fast, fair, and hassle-free.
           </p>
         </div>

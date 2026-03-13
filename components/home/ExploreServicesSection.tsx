@@ -36,10 +36,10 @@ export const ExploreServicesSection: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-2xl lg:text-4xl font-bold text-primary mb-4">
-              Featured Professionals
+              Featured Service Pros
             </h2>
             <p className="text-sm md:tetx-md lg:text-lg text-gray-600">
-              Discover top-rated professionals ready to help you with your needs.
+              Discover top-rated service providers ready to help you with your needs.
             </p>
           </div>
 
@@ -62,9 +62,9 @@ export const ExploreServicesSection: React.FC = () => {
       <section className="py-16 md:py-20 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-4xl font-bold text-primary mb-4">
-            Featured Professionals
+            Featured Service Pros
           </h2>
-          <p className="text-gray-600">No professionals available yet. Check back soon!</p>
+          <p className="text-gray-600">No service providers available yet. Check back soon!</p>
         </div>
       </section>
     );
@@ -76,10 +76,10 @@ export const ExploreServicesSection: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
           <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Explore Services
+            Explore Services Pros
           </h2>
           <p className="text-sm lg:text-lg text-gray-600">
-            Browse through our wide range of service categories and find the perfect professional for your needs.
+            Browse through our wide range of service categories and find the perfect service providers for your needs.
           </p>
         </div>
 
