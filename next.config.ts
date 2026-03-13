@@ -18,6 +18,16 @@ const nextConfig: NextConfig = {
         port: '8000',
         pathname: '/media/**',
       },
+      {
+        protocol: "https",
+        hostname: "kindagigz-backend.onrender.com",
+        pathname: "/media/**",
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
     ],
   },
 };
